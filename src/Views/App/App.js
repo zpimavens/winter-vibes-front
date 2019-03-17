@@ -24,16 +24,35 @@ class App extends React.Component{
 
     //update user info
     
-    // logOut = (e) => {
-    //     e.preventDefault();
-    //     this.setState({
-    //         isLoggedIn: false,
-    //     });
-    // };
+     logOut = (e) => {
+        e.preventDefault();
+        fetch('/api/logOut', {
+            method: 'POST',
+            body: JSON.stringify(this.state),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    this.props.history.push('/login');
+                } else {
+                    const error = new Error(res.status);
+                    throw error;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+            });
+         });
+    };
+
+    
     render(){   
 
         const contextElements = {
             ...this.state,
+            logOut = this.logOut,
         }
 
         return(
