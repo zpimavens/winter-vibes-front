@@ -1,6 +1,6 @@
 import React from 'react';
 import './index.css';
-import { BrowserRouter, Route, Switch} from 'react-router-dom';
+import { BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
 import AppContext from '../../context';
 
 import withAuth from '../../withAuth';
@@ -35,6 +35,7 @@ class App extends React.Component{
         })
             .then(res => {
                 if (res.status === 200) {
+                    console.log('loggeduout');
                     this.props.history.push('/login');
                 } else {
                     const error = new Error(res.status);
@@ -44,7 +45,6 @@ class App extends React.Component{
             .catch(err => {
                 console.error(err);
             });
-         });
     };
 
     
@@ -52,13 +52,13 @@ class App extends React.Component{
 
         const contextElements = {
             ...this.state,
-            logOut = this.logOut,
+            logOut: this.logOut,
         }
 
         return(
 
             <>
-            <BrowserRouter>
+            
             <AppContext.Provider value={contextElements}>   
                 <Switch>
                   <Route exact path='/' component={withAuth(MainView)}/>
@@ -68,11 +68,11 @@ class App extends React.Component{
                   <Route path='/skiarea' component={withAuth(SkiAreaView)} />
                 </Switch>
             </AppContext.Provider>    
-            </BrowserRouter>
+           
             </>
         )
     }
 
 };
 
-export default App;
+export default withRouter(App);

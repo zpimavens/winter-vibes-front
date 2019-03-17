@@ -95,9 +95,9 @@ app.get('/checkToken', withAuth, function(req, res) {
   res.sendStatus(200);
 });
 
-app.post('/logOut') function(req, res){
+app.post('/api/logout', function(req, res){
     res.clearCookie('token').sendStatus(200);
-}
+});
 
 app.listen(process.env.PORT || 8080);
 
