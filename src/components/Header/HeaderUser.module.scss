@@ -1,0 +1,19 @@
+.wrapper{
+    display: flex;
+    align-items: center;
+}
+.userImage{
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+}
+.userName{
+    color: white;
+    font-weight: 400;
+}
+
+@media (max-width: 600px){
+    .wrapper{
+        display: none;
+    }
+}

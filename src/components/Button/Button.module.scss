@@ -1,0 +1,26 @@
+.button{
+    color: white;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: none;
+    height: 30px;
+    font-size: 1rem;
+    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
+    outline: none;
+    cursor: pointer;
+    transition: .5s;
+
+    &:active{
+        background-color: white;
+        color: darkblue;
+    }
+
+    &Secondary{
+        @extend .button;
+        background-image: none;
+        background-color: transparent;
+        border: .5px solid white;
+        font-weight: 300;
+    }
+
+}

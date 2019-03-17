@@ -1,0 +1,21 @@
+.wrapper{
+    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.link{
+    margin-top: 40px;
+    text-decoration: none;
+    color: darkblue;
+    bottom: 10px;
+    
+    &:active{
+        color: white;
+    }
+}

@@ -1,0 +1,44 @@
+.wrapper{
+    display: flex;
+    
+    &Small{
+        @extend .wrapper;
+    }
+    &Big{
+        @extend .wrapper;
+        align-items: center;
+        flex-direction: column;
+    }
+}
+
+.logoImage{
+    &Big{      
+        width: 30vh;
+        height: 30vh;
+    }
+    &Small{
+        width: 70px;
+        height: 70px;
+    }
+}
+.logoText{
+    color: white;
+    font-size: 2.8em;
+
+    &::after{
+        content: ' ';
+        display: block;
+        position: relative;
+        background-color: white;
+        margin: auto;
+        width: 60%;
+        height: 2px;
+        top: 10px;
+    }
+
+    &Small{
+        font-weight: 800;
+        color: white;
+        font-size: 1.7em;
+    }
+}
