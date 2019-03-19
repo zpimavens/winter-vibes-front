@@ -3,5 +3,16 @@
     margin-bottom: 20px;
     border: .5px solid #014053;
     border-radius: 15px;
-    padding: 15px 30px;;
+    padding: 15px 30px;
+
+    // &:invalid{
+    //     border-color: red;
+    // }
 }
+// .invalidFeedback{
+
+// }
+// .formItem:valid~.invalid-feedback {
+//     display: none;
+// }
+

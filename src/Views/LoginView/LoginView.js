@@ -24,13 +24,16 @@ class LoginView extends React.Component{
             .then(res => {
                 if (res.status === 200) {
                     this.props.history.push('/');
+                    
                 } else {
                     const error = new Error(res.status);
+                    console.log(res.json());
                     throw error;
                 }
             })
             .catch(err => {
                 console.error(err);
+                
             });
     };
 
@@ -43,9 +46,12 @@ class LoginView extends React.Component{
 
     render(){
 
+        const data = {
+            ...this.state,
+        }
         return(
-            <AppContext.Consumer>
-            {(context)=>(
+            <AppContext.Provider value={data}>
+            
                     <div className={styles.wrapper}>
                         <Logo 
                             logoType='bigVertical'/>
@@ -56,8 +62,8 @@ class LoginView extends React.Component{
                         />
                         <Link className={styles.link} to='/register'>NIE MASZ KONTA? ZAREJESTRUJ SIĘ</Link>
                     </div>
-                )}
-            </AppContext.Consumer>
+                
+            </AppContext.Provider>
         )
     }
 }

@@ -5,16 +5,20 @@ import PropTypes from 'prop-types';
 const Input = ({name, type, placeholder, ...props}) =>{
 
     return(
+        <>
             <input
                 className={styles.formItem}
                 name={name}
                 id={name}
                 type={type}
                 placeholder={placeholder}
+                
                 //maxlength
                 {...props}
+                
             > 
             </input>
+        </>
     )
 };
 

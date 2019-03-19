@@ -1,9 +1,10 @@
 import React from 'react';
 import './index.css';
-import { BrowserRouter, Route, Switch, withRouter} from 'react-router-dom';
+import { Route, Switch, withRouter} from 'react-router-dom';
 import AppContext from '../../context';
 
 import withAuth from '../../withAuth';
+import Header from '../../components/Header/Header';
 import UserView from '../UserView/UserView';
 import MainView from '../MainView/MainView';
 import SkiAreaView from '../SkiAreaView/SkiAreaView';
@@ -60,6 +61,7 @@ class App extends React.Component{
             <>
             
             <AppContext.Provider value={contextElements}>   
+            {/* <{withAuth(Header)}/>; */}
                 <Switch>
                   <Route exact path='/' component={withAuth(MainView)}/>
                   <Route path='/login' component={LoginView} />

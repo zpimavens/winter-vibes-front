@@ -12,7 +12,10 @@ class RegisterView extends Component{
         email: '',
         username: '',
         password: '',
-
+        formErrors: { email: '', password: '' },
+        emailValid: false,
+        passwordValid: false,
+        formValid: false,
     }
 
     handleInputChange = (e) => {
@@ -34,6 +37,7 @@ class RegisterView extends Component{
             .then(res => {
                 if (res.status === 200) {
                     this.props.history.push('/user');
+                    
                 } else {
                     const error = new Error(res.status);
                     throw error;
@@ -46,23 +50,23 @@ class RegisterView extends Component{
     };
     render(){
 
-    
+    const data = {
+        ...this.state,
+    }
     return(
-        <AppContext.Consumer>
-            {(context)=>(
-                <div className={styles.wrapper}>
-                    <Logo 
-                        logoType='bigVertical'
-                    />
-                    <Form 
-                        formType='register'
-                        handleInputChange={this.handleInputChange}
-                        formSubmitFnc={this.handleRegister}
-                    />
-                    <Link className={styles.link} to='/login'>ZALOGUJ SIĘ</Link>
-                </div>
-            )}
-        </AppContext.Consumer>
+        <AppContext.Provider value={data}>
+            <div className={styles.wrapper}>
+                <Logo 
+                    logoType='bigVertical'
+                />
+                <Form 
+                    formType='register'
+                    handleInputChange={this.handleInputChange}
+                    formSubmitFnc={this.handleRegister}
+                />
+                <Link className={styles.link} to='/login'>ZALOGUJ SIĘ</Link>
+            </div>
+        </AppContext.Provider>
     )}
 };
 

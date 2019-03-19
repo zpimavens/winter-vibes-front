@@ -14,13 +14,14 @@ export default function withAuth(ComponentToProtect) {
                 .then(res => {
                     if (res.status === 200) {
                         this.setState({ loading: false });
+                        //console.log(res.statusText);
                     } else {
                         const error = new Error(res.error);
                         throw error;
                     }
                 })
                 .catch(err => {
-                    // console.error(err);
+                    //console.error(err);
                     this.setState({ loading: false, redirect: true });
                 });
         }
