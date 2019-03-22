@@ -36,7 +36,7 @@ class App extends React.Component{
         })
             .then(res => {
                 if (res.status === 200) {
-                    console.log('loggeduout');
+                    
                     this.props.history.push('/login');
                 } else {
                     const error = new Error(res.status);
@@ -57,11 +57,11 @@ class App extends React.Component{
         }
 
         return(
-
+            
             <>
             
             <AppContext.Provider value={contextElements}>   
-            {/* <{withAuth(Header)}/>; */}
+                 
                 <Switch>
                   <Route exact path='/' component={withAuth(MainView)}/>
                   <Route path='/login' component={LoginView} />
@@ -69,6 +69,7 @@ class App extends React.Component{
                   <Route path='/user' component={withAuth(UserView)} />
                   <Route path='/skiarea' component={withAuth(SkiAreaView)} />
                 </Switch>
+            
             </AppContext.Provider>    
            
             </>

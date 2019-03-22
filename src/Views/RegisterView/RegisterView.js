@@ -4,8 +4,8 @@ import Form from '../../components/Form/Form';
 import Logo from '../../components/Logo/Logo';
 import AppContext from '../../context';
 import {Link} from 'react-router-dom';
+import FormErrors from '../../components/Form/FormErrors';
 
-//form validation!
 class RegisterView extends Component{
     
     state={
@@ -18,15 +18,45 @@ class RegisterView extends Component{
         formValid: false,
     }
 
+    validateField(fieldName, value){
+        let fieldValidationErrors = this.state.formErrors;
+        let emailValid = this.state.emailValid;
+        let passwordValid = this.state.passwordValid;
+
+        switch (fieldName) {
+            case 'email':
+                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                break;
+            case 'password':
+                passwordValid = value.length >= 6;
+                fieldValidationErrors.password = passwordValid ? '' : ' is too short';
+                break;
+            default:
+                break;
+        }
+
+        this.setState({
+            formErrors: fieldValidationErrors,
+            emailValid: emailValid,
+            passwordValid: passwordValid
+        }, this.validateForm);
+    }
+    
+
+    validateForm() {
+        this.setState({ formValid: this.state.emailValid && this.state.passwordValid });
+    }
+
     handleInputChange = (e) => {
         const { value, name } = e.target;
-        this.setState({
-            [name]: value
-        });
+        this.setState({ [name]: value },
+            () => { this.validateField(name, value) });
     }
 
     handleRegister = (e) => {
         e.preventDefault();
+        
         fetch('/api/register', {
             method: 'POST',
             body: JSON.stringify(this.state),
@@ -38,7 +68,15 @@ class RegisterView extends Component{
                 if (res.status === 200) {
                     this.props.history.push('/user');
                     
-                } else {
+                } else if (res.status === 501) {
+                    console.log('juz jest taki email');
+
+                } 
+                else if (res.status === 502) {
+                    console.log('juz jest taki uzytkownik');
+
+                } 
+                else {
                     const error = new Error(res.status);
                     throw error;
                 }
@@ -48,6 +86,8 @@ class RegisterView extends Component{
                 
             });
     };
+
+    
     render(){
 
     const data = {
@@ -59,6 +99,9 @@ class RegisterView extends Component{
                 <Logo 
                     logoType='bigVertical'
                 />
+                
+                <FormErrors formErrors={this.state.formErrors} />
+            
                 <Form 
                     formType='register'
                     handleInputChange={this.handleInputChange}
