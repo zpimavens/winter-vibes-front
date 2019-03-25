@@ -12,7 +12,7 @@ class RegisterView extends Component{
         email: '',
         username: '',
         password: '',
-        formErrors: { email: '', password: '' },
+        formErrors: { email: '', password: '' , username: ''},
         emailValid: false,
         passwordValid: false,
         formValid: false,
@@ -26,11 +26,11 @@ class RegisterView extends Component{
         switch (fieldName) {
             case 'email':
                 emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
-                fieldValidationErrors.email = emailValid ? '' : ' is invalid';
+                fieldValidationErrors.email = emailValid ? '' : 'Niepoprawny adres email.';
                 break;
             case 'password':
                 passwordValid = value.length >= 6;
-                fieldValidationErrors.password = passwordValid ? '' : ' is too short';
+                fieldValidationErrors.password = passwordValid ? '' : 'Hasło jest za krótkie, min 6 znaków.';
                 break;
             default:
                 break;
@@ -51,40 +51,46 @@ class RegisterView extends Component{
     handleInputChange = (e) => {
         const { value, name } = e.target;
         this.setState({ [name]: value },
-            () => { this.validateField(name, value) });
+           ()=> this.validateField(name, value))
+        ;
     }
 
     handleRegister = (e) => {
         e.preventDefault();
-        
-        fetch('/api/register', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-            .then(res => {
-                if (res.status === 200) {
-                    this.props.history.push('/user');
-                    
-                } else if (res.status === 501) {
-                    console.log('juz jest taki email');
 
-                } 
-                else if (res.status === 502) {
-                    console.log('juz jest taki uzytkownik');
-
-                } 
-                else {
-                    const error = new Error(res.status);
-                    throw error;
+        if(this.state.formValid){
+            
+            fetch('/api/register', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Content-Type': 'application/json'
                 }
             })
-            .catch(err => {
-                console.error(err);
-                
-            });
+                .then(res => {
+                    if (res.status === 200) {
+                        this.props.history.push('/user');
+                        
+                    } else if (res.status === 501) {
+                        //console.log('juz jest taki email');
+                        this.setState({ formErrors: {email: 'Istnieje już taki email'}});
+                    } 
+                    else if (res.status === 502) {
+                        //console.log('juz jest taki uzytkownik');
+                        this.setState({ formErrors: {username: 'Istnieje już taka nazwa użytkownika'}});
+                    } 
+                    else {
+                        const error = new Error(res.status);
+                        throw error;
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    
+                });
+
+        }
+
     };
 
     

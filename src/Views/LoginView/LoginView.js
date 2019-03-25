@@ -4,12 +4,16 @@ import Form from '../../components/Form/Form';
 import AppContext from '../../context';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
+import FormErrors from '../../components/Form/FormErrors';
 
 class LoginView extends React.Component{
 
     state={
         email: '',
-        password: ''
+        password: '',
+        formErrors: {
+            login: '',
+        }
     }
 
     handleLogin = (e) => {
@@ -27,7 +31,7 @@ class LoginView extends React.Component{
                     
                 } else {
                     const error = new Error(res.status);
-                    console.log(res.json());
+                    this.setState({formErrors: {login: 'Niepoprawne dane logowania.'}});
                     throw error;
                 }
             })
@@ -55,6 +59,8 @@ class LoginView extends React.Component{
                     <div className={styles.wrapper}>
                         <Logo 
                             logoType='bigVertical'/>
+
+                        <FormErrors formErrors={this.state.formErrors} />
                         <Form
                             formSubmitFnc={this.handleLogin}
                             handleInputChange={this.handleInputChange}
