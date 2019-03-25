@@ -1,0 +1,41 @@
+.navType{
+    display: flex;
+    align-items: center;
+
+    &Image{
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 20px;
+        cursor: pointer;
+    }
+
+    &Name{
+        color: white;
+        font-weight: 400;
+    }
+}
+.profileType{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    &Image{
+        height: 200px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 3px solid rgb(113, 201, 238);
+    }
+
+    &Name{
+        color: #137492;
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+}
+
+
+@media (max-width: 600px){
+    .navType{
+        display: none;
+    }
+}

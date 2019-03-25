@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Header.module.scss';
 import HeaderNavigation from './HeaderNavigation';
-import HeaderUser from './HeaderUser';
+import Avatar from '../UserAvatar/UserAvatar';
 import HeaderDropDown from './HeaderDropDown';
 import AppContext from '../../context';
 import Logo from '../Logo/Logo';
@@ -31,7 +31,7 @@ class Header extends React.Component{
                         <HeaderNavigation 
                             clickFnc={this.toggleMenu}
                         />
-                        <HeaderUser />
+                        <Avatar />
                         
                     {this.state.isDropDownOpen ? <HeaderDropDown clickFnc={this.toggleMenu}/> : null }
                     </header>

@@ -54,6 +54,7 @@ class App extends React.Component{
         const contextElements = {
             ...this.state,
             logOut: this.logOut,
+            history: this.props.history,
         }
 
         return(
