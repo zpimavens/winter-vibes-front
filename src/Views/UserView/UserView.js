@@ -9,18 +9,37 @@ import styles from './UserView.module.scss';
 
 class UserView extends Component{
 
-    state={
-        username: 'Tosica97',      
-        image: 'https://source.unsplash.com/random/400x400',        //image url
-        skis: 'Volkl AURORA',                               //skis name - string
-        level: '70',                 //min 0 max 100%
+    state = {
+        skis: '',                               //skis name - string
+        level: '',                 //min 0 max 100%
         visited: [                   //list of visited arenas       
 
         ],
     }
+    updateState = (data) => {
+        this.setState({
+            skis: data.skis,
+            level: data.level,
+            visited: data.visited,
+            trophies: data.trophies,
+        })
+    }
 
-    componentDidMount(){
-        //update user info, fetch stuff
+    componentDidMount() {
+
+        fetch('/api/getCurrentUser')
+            .then(function (response) {
+                return response.json();
+            })
+            .then(([data]) => {
+                this.setState({
+                    skis: data.skis,
+                    level: data.level,
+                    visited: data.visited,
+                    trophies: data.trophies,
+                })
+            })
+            .catch(error => console.log(error));
     };
     //function for profile editing
 

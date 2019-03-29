@@ -11,15 +11,14 @@ import SkiAreaView from '../SkiAreaView/SkiAreaView';
 import LoginView from '../LoginView/LoginView';
 import RegisterView from '../RegisterView/RegisterView';
 
-import userImage from '../../assets/tosiaFoto.JPG';
 
 
 class App extends React.Component{
 
     state={
         user: {
-            username: 'Tosica97',
-            image: userImage,
+            username: '',
+            image: '',
         },
     };
 
@@ -48,7 +47,21 @@ class App extends React.Component{
             });
     };
 
-    
+    componentDidMount() {
+        fetch('/api/getCurrentUser')
+            .then(response => {
+                return response.json();
+            })
+            .then(([data]) => {
+                this.setState({
+                    user: {
+                        username: data.username,
+                        image: data.image,
+                    }
+                })
+            })
+    }
+
     render(){   
 
         const contextElements = {
