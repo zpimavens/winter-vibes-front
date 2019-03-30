@@ -17,7 +17,7 @@ const HeaderNavigation = ({clickFnc}) =>{
                             <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/'>MOJE GRUPY</NavLink>
                         </li>
                         <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/'>SPOŁECZNOŚĆ</NavLink>
+                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search'>SPOŁECZNOŚĆ</NavLink>
                         </li>
                         <li className={styles.navItem}>
                             <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/skiarea'>SKIARENY</NavLink>

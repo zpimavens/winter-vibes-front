@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from '../../components/Header/Header';
 
 const SkiArea = ()=>{
     return(
         <>
-        <Header />
-        <h1>ski arena</h1>
+        <h1>kiedys tu bedo ski areny</h1>
         </>
     )
 };

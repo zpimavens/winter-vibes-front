@@ -9,6 +9,7 @@ import MainView from '../MainView/MainView';
 import SkiAreaView from '../SkiAreaView/SkiAreaView';
 import LoginView from '../LoginView/LoginView';
 import RegisterView from '../RegisterView/RegisterView';
+import SearchView from '../../Views/SearchView/SearchView';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import PublicRoute from '../../components/PublicRoute/PublicRoute';
 
@@ -51,7 +52,10 @@ class App extends React.Component{
     fetchUserData= ()=>{
         fetch('/api/getCurrentUser')
             .then(response => {
+                if(response.status===200)
                     return response.json();
+                    else
+                    throw new Error(response.status)
             })
             .then(([data]) => {
                 this.setState({
@@ -62,6 +66,7 @@ class App extends React.Component{
                     }
                 })
             })
+            .catch(error=>(null));
     }
     componentDidMount() {
         if(fetch('/checkToken').then(res=>res.status===200)){
@@ -83,7 +88,7 @@ class App extends React.Component{
             <>
             
             <AppContext.Provider value={contextElements}>   
-                {/* <Header /> */}
+                <Header />
                 <Switch>
                   <PrivateRoute exact path='/' component={MainView}/>
                   <PublicRoute path='/login' component={LoginView} fetchUserData={this.fetchUserData} history={this.props.history}
@@ -91,6 +96,7 @@ class App extends React.Component{
                   <PublicRoute path='/register' component={RegisterView} />
                   <PrivateRoute path='/user' component={UserView} />
                   <PrivateRoute path='/skiarea' component={SkiAreaView} />
+                  <PrivateRoute path='/search' component={SearchView} />
                 </Switch>
             
             </AppContext.Provider>    

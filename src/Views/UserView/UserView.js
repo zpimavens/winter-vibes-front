@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import Header from '../../components/Header/Header';
 import UserAvatar from '../../components/UserAvatar/UserAvatar';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import Button from '../../components/Button/Button';
@@ -49,7 +48,6 @@ class UserView extends Component{
     render(){
         return(
             <>
-            <Header/>
             <div className={styles.wrapper}>
                 <div>
                     <UserAvatar 

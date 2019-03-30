@@ -30,7 +30,7 @@ const HeaderDropDown = ({clickFnc}) =>{
                         onClick={clickFnc}
                         className={styles.navItemLink} 
                         activeClassName={styles.navItemLinkActive} 
-                        to='/'>SPOŁECZNOŚĆ</NavLink>
+                        to='/search'>SPOŁECZNOŚĆ</NavLink>
                     </li>
                     <li className={styles.navItem}>
                         <NavLink exact 
