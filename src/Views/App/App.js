@@ -19,6 +19,7 @@ class App extends React.Component{
         user: {
             username: '',
             image: '',
+            
         },
     };
 
@@ -57,12 +58,15 @@ class App extends React.Component{
                     user: {
                         username: data.username,
                         image: data.image,
+                        
                     }
                 })
             })
     }
     componentDidMount() {
-        
+        if(fetch('/checkToken').then(res=>res.status===200)){
+            this.fetchUserData();
+        }
     }
 
     render(){   
