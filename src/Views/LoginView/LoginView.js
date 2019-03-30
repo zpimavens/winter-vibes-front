@@ -14,8 +14,9 @@ class LoginView extends React.Component{
         formErrors: {
             login: '',
         }
+        
     }
-
+    
     handleLogin = (e) => {
         e.preventDefault();
         fetch('/api/authenticate', {
@@ -28,6 +29,7 @@ class LoginView extends React.Component{
             .then(res => {
                 if (res.status === 200) {
                     this.props.history.push('/');
+                    this.props.fetchUserData();
                     
                 } else {
                     const error = new Error(res.status);
@@ -37,7 +39,6 @@ class LoginView extends React.Component{
             })
             .catch(err => {
                 console.error(err);
-                
             });
     };
 
@@ -46,6 +47,8 @@ class LoginView extends React.Component{
         this.setState({
             [name]: value
         });
+    }
+    componentDidMount(){
     }
 
     render(){

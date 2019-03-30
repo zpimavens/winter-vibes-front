@@ -1,16 +1,16 @@
 import React from 'react';
 import './index.css';
-import { Route, Switch, withRouter} from 'react-router-dom';
+import { Switch, withRouter} from 'react-router-dom';
 import AppContext from '../../context';
 
-import withAuth from '../../withAuth';
 import Header from '../../components/Header/Header';
 import UserView from '../UserView/UserView';
 import MainView from '../MainView/MainView';
 import SkiAreaView from '../SkiAreaView/SkiAreaView';
 import LoginView from '../LoginView/LoginView';
 import RegisterView from '../RegisterView/RegisterView';
-
+import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
+import PublicRoute from '../../components/PublicRoute/PublicRoute';
 
 
 class App extends React.Component{
@@ -35,7 +35,6 @@ class App extends React.Component{
         })
             .then(res => {
                 if (res.status === 200) {
-                    
                     this.props.history.push('/login');
                 } else {
                     const error = new Error(res.status);
@@ -47,10 +46,11 @@ class App extends React.Component{
             });
     };
 
-    componentDidMount() {
+
+    fetchUserData= ()=>{
         fetch('/api/getCurrentUser')
             .then(response => {
-                return response.json();
+                    return response.json();
             })
             .then(([data]) => {
                 this.setState({
@@ -61,6 +61,9 @@ class App extends React.Component{
                 })
             })
     }
+    componentDidMount() {
+        
+    }
 
     render(){   
 
@@ -68,6 +71,7 @@ class App extends React.Component{
             ...this.state,
             logOut: this.logOut,
             history: this.props.history,
+            
         }
 
         return(
@@ -75,13 +79,14 @@ class App extends React.Component{
             <>
             
             <AppContext.Provider value={contextElements}>   
-                 
+                {/* <Header /> */}
                 <Switch>
-                  <Route exact path='/' component={withAuth(MainView)}/>
-                  <Route path='/login' component={LoginView} />
-                  <Route path='/register' component={RegisterView} />
-                  <Route path='/user' component={withAuth(UserView)} />
-                  <Route path='/skiarea' component={withAuth(SkiAreaView)} />
+                  <PrivateRoute exact path='/' component={MainView}/>
+                  <PublicRoute path='/login' component={LoginView} fetchUserData={this.fetchUserData} history={this.props.history}
+                  />
+                  <PublicRoute path='/register' component={RegisterView} />
+                  <PrivateRoute path='/user' component={UserView} />
+                  <PrivateRoute path='/skiarea' component={SkiAreaView} />
                 </Switch>
             
             </AppContext.Provider>    
