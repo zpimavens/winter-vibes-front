@@ -11,7 +11,7 @@ const UsersListItem = ({username, image, skill, skis})=>(
             />
         <ul className={styles.userInfo}>
             <li>{username}</li>
-            <li>Poziom zaawansowania: {skill/10}</li>
+            <li>Poziom zaawansowania: {skill}</li>
             <li>{skis}</li>
             <li>Krakow</li>
         </ul>
