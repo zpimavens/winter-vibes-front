@@ -69,7 +69,8 @@ class RegisterView extends Component{
             })
                 .then(res => {
                     if (res.status === 200) {
-                        this.props.history.push('/user');
+                        this.props.history.push('/registersuccess');
+                        // this.props.history.push('/registersuccess');
                         
                     } else if (res.status === 501) {
                         //console.log('juz jest taki email');
