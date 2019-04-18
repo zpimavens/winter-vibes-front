@@ -9,11 +9,12 @@ import MainView from '../MainView/MainView';
 import SkiAreaView from '../SkiAreaView/SkiAreaView';
 import LoginView from '../LoginView/LoginView';
 import RegisterView from '../RegisterView/RegisterView';
-import SearchView from '../../Views/SearchView/SearchView';
+import SearchUsersView from '../../Views/SearchUsersView/SearchUsersView';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import PublicRoute from '../../components/PublicRoute/PublicRoute';
 import ActivationView from '../ActivationView/ActivationView';
 import RegisterDoneView from '../../Views/RegisterDoneView/RegisterDoneView';
+import EditProfileView from '../EditProfileView/EditProfileView';
 
 
 class App extends React.Component{
@@ -95,13 +96,16 @@ class App extends React.Component{
                   <PrivateRoute exact path='/' component={MainView}/>
                   <PublicRoute path='/login' component={LoginView} fetchUserData={this.fetchUserData} history={this.props.history}
                   />
-                        <PublicRoute path='/register' component={RegisterView} history={this.props.history}/>
+                  <PublicRoute path='/register' component={RegisterView} history={this.props.history}/>
                   <PublicRoute path='/activate' component={ActivationView} />
                   <PublicRoute path='/registersuccess' component={RegisterDoneView} />
 
-                  <PrivateRoute path='/user' component={UserView} />
+                  <PrivateRoute path='/user' component={UserView} history={this.props.history}/>
                   <PrivateRoute path='/skiarea' component={SkiAreaView} />
-                  <PrivateRoute path='/search' component={SearchView} />
+                  <PrivateRoute path='/search' component={SearchUsersView} />
+                  <PrivateRoute path='/editprofile' component={EditProfileView} />
+
+                  
                 </Switch>
             
             </AppContext.Provider>    

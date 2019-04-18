@@ -18,7 +18,8 @@
         display: block;
         background-color: rgba(41, 129, 156, 0.2);
         position: relative;
-        top: 10px;
+        top: 30px;
+        box-shadow: 0 2px 3px rgb(221, 221, 221);
     }
 }
 .title{
@@ -29,6 +30,7 @@
 
     &::after{
         content: '';
+        
         width: 50%;
         height: 2px;
         display: block;
@@ -39,8 +41,10 @@
     }
 }
 .form{
-    // display: flex;
-    // align-content: space-around;
+    display: flex;
+    align-content: space-around;
     // width: 100%;
-    // justify-content: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }

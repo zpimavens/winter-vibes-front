@@ -1,8 +1,9 @@
 .wrapper{
     list-style: none;
-    border-bottom: 1px solid navy;
+    border-bottom: 1px solid rgba(36, 36, 155, 0.233);
     display: flex;
-    
+    cursor: pointer;
+    padding: 30px;
 }
 .image{
     border-radius: 100px;
@@ -10,4 +11,5 @@
 }
 .userInfo{
     list-style: none;
+    margin: auto;
 }

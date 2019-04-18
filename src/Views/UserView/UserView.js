@@ -58,7 +58,9 @@ class UserView extends Component{
                     <ProgressBar 
                         progress={this.state.level}
                     />
-                    <Button >EDYTUJ PROFIL</Button>
+                    <Button 
+                    clickFn={()=>this.props.history.push('/editprofile')}
+                    >EDYTUJ PROFIL</Button>
 
                 </div>
             </div>

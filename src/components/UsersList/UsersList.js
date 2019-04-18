@@ -4,7 +4,6 @@ import styles from './UsersList.module.scss';
 
 const UsersList = ({users})=>(
     <div className={styles.wrapper}>
-    <h1>Znaleziono takich userow, pacz:</h1>
     {users.length ? 
         <ul className={styles.userList}>
             {users.map((user)=>(
@@ -16,7 +15,7 @@ const UsersList = ({users})=>(
             ))}
         </ul>
         :
-        <h1>no users, sorry</h1>
+        <h2>Nie znaleziono uzytkowników</h2>
     }
     </div>
 )

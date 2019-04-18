@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import UsersList from '../../components/UsersList/UsersList';
-import styles from './SearchView.module.scss';
+import styles from './SearchUsersView.module.scss';
 
-class SearchView extends Component {
+class SearchUsersView extends Component {
     
     state={
         usersFound: [
@@ -18,6 +18,7 @@ class SearchView extends Component {
         this.setState(prevState=>({
             [name]: value,
             usersFound: prevState.usersFound,
+            
         }));
     }
 
@@ -61,6 +62,7 @@ class SearchView extends Component {
                         onChange={this.handleInputChange}
                     />
                     <Button 
+                        
                         clickFn={this.handleSearch}
                     >Szukaj</Button>
                 </form>
@@ -75,4 +77,4 @@ class SearchView extends Component {
 }
 
 
-export default SearchView;
+export default SearchUsersView;
