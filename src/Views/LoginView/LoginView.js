@@ -19,6 +19,7 @@ class LoginView extends React.Component{
     
     handleLogin = (e) => {
         e.preventDefault();
+        
         fetch('/api/authenticate', {
             method: 'POST',
             body: JSON.stringify(this.state),

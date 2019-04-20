@@ -6,10 +6,10 @@ import AppContext from '../../context';
 import Header from '../../components/Header/Header';
 import UserView from '../UserView/UserView';
 import MainView from '../MainView/MainView';
-import SkiAreaView from '../SkiAreaView/SkiAreaView';
+import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView';
 import LoginView from '../LoginView/LoginView';
 import RegisterView from '../RegisterView/RegisterView';
-import SearchUsersView from '../../Views/SearchUsersView/SearchUsersView';
+import UsersSearchView from '../../Views/UsersSearchView/UsersSearchView';
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
 import PublicRoute from '../../components/PublicRoute/PublicRoute';
 import ActivationView from '../ActivationView/ActivationView';
@@ -23,11 +23,10 @@ class App extends React.Component{
         user: {
             username: '',
             image: '',
-            
+            logged: '',
         },
     };
 
-    //update user info
     
      logOut = (e) => {
         e.preventDefault();
@@ -40,6 +39,11 @@ class App extends React.Component{
         })
             .then(res => {
                 if (res.status === 200) {
+                    this.setState({
+                        
+                           user: {logged: false,}
+                        
+                    })
                     this.props.history.push('/login');
                 } else {
                     const error = new Error(res.status);
@@ -65,7 +69,7 @@ class App extends React.Component{
                     user: {
                         username: data.username,
                         image: data.image,
-                        
+                        logged: true,
                     }
                 })
             })
@@ -91,7 +95,7 @@ class App extends React.Component{
             <>
             
             <AppContext.Provider value={contextElements}>   
-                <Header />
+                {this.state.user.logged && <Header /> }
                 <Switch>
                   <PrivateRoute exact path='/' component={MainView}/>
                   <PublicRoute path='/login' component={LoginView} fetchUserData={this.fetchUserData} history={this.props.history}
@@ -100,12 +104,11 @@ class App extends React.Component{
                   <PublicRoute path='/activate' component={ActivationView} />
                   <PublicRoute path='/registersuccess' component={RegisterDoneView} />
 
-                  <PrivateRoute path='/user' component={UserView} history={this.props.history}/>
-                  <PrivateRoute path='/skiarea' component={SkiAreaView} />
-                  <PrivateRoute path='/search' component={SearchUsersView} />
+                  <PrivateRoute path='/user' component={UserView} history={this.props.history} user={this.state.user}/>
+                  <PrivateRoute path='/search-areas' component={SkiAreaSearchView} />
+                  <PrivateRoute path='/search-users' component={UsersSearchView} />
                   <PrivateRoute path='/editprofile' component={EditProfileView} />
 
-                  
                 </Switch>
             
             </AppContext.Provider>    

@@ -11,16 +11,16 @@ const HeaderNavigation = ({clickFnc}) =>{
                 <nav className={styles.wrpper}>
                     <ul >
                         <li className={styles.navItem}>
-                            <NavLink exact  className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/user'>MOJE KONTO</NavLink>
+                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to={`/user/${context.user.username}`}>MOJE KONTO</NavLink>
                         </li>
                         <li className={styles.navItem}>
                             <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/'>MOJE GRUPY</NavLink>
                         </li>
                         <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search'>SPOŁECZNOŚĆ</NavLink>
+                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search-users'>SPOŁECZNOŚĆ</NavLink>
                         </li>
                         <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/skiarea'>SKIARENY</NavLink>
+                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search-areas'>SKIARENY</NavLink>
                         </li>
                         <li className={styles.navItem}>
                             <button

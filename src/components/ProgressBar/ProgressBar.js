@@ -6,7 +6,7 @@ const ProgressBar = ({progress})=>(
     <div className={styles.wrapper}>
     
     <div className={styles.progressBar}>
-        <div style={{width: `${progress}%`}}></div>
+        <div style={{width: `${progress*10}%`}}></div>
     </div>
     
     </div>

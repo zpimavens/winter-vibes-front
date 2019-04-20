@@ -9,7 +9,8 @@ class EditProfileView extends Component {
     state = {
         username: '',
         skis: '',
-        skill: '',
+        level: '',
+        city: '',
         formErrors: {
             username: '',
         }
@@ -25,9 +26,7 @@ class EditProfileView extends Component {
    handlePrifileUdate = (e) => {
        //update profile info in database
        e.preventDefault();
-       console.log('pretend to be updated, connect to db');
-       /*
-       fetch('/someurltoupdateprofile', {
+       fetch('/api/editUser', {
             method: 'POST',
             body: JSON.stringify(this.state),
             headers: {
@@ -36,7 +35,7 @@ class EditProfileView extends Component {
         })
             .then(res => {
                 if (res.status === 200) {
-                    Errors='done!';
+                    this.setState({ formErrors: { username: 'Pomyślnie zmieniono Twoje dane :)' } });
 
                 } else {
                     const error = new Error(res.status);
@@ -47,7 +46,27 @@ class EditProfileView extends Component {
             .catch(err => {
                 console.error(err);
             });
-        */
+        
+   }
+   componentDidMount(){
+       fetch('/api/getCurrentUser')
+       .then(res=>{
+           if (res.status === 200)
+               return res.json();
+           else
+               throw new Error(res.status)
+       })
+           .then(([data]) => {
+               this.setState({
+                   
+                       username: data.username,
+                       skis: data.skis,
+                       level: data.level,
+                       city: data.city,
+                   
+               })
+           })
+           .catch(error => (null));
    }
 
     render(){
@@ -61,6 +80,7 @@ class EditProfileView extends Component {
                     name="username"
                     id="username"
                     type='text'
+                    value={this.state.username}
                     placeholder="Nazwa użytkownika"
                     onChange={this.handleInputChange}
                 />
@@ -70,14 +90,25 @@ class EditProfileView extends Component {
                     id="skis"
                     type='text'
                     placeholder="Nazwa nart"
+                    value={this.state.skis}
                     onChange={this.handleInputChange}
                 />
-                <label htmlFor="skill">Poziom umiejętności: </label>
+                <Input
+                    // className={styles.input}
+                    name="city"
+                    id="city"
+                    type='text'
+                    placeholder="Miasto"
+                    value={this.state.city}
+                    onChange={this.handleInputChange}
+                />
+                <label htmlFor="level">Poziom umiejętności: {this.state.level}</label>
                 <Input
                     className={styles.slider}
-                    name="skill"
-                    id="skill"
+                    name="level"
+                    id="level"
                     type='range'
+                    value={this.state.level}
                     min='0'
                     max='10'
                     onChange={this.handleInputChange}

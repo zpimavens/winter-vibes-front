@@ -8,25 +8,36 @@ const boldText={
 const italicText = {
     fontStyle: 'italic',
 }
+//{username, image, level, skis, city}
+class UsersListItem extends React.Component{
+    
+    handleClick = (e) => {
+        this.props.history.push(`/user/${this.props.username/*.toLowerCase()*/}`)  
+    }
+    
+    render(){
+        return(
+            <li 
+                className={styles.wrapper}
+                onClick={this.handleClick}
+                id={this.props.username}
+            >
+                <img 
+                    src={this.props.image} 
+                    alt={this.props.username} 
+                    className={styles.image}
+                    
+                    />
+                <ul className={styles.userInfo}>
+                    <li style={boldText}>{this.props.username}</li>
+                    <li>Poziom zaawansowania: {this.props.level}</li>
+                    <li style={italicText}>{this.props.skis}</li>
+                    <li>{this.props.city}</li>
+                </ul>
+            </li>
 
-const UsersListItem = ({username, image, level, skis})=>(
-    <li 
-        className={styles.wrapper}
-        onClick={() => console.log(username)}
-    >
-        <img 
-            src={image} 
-            alt={username} 
-            className={styles.image}
-            
-            />
-        <ul className={styles.userInfo}>
-            <li style={boldText}>{username}</li>
-            <li>Poziom zaawansowania: {level/10}</li>
-            <li style={italicText}>{skis}</li>
-            <li>Krakow</li>
-        </ul>
-    </li>
-)
+        )
+    }
+}
 
 export default UsersListItem;

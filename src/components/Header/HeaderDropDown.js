@@ -15,7 +15,7 @@ const HeaderDropDown = ({clickFnc}) =>{
                         onClick={clickFnc}
                         className={styles.navItemLink} 
                         activeClassName={styles.navItemLinkActive} 
-                        to='/user'
+                        to={`/user/${context.user.username}`}
                         >MOJE KONTO</NavLink>
                     </li>
                     <li className={styles.navItem}>
@@ -30,14 +30,14 @@ const HeaderDropDown = ({clickFnc}) =>{
                         onClick={clickFnc}
                         className={styles.navItemLink} 
                         activeClassName={styles.navItemLinkActive} 
-                        to='/search'>SPOŁECZNOŚĆ</NavLink>
+                        to='/search-users'>SPOŁECZNOŚĆ</NavLink>
                     </li>
                     <li className={styles.navItem}>
                         <NavLink exact 
                         onClick={clickFnc}
                         className={styles.navItemLink} 
                         activeClassName={styles.navItemLinkActive} 
-                        to='/skiarea'>SKIARENY</NavLink>
+                        to='/search-areas'>SKIARENY</NavLink>
                     </li>
                     <li className={styles.navItem}>
                         <button

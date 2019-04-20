@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 import UsersList from '../../components/UsersList/UsersList';
-import styles from './SearchUsersView.module.scss';
+import styles from './UsersSearchView.module.scss';
 
-class SearchUsersView extends Component {
+class UsersSearchView extends Component {
     
     state={
         usersFound: [
@@ -50,31 +50,37 @@ class SearchUsersView extends Component {
         this.getSearchedUsers();
     }
 
+    
+
     render(){
         return(
-            <div className={styles.wrapper}>
-                <div className={styles.formWrapper}>
-                <h2 className={styles.title}>WYSZUKAJ UŻYTKOWNIKÓW</h2>
-                <form className={styles.form}>
-                    <Input
-                        name='username'
-                        placeholder='Szukaj użytkowników...'
-                        onChange={this.handleInputChange}
-                    />
-                    <Button 
-                        
-                        clickFn={this.handleSearch}
-                    >Szukaj</Button>
-                </form>
-            </div>
-                <UsersList 
-                    users={this.state.usersFound}
-                />
-            </div>
+            
+                    <div className={styles.wrapper}>
+                        <div className={styles.formWrapper}>
+                        <h2 className={styles.title}>WYSZUKAJ UŻYTKOWNIKÓW</h2>
+                        <form className={styles.form}>
+                            <Input
+                                name='username'
+                                placeholder='Szukaj użytkowników...'
+                                onChange={this.handleInputChange}
+                                
+                            />
+                            <Button 
+                                
+                                clickFn={this.handleSearch}
+                            >Szukaj</Button>
+                        </form>
+                    </div>
+                        <UsersList 
+                            users={this.state.usersFound}
+                           
+                        />
+                    </div>
+             
 
         )
     }
 }
 
 
-export default SearchUsersView;
+export default UsersSearchView;
