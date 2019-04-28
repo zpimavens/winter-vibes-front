@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './UsersListItem.module.scss';
 import PropTypes from 'prop-types';
+import UserAvatar from '../UserAvatar/UserAvatar';
 
 class UsersListItem extends React.Component{
     
@@ -16,12 +17,12 @@ class UsersListItem extends React.Component{
                 onClick={this.handleClick}
                 id={username}
             >
-                <img 
-                    src={image} 
-                    alt={username} 
-                    className={styles.image}
-                    
-                    />
+                <UserAvatar 
+                    avatarType='listType'
+                    image={image}
+                    username={username}
+                    alt={username}
+                />
                 <ul className={styles.userInfo}>
                     <li 
                         className={styles.boldText}

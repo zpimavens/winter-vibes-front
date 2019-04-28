@@ -1,4 +1,4 @@
-.smallType{
+.headerType{
     display: flex;
     align-items: center;
 
@@ -31,10 +31,21 @@
         font-size: 1.5rem;
     }
 }
+.listType{
 
+    &Image{
+        border-radius: 100px;
+        height: 100px;
+        cursor: pointer;
+        border: 3px solid rgb(113, 201, 238);
+    }
+    &Name{
+        display: none;
+    }
+}
 
-@media (max-width: 1155px){
-    .smallType{
+@media (max-width: 1250px){
+    .headerType{
         display: none;
     }
 }

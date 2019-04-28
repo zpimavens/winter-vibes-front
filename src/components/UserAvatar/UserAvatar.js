@@ -4,33 +4,50 @@ import AppContext from '../../context';
 import PropTypes from 'prop-types';
 
 const Avatar = ({avatarType, image, username}) => {    
-    const wrapperClass = avatarType === 'profileType' ? styles.profileType : styles.smallType;
-    const imageClass = avatarType === 'profileType' ? styles.profileTypeImage : styles.smallTypeImage;
-    const usernameClass = avatarType === 'profileType' ? styles.profileTypeName : styles.smallTypeName;
+    let wrapperClassName = undefined;
+    let imageClassName  = undefined;
+    let usernameClassName = undefined;
 
+    switch (avatarType){
+        case 'headerType':
+        wrapperClassName = styles.headerType;
+        imageClassName = styles.headerTypeImage;
+        usernameClassName = styles.headerTypeName;
+        break;
+        case 'profileType':
+            wrapperClassName = styles.profileType;
+            imageClassName = styles.profileTypeImage;
+            usernameClassName = styles.profileTypeName;
+        break;
+        case 'listType':
+            wrapperClassName = styles.listType;
+            imageClassName = styles.listTypeImage;
+            usernameClassName = styles.listTypeName;
+        break;
+        default:
+        break;
+    }
     return (
         <AppContext.Consumer>
             {(context) => (
-                <div className={wrapperClass}>
+                <div className={wrapperClassName}>
                     <img
                         src={image}
-                        className={imageClass}
+                        className={imageClassName}
                         alt={username}
                         onClick={() => context.history.push({ pathname: `/user/${username}` })}
                     />
-                    <h4 className={usernameClass}>{username}</h4>
+                    <h4 className={usernameClassName}>{username}</h4>
                 </div>
             )}
         </AppContext.Consumer>
     )
 };
 Avatar.propTypes={
-    type: PropTypes.oneOf(['profileType', 'smallType']),
+    avatarType: PropTypes.oneOf(['profileType', 'headerType', 'listType']).isRequired,
     image: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
 }
-Avatar.defaultProps = {
-    type: 'smallType',
-}
+
 
 export default Avatar;

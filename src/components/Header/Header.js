@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './Header.module.scss';
 import HeaderNavigation from './HeaderNavigation';
 import UserAvatar from '../UserAvatar/UserAvatar';
-import HeaderDropDown from './HeaderDropDown';
 import AppContext from '../../context';
 import Logo from '../Logo/Logo';
 
@@ -29,15 +28,19 @@ class Header extends React.Component{
                                 <Logo
                                     logoType='smallHorizontal'
                                 />
-                                <HeaderNavigation
-                                    clickFnc={this.toggleMenu}
-                                />
+                                <HeaderNavigation/>
                                 <UserAvatar 
+                                    avatarType='headerType'
                                     image={context.user.image}
                                     username={context.user.username}
                                 />
-            
-                                {this.state.isDropDownOpen && <HeaderDropDown clickFnc={this.toggleMenu} />}
+                                <button 
+                                    className={styles.button}
+                                    onClick={this.toggleMenu}
+                                >
+                                <div className={styles.buttonIcon}></div>
+                                </button>
+                                {this.state.isDropDownOpen && <HeaderNavigation onClick={this.toggleMenu} type='dropdown' />}
                             </header>
 
                         )}

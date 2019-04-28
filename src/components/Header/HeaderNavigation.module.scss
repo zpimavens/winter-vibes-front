@@ -12,13 +12,11 @@
         @extend .navItem;
         padding: 0;
         font-family: 'Roboto';
-        // font-size: 15px;
     }
 
     &Link{
-
-        text-decoration: none;
         color: white;
+        text-decoration: none;
         background-color: transparent;
         border: none;
         outline: none;
@@ -30,49 +28,46 @@
     }
 }
 
-.button{
-    display: none;
-    width: 30px;
-    height: 30px;
-    background-color: transparent;
-    border: none;
-    outline: none;
-    padding: 0;
-    margin-bottom: 20px;
-    
-    
-    &Icon{
-        width: 30px;
-        height: 2px;
-        background-color: white;
-        position: absolute;
+.wrapperDropdown{
+    position: absolute;
+    right: 0;
+    top: 80px;
+}
+.navItemDropdown{
+    display: flex;
+    width: 100vw;
+    height: 6vh;
+    font-weight: 300;
+    border: .1px solid rgba(255, 255, 255, 0.1);
+    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
+    justify-content: center;
+
+    font-size: 16px;
+    &>button{
+        @extend .navItemDropdown;
+        padding: 0;
+        font-family: 'Roboto';
     }
-    &Icon:after{
-        content: '';
-        @extend .buttonIcon;
-        position: relative;
-        display: block;
-        top: -11px;
-        background-color: white;
+    
+    &Link{
+        color: white;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        height: 100%;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        cursor: pointer;
         
-    }
-    &Icon:before{
-        content: '';
-        @extend .buttonIcon;
-        position: relative;
-        display: block;
-        top: 9px;
-        background-color: white;
-        
+        &Active{
+            font-weight: 700;
+        }
     }
 }
-@media (max-width: 1155px){
+
+@media (max-width: 1250px){
     .navItem{
         display: none;
-    }
-    .button{
-        
-        display: block;
-
     }
 }

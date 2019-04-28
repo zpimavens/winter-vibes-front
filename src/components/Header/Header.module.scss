@@ -6,7 +6,45 @@
     padding: 15px 5vw;
     background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
     
-    
 }
+.button{
+    display: none;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    padding: 0 35px 0 0;    
+    
+    &Icon{
+        width: 30px;
+        height: 2px;
+        background-color: white;
+        position: absolute;
+    }
+    &Icon:after{
+        content: '';
+        @extend .buttonIcon;
+        position: relative;
+        display: block;
+        top: -11px;
+        background-color: white;
+        
+    }
+    &Icon:before{
+        content: '';
+        @extend .buttonIcon;
+        position: relative;
+        display: block;
+        top: 9px;
+        background-color: white;
+        
+    }
+}
+@media (max-width: 1250px){
+    .button{
+        display: block;
 
+    }
+}
 

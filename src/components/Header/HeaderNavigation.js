@@ -2,43 +2,85 @@ import React from 'react';
 import styles from './HeaderNavigation.module.scss';
 import { NavLink } from 'react-router-dom';
 import AppContext from '../../context';
+import PropTypes from 'prop-types';
 
-const HeaderNavigation = ({clickFnc}) =>{
+const HeaderNavigation = ({type,...props}) =>{
+
+    const navLinkClassName = type==='navbar' ? styles.navItem : styles.navItemDropdown;
+    const wrapperClassName = type==='navbar' ? styles.wrapper : styles.wrapperDropdown;
+    const navItemLinkClassName = type==='navbar' ? styles.navItemLink : styles.navItemDropdownLink;
+    const navItemLinkActiveClassName = type==='navbar' ? styles.navItemLinkActive : styles.navItemDropdownLinkActive;
 
     return(
         <AppContext.Consumer>
             {(context)=>(
-                <nav className={styles.wrpper}>
+                <nav className={wrapperClassName}>
                     <ul >
-                        <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to={`/user/${context.user.username}`}>MOJE KONTO</NavLink>
+                        <li className={navLinkClassName}>
+                            <NavLink 
+                                exact 
+                                className={navItemLinkClassName} 
+                                activeClassName={navItemLinkActiveClassName} 
+                                to={`/user/${context.user.username}`}
+                                {...props}
+                            >
+                            MOJE KONTO
+                            </NavLink>
                         </li>
-                        <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/'>MOJE GRUPY</NavLink>
+                        <li className={navLinkClassName}>
+                            <NavLink 
+                                exact 
+                                className={navItemLinkClassName} 
+                                activeClassName={navItemLinkActiveClassName} 
+                                to='/'
+                                {...props}
+                            >
+                            MOJE GRUPY
+                            </NavLink>
                         </li>
-                        <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search-users'>SPOŁECZNOŚĆ</NavLink>
+                        <li className={navLinkClassName}>
+                            <NavLink 
+                                exact 
+                                className={navItemLinkClassName} 
+                                activeClassName={navItemLinkActiveClassName} 
+                                to='/search-users'
+                                {...props}
+                            >
+                            SPOŁECZNOŚĆ
+                            </NavLink>
                         </li>
-                        <li className={styles.navItem}>
-                            <NavLink exact className={styles.navItemLink} activeClassName={styles.navItemLinkActive} to='/search-areas'>SKIARENY</NavLink>
+                        <li className={navLinkClassName}>
+                            <NavLink 
+                                exact 
+                                className={navItemLinkClassName} 
+                                activeClassName={navItemLinkActiveClassName} 
+                                to='/search-areas'
+                                {...props}
+                            >
+                            SKIARENY
+                            </NavLink>
                         </li>
-                        <li className={styles.navItem}>
+                        <li 
+                            className={navLinkClassName}
+                        >
                             <button
                                 onClick={context.handleLogOut} 
-                                className={styles.navItemLink}
-                            >WYLOGUJ</button>
+                                className={navItemLinkClassName}
+                            >
+                            WYLOGUJ
+                            </button>
                         </li>
-                    </ul>
-                    <button 
-                        className={styles.button}
-                        onClick={clickFnc}
-                    >
-                    <div className={styles.buttonIcon}></div>
-                    </button>  
+                    </ul>    
                 </nav>
             )}
         </AppContext.Consumer>
     )
 };
 
+HeaderNavigation.propTypes={
+    type: PropTypes.oneOf(['navbar','dropdown']),
+}
+HeaderNavigation.defaultProps={
+    type: 'navbar',
+}
 export default HeaderNavigation;
