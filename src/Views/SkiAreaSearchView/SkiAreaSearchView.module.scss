@@ -4,12 +4,21 @@
     align-items: center;
     justify-content: center;
 }
+.input{
+    background-color: red;
+}
 .formWrapper{
     margin: 30px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    &>button{
+        display: block;
+        margin-top: 20px;
+    }
+    
     &::after{
         content: '';
         width: 100%;
@@ -42,5 +51,19 @@
 .form{
     display: flex;
     justify-content: center;
+    margin: 0 30px;
+    flex-wrap: wrap;
     align-items: center;
+    &>Input{
+        margin: 10px 30px 10px 0;
+    }
+    &>label{
+        margin: 10px;
+        display: flex;
+        align-items: center;
+    }
+    &>Input[type=text]{
+        width: 300px;
+    }
+    
 }
