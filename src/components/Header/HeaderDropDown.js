@@ -41,7 +41,7 @@ const HeaderDropDown = ({clickFnc}) =>{
                     </li>
                     <li className={styles.navItem}>
                         <button
-                            onClick={context.logOut}
+                            onClick={context.handleLogOut}
                             className={styles.navItemLink}
                         >WYLOGUJ</button>
                     </li>

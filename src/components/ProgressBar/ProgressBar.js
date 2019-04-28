@@ -1,14 +1,15 @@
 import React from 'react';
 import styles from './ProgressBar.module.scss';
+import PropTypes from 'prop-types';
 
 const ProgressBar = ({progress})=>(
-
     <div className={styles.wrapper}>
-    
-    <div className={styles.progressBar}>
-        <div style={{width: `${progress*10}%`}}></div>
-    </div>
-    
+        <div className={styles.progressBar}>
+            <div style={{width: `${progress*10}%`}}></div>
+        </div>
     </div>
 )
+ProgressBar.propTypes={
+    progress: PropTypes.number,
+}
 export default ProgressBar;

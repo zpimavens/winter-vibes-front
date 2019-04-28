@@ -1,35 +1,28 @@
 import React from 'react';
-import Input from '../Input/Input';
 import styles from './Form.module.scss';
-import Button from '../Button/Button';
 import AppContext from '../../context';
-
+import Input from '../Input/Input';
+import Button from '../Button/Button';
+import PropTypes from 'prop-types';
 
 const Form = ({formSubmitFnc, handleInputChange, formType})=>{
     return(
         <AppContext.Consumer>
             {(context)=>(
                 <form className={styles.formWrapper}>
-                    
-                    {formType==='register' ? 
-                        (
-                            <Input
-                                name='username'
-                                type='text'
-                                
-                                placeholder='NAZWA UŻYTKOWNIKA'
-                                onChange={handleInputChange}
-                                value={context.username}
-                            />
-                        ):(
-                            null
-                        )
+                    {formType==='register' && 
+                        <Input
+                            name='username'
+                            type='text'
+                            placeholder='NAZWA UŻYTKOWNIKA'
+                            onChange={handleInputChange}
+                            value={context.username}
+                        />
                     }
                     <Input
                         name='email'
                         placeholder='E-MAIL'
                         type='email'
-                        
                         onChange={handleInputChange}
                         value={context.email}
                     />
@@ -37,15 +30,14 @@ const Form = ({formSubmitFnc, handleInputChange, formType})=>{
                         name='password'
                         placeholder='HASŁO'
                         type='password'
-                        
                         onChange={handleInputChange}
                         value={context.password}
                     />
                     <Button
-                        secondary='true'
+                        secondary={true}
                         clickFn={formSubmitFnc}
                     >
-                    {formType === 'login' ? 'ZALOGUJ' : 'Zarejestruj się'}
+                    {formType === 'login' ? 'ZALOGUJ' : 'ZAREJESTRUJ SIĘ'}
                     </Button>
                     
                 </form> 
@@ -54,4 +46,10 @@ const Form = ({formSubmitFnc, handleInputChange, formType})=>{
         </AppContext.Consumer>
     )
 }
+Form.propTypes = {
+    formType: PropTypes.string,
+    formSubmitFnc: PropTypes.func.isRequired,
+    handleInputChange: PropTypes.func.isRequired,
+}
+
 export default Form;

@@ -10,7 +10,6 @@ class ActivationView extends React.Component {
    }
 
    componentDidMount(){
-       
     fetch(this.state.path)
     .then(response => {
         if(response===500){
@@ -32,24 +31,27 @@ class ActivationView extends React.Component {
    render(){
        return(
            <div className={styles.wrapper}>
-       {this.state.loading ? 
-            (<h1>Trwa aktywacja....</h1>
-            ):(
-                this.state.resolved ? (
-                    <>
-                    <h1>Dzięki za rejestrację!</h1>
-                    <h2>Twoje konto jest już aktywne.</h2>
-                    <Link className={styles.link} to='/login'>Kliknij tutaj by się zalogować!</Link>
-                    </>
+            {this.state.loading ? 
+                (<h1>Trwa aktywacja....</h1>
                 ):(
-                    <h1>Coś poszło nie tak. Spróbuj ponownie za chwilę.</h1>
+                    this.state.resolved ? (
+                        <>
+                        <h1>Dzięki za rejestrację!</h1>
+                        <h2>Twoje konto jest już aktywne.</h2>
+                        <Link 
+                            className={styles.link} 
+                            to='/login'
+                        >
+                            Kliknij tutaj by się zalogować!
+                        </Link>
+                        </>
+                    ):(
+                        <h1>Coś poszło nie tak. Spróbuj ponownie za chwilę.</h1>
+                    )
                 )
-            )}
-
-        </div>
+            }
+            </div>
        )
    }
 }
-
-//wyslj zapytanie do api/activate, zwroc jakis kod
 export default ActivationView;

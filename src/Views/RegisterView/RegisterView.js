@@ -57,7 +57,6 @@ class RegisterView extends Component{
 
     handleRegister = (e) => {
         e.preventDefault();
-
         if(this.state.formValid){
             
             fetch('/api/register', {
@@ -67,36 +66,30 @@ class RegisterView extends Component{
                     'Content-Type': 'application/json'
                 }
             })
-                .then(res => {
-                    if (res.status === 200) {
-                        this.props.history.push('/registersuccess');
-                        // this.props.history.push('/registersuccess');
-                        
-                    } else if (res.status === 501) {
-                        //console.log('juz jest taki email');
-                        this.setState({ formErrors: {email: 'Istnieje już taki email'}});
-                    } 
-                    else if (res.status === 502) {
-                        //console.log('juz jest taki uzytkownik');
-                        this.setState({ formErrors: {username: 'Istnieje już taka nazwa użytkownika'}});
-                    } 
-                    else {
-                        const error = new Error(res.status);
-                        throw error;
-                    }
-                })
-                .catch(err => {
-                    console.error(err);
+            .then(res => {
+                if (res.status === 200) {
+                    this.props.history.push('/registersuccess');
                     
-                });
-
+                } else if (res.status === 501) {
+                    this.setState({ formErrors: {email: 'Istnieje już taki email'}});
+                } 
+                else if (res.status === 502) {
+                    this.setState({ formErrors: {username: 'Istnieje już taka nazwa użytkownika'}});
+                } 
+                else {
+                    const error = new Error(res.status);
+                    throw error;
+                }
+            })
+            .catch(err => {
+                console.error(err);
+                
+            });
         }
-
     };
 
     
     render(){
-
     const data = {
         ...this.state,
     }
@@ -106,15 +99,20 @@ class RegisterView extends Component{
                 <Logo 
                     logoType='bigVertical'
                 />
-                
-                <FormErrors formErrors={this.state.formErrors} />
-            
+                <FormErrors 
+                    formErrors={this.state.formErrors} 
+                />
                 <Form 
                     formType='register'
                     handleInputChange={this.handleInputChange}
                     formSubmitFnc={this.handleRegister}
                 />
-                <Link className={styles.link} to='/login'>ZALOGUJ SIĘ</Link>
+                <Link 
+                    className={styles.link} 
+                    to='/login'
+                >
+                ZALOGUJ SIĘ
+                </Link>
             </div>
         </AppContext.Provider>
     )}

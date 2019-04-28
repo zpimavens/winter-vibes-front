@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 
 class PublicRoute extends React.Component {
     state = {
@@ -32,5 +32,8 @@ class PublicRoute extends React.Component {
             )
         }
     }
+}
+PublicRoute.propTypes={
+    component: PropTypes.func.isRequired,
 }
 export default PublicRoute;

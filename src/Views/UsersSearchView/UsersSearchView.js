@@ -5,11 +5,8 @@ import UsersList from '../../components/UsersList/UsersList';
 import styles from './UsersSearchView.module.scss';
 
 class UsersSearchView extends Component {
-    
     state={
-        usersFound: [
-            
-        ],
+        usersFound: [],
         username: '',
     }
 
@@ -17,8 +14,7 @@ class UsersSearchView extends Component {
         const { value, name } = e.target;
         this.setState(prevState=>({
             [name]: value,
-            usersFound: prevState.usersFound,
-            
+            usersFound: prevState.usersFound,   
         }));
     }
 
@@ -29,20 +25,21 @@ class UsersSearchView extends Component {
                 "Content-Type": "application/json",  
             },
             body: JSON.stringify(this.state)
-        }).then(response => {
+        })
+        .then(response => {
             if (response.status === 200)
                 return response.json();
             else
                 throw new Error(response.status)
         })
-            .then((data) => {
-                
-                this.setState(prevState=>({
-                    usersFound: data,
-                    userSearch: prevState.userSearch,
-                }))
-            })
-            .catch(error => (console.error(error)));
+        .then((data) => {
+            
+            this.setState(prevState=>({
+                usersFound: data,
+                userSearch: prevState.userSearch,
+            }))
+        })
+        .catch(error => (console.error(error)));
         }
 
     handleSearch=(e)=>{
@@ -50,37 +47,31 @@ class UsersSearchView extends Component {
         this.getSearchedUsers();
     }
 
-    
-
     render(){
         return(
-            
-                    <div className={styles.wrapper}>
-                        <div className={styles.formWrapper}>
-                        <h2 className={styles.title}>WYSZUKAJ UŻYTKOWNIKÓW</h2>
-                        <form className={styles.form}>
-                            <Input
-                                name='username'
-                                placeholder='Szukaj użytkowników...'
-                                onChange={this.handleInputChange}
-                                
-                            />
-                            <Button 
-                                
-                                clickFn={this.handleSearch}
-                            >Szukaj</Button>
-                        </form>
-                    </div>
-                        <UsersList 
-                            users={this.state.usersFound}
-                           
-                        />
-                    </div>
-             
-
+            <div className={styles.wrapper}>
+                <div className={styles.formWrapper}>
+                <h2 
+                    className={styles.title}
+                >
+                WYSZUKAJ UŻYTKOWNIKÓW
+                </h2>
+                <form className={styles.form}>
+                    <Input
+                        name='username'
+                        placeholder='Szukaj użytkowników...'
+                        onChange={this.handleInputChange}
+                    />
+                    <Button 
+                        clickFn={this.handleSearch}
+                    >Szukaj</Button>
+                </form>
+            </div>
+                <UsersList 
+                    users={this.state.usersFound}
+                />
+            </div>
         )
     }
 }
-
-
 export default UsersSearchView;

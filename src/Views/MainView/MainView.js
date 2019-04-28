@@ -1,5 +1,4 @@
 import React from 'react';
-//import styles from './MainView.module.scss';
 
 const MainView = ()=>{
 

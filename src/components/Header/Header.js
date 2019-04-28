@@ -6,7 +6,6 @@ import HeaderDropDown from './HeaderDropDown';
 import AppContext from '../../context';
 import Logo from '../Logo/Logo';
 
-//doesnt work
 class Header extends React.Component{
     state={
         isDropDownOpen: false,
@@ -18,31 +17,27 @@ class Header extends React.Component{
         this.setState(
             prevState=>({
                 isDropDownOpen: !prevState.isDropDownOpen,
-                loading: prevState.loading,
-                isAuthenticated: prevState.isAuthenticated,
             })
         )
     };
 
     render(){
               return(
-                    
                     <AppContext.Consumer>
                         {(context)=>(
                             <header className={styles.wrapper}>
                                 <Logo
-                                    logoType='navbarLogo'
+                                    logoType='smallHorizontal'
                                 />
                                 <HeaderNavigation
                                     clickFnc={this.toggleMenu}
-            
                                 />
                                 <UserAvatar 
                                     image={context.user.image}
                                     username={context.user.username}
                                 />
             
-                                {this.state.isDropDownOpen ? <HeaderDropDown clickFnc={this.toggleMenu} /> : null}
+                                {this.state.isDropDownOpen && <HeaderDropDown clickFnc={this.toggleMenu} />}
                             </header>
 
                         )}

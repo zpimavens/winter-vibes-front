@@ -5,16 +5,15 @@ import AppContext from '../../context';
 import { Link } from 'react-router-dom';
 import Logo from '../../components/Logo/Logo';
 import FormErrors from '../../components/Form/FormErrors';
+import PropTypes from 'prop-types';
 
 class LoginView extends React.Component{
-
     state={
         email: '',
         password: '',
         formErrors: {
             login: '',
         }
-        
     }
     
     handleLogin = (e) => {
@@ -27,20 +26,24 @@ class LoginView extends React.Component{
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    this.props.history.push('/');
-                    this.props.fetchUserData();
-                    
-                } else {
-                    const error = new Error(res.status);
-                    this.setState({formErrors: {login: 'Niepoprawne dane logowania.'}});
-                    throw error;
+        .then(res => {
+            if (res.status === 200) {
+                this.props.history.push('/');
+                this.props.fetchUserData();
+                
+            } else {
+                const error = new Error(res.status);
+                if(res.status===401)
+                this.setState({formErrors: {login: 'Niepoprawne dane logowania.'}});
+                else{
+                    this.setState({ formErrors: { login: 'Coś poszło nie tak. Spróbuj ponownie później.' } });
                 }
-            })
-            .catch(err => {
-                console.error(err);
-            });
+                throw error;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
     };
 
     handleInputChange = (e) => {
@@ -49,33 +52,38 @@ class LoginView extends React.Component{
             [name]: value
         });
     }
-    componentDidMount(){
-    }
 
     render(){
-
         const data = {
             ...this.state,
         }
         return(
             <AppContext.Provider value={data}>
-            
                     <div className={styles.wrapper}>
                         <Logo 
-                            logoType='bigVertical'/>
-
-                        <FormErrors formErrors={this.state.formErrors} />
+                            logoType='bigVertical'
+                        />
+                        <FormErrors 
+                            formErrors={this.state.formErrors} 
+                        />
                         <Form
                             formSubmitFnc={this.handleLogin}
                             handleInputChange={this.handleInputChange}
                             formType='login'
                         />
-                        <Link className={styles.link} to='/register'>NIE MASZ KONTA? ZAREJESTRUJ SIĘ</Link>
-                    </div>
-                
+                        <Link 
+                            className={styles.link} 
+                            to='/register'
+                        >
+                        NIE MASZ KONTA? ZAREJESTRUJ SIĘ
+                        </Link>
+                    </div> 
             </AppContext.Provider>
         )
     }
+}
+LoginView.propTypes={
+    fetchUserData: PropTypes.func.isRequired,
 }
 
 export default LoginView;

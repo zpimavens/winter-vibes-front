@@ -1,3 +1,8 @@
+$progr-bar-color: #4375a0;
+$progr-bar-shadow-color: #464646a2;
+$progr-bar-thumb-border-color: #524e4e;
+$progr-bar-border-color: #383737;
+
 .formWrapper{
     display: flex;
     flex-direction: column;
@@ -7,15 +12,15 @@
     justify-content: center;
     padding: 0 40px;
 }
-.input{
-    // width: 100%;
-   // margin-top: 40px;
-}
 .formTitle{
     margin-bottom: 50px;
 }
 .slider{
     margin: 20px auto 50px;
+    -webkit-appearance: none; 
+    width: 100%; 
+    background: transparent; 
+    border: none;
     
     &::before{
         content: '0';
@@ -32,43 +37,43 @@
         right: 10px;
     }
 }
-input[type=range] {
-  -webkit-appearance: none; 
-  width: 100%; 
-  background: transparent; 
-  border: none;
+.slider:focus{
+  outline: none;
 }
-
-input[type=range]::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   -webkit-appearance: none;
 }
 
-input[type=range]:focus {
-  outline: none; 
-}
-
-input[type=range]::-ms-track {
+.slider::-ms-track {
   width: 100%;
   cursor: pointer;
-
   background: transparent; 
   border-color: transparent;
   color: transparent;
 }
-input[type=range]::-webkit-slider-thumb {
+.slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  border: 1px solid #524e4e;
+  border: 1px solid $progr-bar-thumb-border-color;
   height: 26px;
   width: 20px;
   border-radius: 20px;
   background: #ffffff;
   cursor: pointer;
-  margin-top: -10px; /* You need to specify a margin in Chrome, but in Firefox and IE it is automatic */
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d; /* Add cool effects to your sliders! */
+  margin-top: -10px; 
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
 }
-input[type=range]::-moz-range-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #524e4e;
+.slider::-moz-range-thumb {
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
+  border: 1px solid $progr-bar-thumb-border-color;
+  height: 36px;
+  width: 16px;
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+}
+.slider::-ms-thumb {
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
+  border: 1px solid $progr-bar-thumb-border-color;
   height: 36px;
   width: 16px;
   border-radius: 3px;
@@ -76,42 +81,26 @@ input[type=range]::-moz-range-thumb {
   cursor: pointer;
 }
 
-/* All the same stuff for IE */
-input[type=range]::-ms-thumb {
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  border: 1px solid #524e4e;
-  height: 36px;
-  width: 16px;
-  border-radius: 3px;
-  background: #ffffff;
-  cursor: pointer;
-}
-
-input[type=range]::-webkit-slider-runnable-track {
+.slider::-webkit-slider-runnable-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
+  background: $progr-bar-color;
   border-radius: 30px;
-  border: 0.2px solid #010101;
+  border: 0.2px solid $progr-bar-border-color;
 }
-
-input[type=range]:focus::-webkit-slider-runnable-track {
-  background: #367ebd;
-}
-
-input[type=range]::-moz-range-track {
+.slider::-moz-range-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-  background: #3071a9;
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
+  background: $progr-bar-color;
   border-radius: 30px;
-  border: 0.2px solid #010101;
+  border: 0.2px solid $progr-bar-border-color;
 }
 
-input[type=range]::-ms-track {
+.slider::-ms-track {
   width: 100%;
   height: 8.4px;
   cursor: pointer;
@@ -120,21 +109,15 @@ input[type=range]::-ms-track {
   border-width: 16px 0;
   color: transparent;
 }
-input[type=range]::-ms-fill-lower {
-  background: #2a6495;
-  border: 0.2px solid #010101;
+.slider::-ms-fill-lower {
+  background: $progr-bar-color;
+  border: 0.2px solid $progr-bar-border-color;
   border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
 }
-input[type=range]:focus::-ms-fill-lower {
-  background: #3071a9;
-}
-input[type=range]::-ms-fill-upper {
-  background: #3071a9;
-  border: 0.2px solid #010101;
+.slider::-ms-fill-upper {
+  background: $progr-bar-color;
+  border: 0.2px solid $progr-bar-border-color;
   border-radius: 2.6px;
-  box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
-}
-input[type=range]:focus::-ms-fill-upper {
-  background: #367ebd;
+  box-shadow: 1px 1px 1px $progr-bar-shadow-color, 0px 0px 1px $progr-bar-shadow-color;
 }

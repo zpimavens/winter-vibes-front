@@ -4,7 +4,7 @@ import Input from '../../components/Input/Input';
 import Button from '../../components/Button/Button';
 
 class SkiAreaSearchView extends Component{
-
+//in progress
     state={
         country: '',
         rental: false,
@@ -17,7 +17,6 @@ class SkiAreaSearchView extends Component{
         const { value, name } = e.target;
         
         if(name==='country'){
-            
             this.setState({
                 [name]: value
             });
@@ -26,7 +25,6 @@ class SkiAreaSearchView extends Component{
                 [name]: !prev[name]
             }));
         }
-        
     }
 
     handleSearch=()=>{
@@ -39,7 +37,6 @@ class SkiAreaSearchView extends Component{
                 <div className={styles.formWrapper}>
                     <h2 className={styles.title}>WYSZUKAJ SKIARENY</h2>
                     <form className={styles.form}>
-                    
                         <Input
                             name='country'
                             placeholder='Kraj'

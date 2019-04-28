@@ -1,43 +1,55 @@
 import React from 'react';
 import styles from './UsersListItem.module.scss';
+import PropTypes from 'prop-types';
 
-const boldText={
-    fontWeight: '800',
-    fontSize: '1.3em'
-}
-const italicText = {
-    fontStyle: 'italic',
-}
-//{username, image, level, skis, city}
 class UsersListItem extends React.Component{
     
     handleClick = (e) => {
-        this.props.history.push(`/user/${this.props.username/*.toLowerCase()*/}`)  
+        this.props.history.push(`/user/${this.props.username}`)  
     }
     
     render(){
+        const {username, image, level, skis, city} = this.props;
         return(
             <li 
                 className={styles.wrapper}
                 onClick={this.handleClick}
-                id={this.props.username}
+                id={username}
             >
                 <img 
-                    src={this.props.image} 
-                    alt={this.props.username} 
+                    src={image} 
+                    alt={username} 
                     className={styles.image}
                     
                     />
                 <ul className={styles.userInfo}>
-                    <li style={boldText}>{this.props.username}</li>
-                    <li>Poziom zaawansowania: {this.props.level}</li>
-                    <li style={italicText}>{this.props.skis}</li>
-                    <li>{this.props.city}</li>
+                    <li 
+                        className={styles.boldText}
+                    >
+                    {username}
+                    </li>
+                    <li>Poziom zaawansowania: {level}</li>
+                    <li 
+                        className={styles.italicText}
+                    >
+                    {skis}
+                    </li>
+                    <li>{city}</li>
                 </ul>
             </li>
 
         )
     }
+}
+UsersListItem.propTypes={
+    username: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired, 
+    level: PropTypes.number,   
+    skis: PropTypes.string, 
+    city: PropTypes.string,
+}
+UsersListItem.dfaultProps={
+    level: 0,
 }
 
 export default UsersListItem;

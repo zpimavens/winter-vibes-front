@@ -9,10 +9,10 @@ class EditProfileView extends Component {
     state = {
         username: '',
         skis: '',
-        level: '',
-        city: '',
+        level: 0,
+        town: '',
         formErrors: {
-            username: '',
+            else: '',
         }
 
     }
@@ -24,7 +24,6 @@ class EditProfileView extends Component {
     }
 
    handlePrifileUdate = (e) => {
-       //update profile info in database
        e.preventDefault();
        fetch('/api/editUser', {
             method: 'POST',
@@ -33,59 +32,47 @@ class EditProfileView extends Component {
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    this.setState({ formErrors: { username: 'Pomyślnie zmieniono Twoje dane :)' } });
+        .then(res => {
+            if (res.status === 200) {
+                this.setState({ formErrors: { else: 'Pomyślnie zmieniono Twoje dane :)' } });
 
-                } else {
-                    const error = new Error(res.status);
-                    this.setState({formErrors: {username: 'Taka nazwa użytkownika już istnieje.'}});
-                    throw error;
-                }
-            })
-            .catch(err => {
-                console.error(err);
-            });
+            } else {
+                const error = new Error(res.status);
+                this.setState({formErrors: {else: 'Coś poszło nie tak. Spróbuj ponownie.'}});
+                throw error;
+            }
+        })
+        .catch(err => {
+            console.error(err);
+        });
         
    }
    componentDidMount(){
        fetch('/api/getCurrentUser')
-       .then(res=>{
+        .then(res=>{
            if (res.status === 200)
                return res.json();
            else
                throw new Error(res.status)
        })
-           .then(([data]) => {
-               this.setState({
-                   
-                       username: data.username,
-                       skis: data.skis,
-                       level: data.level,
-                       city: data.city,
-                   
-               })
-           })
-           .catch(error => (null));
+        .then(([data]) => {
+            this.setState({
+                username: data.username,
+                skis: data.skis,
+                level: data.level,
+                town: data.town,
+            })
+        })
+        .catch(error => (null));
    }
 
     render(){
         return(
             <>
             <form className={styles.formWrapper}>
-            <h2 className={styles.formTitle}>Podaj nam dane do zmiany: </h2>
+            <h2 className={styles.formTitle}>Podaj dane do zmiany:</h2>
             <FormErrors formErrors={this.state.formErrors}/>
                 <Input
-                    // className={styles.input}
-                    name="username"
-                    id="username"
-                    type='text'
-                    value={this.state.username}
-                    placeholder="Nazwa użytkownika"
-                    onChange={this.handleInputChange}
-                />
-                <Input
-                    // className={styles.input}
                     name="skis"
                     id="skis"
                     type='text'
@@ -94,12 +81,11 @@ class EditProfileView extends Component {
                     onChange={this.handleInputChange}
                 />
                 <Input
-                    // className={styles.input}
-                    name="city"
-                    id="city"
+                    name="town"
+                    id="town"
                     type='text'
                     placeholder="Miasto"
-                    value={this.state.city}
+                    value={this.state.town}
                     onChange={this.handleInputChange}
                 />
                 <label htmlFor="level">Poziom umiejętności: {this.state.level}</label>
@@ -112,11 +98,12 @@ class EditProfileView extends Component {
                     min='0'
                     max='10'
                     onChange={this.handleInputChange}
-                    
                 />
                 <Button
                     clickFn={this.handlePrifileUdate}
-                >ZAPISZ ZMIANY</Button>
+                >
+                ZAPISZ ZMIANY
+                </Button>
             </form>
             </>
         )

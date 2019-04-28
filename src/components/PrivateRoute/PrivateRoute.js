@@ -1,6 +1,6 @@
 import React from 'react';
 import {Route, Redirect} from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 
 class PrivateRoute extends React.Component {
     state = {
@@ -23,37 +23,18 @@ class PrivateRoute extends React.Component {
         } else {
             return (
                 <Route {...rest} render={props => (
-                    <div>
+                    <>
                         {!this.state.isAuthenticated && <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />}
-                        <Component {...props} />
-                    </div>
+                        <Component {...rest} />
+                    </>
                 )}
                 />
             )
         }
     }
 }
-// const PrivateRoute = ({component: Component, ...rest})=>{
-    
-    
-//    async function auth(){
-       
-//       const aut = await
-//        fetch('/checkToken')
-//         .then(res => {
-            
-//             return res.status===200
-//         })
-//         return aut;
-//     }
-
-// return(
-    
-//     <Route {...rest} render={(props) => (
-//        auth()===true?  <Component {...props} /> : <Redirect to='/login' />
-//     )} />
-    
-// )
-// }
+PrivateRoute.propTypes={
+    component: PropTypes.func.isRequired,
+}
 
 export default PrivateRoute;

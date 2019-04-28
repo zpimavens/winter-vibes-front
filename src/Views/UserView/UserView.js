@@ -4,24 +4,16 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import Button from '../../components/Button/Button';
 import AppContext from '../../context';
-
 import styles from './UserView.module.scss';
-
 
 class UserView extends Component{
 
-    
     state = {
         username: window.location.pathname.slice(6).replace(/%20/g, " "),
         image: '',
-        skis: '',                               //skis name - string
-        level: '', 
-        city: '',                //min 0 max 100%
-        visited: [                   //list of visited arenas       
-
-        ],
-        trophies: '',
-        
+        skis: '',                              
+        level: 0, 
+        town: '',                   
     }
 
     updateState = (data) => {
@@ -30,9 +22,7 @@ class UserView extends Component{
             skis: data.skis,
             level: data.level,
             image: data.image,
-            city: data.city,
-            visited: data.visited,
-            trophies: data.trophies,
+            town: data.town,
         })
         
     }
@@ -44,81 +34,61 @@ class UserView extends Component{
                 'Content-Type': 'application/json'
             }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    //console.log(res.json());
-                    return res.json();
+        .then(res => {
+            if (res.status === 200) {
+                return res.json();
 
-                } else {
-                    const error = new Error(res.status);
-                    throw error;
-                }
-            })
-            .then(([data]) => {
-                this.updateState(data);
-                // console.log(data);
-            })
-            .catch(err => {
-                console.error(err);
-            });
+            } else {
+                const error = new Error(res.status);
+                throw error;
+            }
+        })
+        .then(([data]) => {
+            this.updateState(data);
+        })
+        .catch(err => {
+            console.error(err);
+        });
     }
 
     componentDidUpdate(prevProps){
         if (this.props.location !== prevProps.location) {
-            // this.setState({
-            //     username: window.location.pathname.slice(6).replace(/%20/g, " ")
-            // })
-            // // window.location.reload();
-            this.uptadeProfileInfo();
-            
+            this.uptadeProfileInfo();    
         }
     }
     componentDidMount() {
-
-        this.uptadeProfileInfo();
-        
+        this.uptadeProfileInfo(); 
     };
 
-    //function for profile editing
-
-    //display visited areanas, 
-
     render(){
+        const {username, image, town, skis, level} =this.state;
         return(
             <AppContext.Consumer>
                 {(context)=>(
                     (window.location.pathname === "/user" || window.location.pathname === "/user/") ?
-                    (<Redirect to={`/user/${context.user.username}`} />):(
-
+                    (<Redirect to={`/user/${context.user.username}`} />
+                    ):(
                         <div className={styles.wrapper}>
-                            <div>
-                                <UserAvatar 
-                                    avatarType='profile'
-                                    //tu dać trzeba usera
-                                    username={this.state.username}
-                                    image={this.state.image}
-                                />
-                                <p>{this.state.city}</p>
-                                <p>{this.state.skis}</p>
-                                <p>Umiejętności:</p>
-                                <ProgressBar 
-                                    progress={this.state.level}
-                                />
-                                {
-                                context.user.username===this.state.username ? 
-                                ( 
+                            <UserAvatar 
+                                avatarType='profileType'
+                                username={username}
+                                image={image}
+                            />
+                            <p>{town}</p>
+                            <p>{skis}</p>
+                            <p>Umiejętności:</p>
+                            <ProgressBar 
+                                progress={level}
+                            />
+                            {context.user.username===username && (
                                 <Button 
-                                clickFn={()=>this.props.history.push('/editprofile')}
-                                >EDYTUJ PROFIL</Button>
-                                ):(
-                                    null
-                                )
-                                }
-
-                            </div>
+                                    clickFn={()=>this.props.history.push('/editprofile')}
+                                >
+                                EDYTUJ PROFIL
+                                </Button>
+                            )}  
                         </div>
                     )
-                
                 )}
             </AppContext.Consumer>
         )

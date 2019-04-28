@@ -12,10 +12,8 @@ const Input = ({name, type, placeholder, ...props}) =>{
                 id={name}
                 type={type}
                 placeholder={placeholder}
-                
                 //maxlength
                 {...props}
-                
             > 
             </input>
         </>

@@ -1,14 +1,12 @@
 import React from 'react';
 import styles from './UserAvatar.module.scss';
 import AppContext from '../../context';
+import PropTypes from 'prop-types';
 
-
-const Avatar = ({avatarType, image, username}) => {        //type: navbar or big
-    // (type === 'profile' ? styles.profileType : styles.listType)
-    const wrapperClass = avatarType === 'profile' ? styles.profileType : styles.navType;
-    const imageClass = avatarType === 'profile' ? styles.profileTypeImage : styles.navTypeImage ;
-    const usernameClass = avatarType === 'profile' ? styles.profileTypeName : styles.navTypeName  ;
-    
+const Avatar = ({avatarType, image, username}) => {    
+    const wrapperClass = avatarType === 'profileType' ? styles.profileType : styles.smallType;
+    const imageClass = avatarType === 'profileType' ? styles.profileTypeImage : styles.smallTypeImage;
+    const usernameClass = avatarType === 'profileType' ? styles.profileTypeName : styles.smallTypeName;
 
     return (
         <AppContext.Consumer>
@@ -26,9 +24,13 @@ const Avatar = ({avatarType, image, username}) => {        //type: navbar or big
         </AppContext.Consumer>
     )
 };
-
+Avatar.propTypes={
+    type: PropTypes.oneOf(['profileType', 'smallType']),
+    image: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+}
 Avatar.defaultProps = {
-    type: 'navType',
+    type: 'smallType',
 }
 
 export default Avatar;
