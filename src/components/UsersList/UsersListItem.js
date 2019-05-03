@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import styles from './UsersListItem.module.scss'
 
@@ -51,4 +52,4 @@ UsersListItem.dfaultProps={
     level: 0,
 }
 
-export default UsersListItem
+export default withRouter(UsersListItem)

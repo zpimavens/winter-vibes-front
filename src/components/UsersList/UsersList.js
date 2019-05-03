@@ -14,7 +14,6 @@ const UsersList =({users})=>  (
                     <UserItem 
                         {...user}
                         key={user.username}
-                        history={context.history}
                     />
                 ))}
             </ul>

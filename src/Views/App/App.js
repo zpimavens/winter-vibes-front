@@ -2,7 +2,6 @@ import React from 'react'
 import { Switch, withRouter} from 'react-router-dom'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
-
 import Header from '../../components/Header/Header'
 import UserView from '../UserView/UserView'
 import MainView from '../MainView/MainView'
@@ -47,7 +46,6 @@ class App extends React.Component{
         })
     }
 
-
     fetchUserData= ()=>{
         fetch(requestUrls.CURRENT_USER)
         .then(response => {
@@ -67,14 +65,18 @@ class App extends React.Component{
         })
         .catch()
     }
-    componentDidMount() {
 
+    checkToken = ()=>{
         fetch(requestUrls.CHECK_TOKEN)
         .then(res =>{
             if ( res.status === 200){
                 this.fetchUserData()
             }}
-        ) 
+        )
+    }
+    
+    componentDidMount() {
+        this.checkToken()
     }
 
     render(){   
@@ -82,7 +84,6 @@ class App extends React.Component{
         const contextElements = {
             ...this.state,
             handleLogOut: this.handleLogOut,
-            history: this.props.history,
         }
 
         return(
@@ -97,12 +98,10 @@ class App extends React.Component{
                         path={appUrls.LOGIN} 
                         component={LoginView} 
                         fetchUserData={this.fetchUserData} 
-                        history={this.props.history}
                     />
                     <PublicRoute 
                         path={appUrls.REGISTER} 
                         component={RegisterView} 
-                        history={this.props.history}
                     />
                     <PublicRoute 
                         path={appUrls.ACTIVATE}
@@ -115,7 +114,6 @@ class App extends React.Component{
                     <PrivateRoute 
                         path={appUrls.USER}
                         component={UserView} 
-                        history={this.props.history} 
                         user={this.state.user}
                     />
                     <PrivateRoute 

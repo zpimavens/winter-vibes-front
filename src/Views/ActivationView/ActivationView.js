@@ -8,9 +8,9 @@ class ActivationView extends React.Component {
     loading: true
   };
 
-  componentDidMount() {
+  handleActivation = ()=>{
     const path = "/api" + window.location.pathname;
-
+  
     fetch(path).then(response => {
       if (response === 500) {
         this.setState({
@@ -24,6 +24,10 @@ class ActivationView extends React.Component {
         });
       }
     });
+  }
+
+  componentDidMount() {
+    this.handleActivation()
   }
   render() {
     return (

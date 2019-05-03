@@ -35,7 +35,7 @@ const Form = ({formSubmitFnc, handleInputChange, formType})=>{
                     />
                     <Button
                         secondary={true}
-                        clickFn={formSubmitFnc}
+                        onClick={formSubmitFnc}
                     >
                     {formType === 'login' ? 'ZALOGUJ' : 'ZAREJESTRUJ SIĘ'}
                     </Button>

@@ -182,7 +182,7 @@ class SkiAreaSearchView extends Component{
                         </label>
                     </form>
                     <Button
-                        clickFn={this.handleSearch}
+                        onClick={this.handleSearch}
                     >Szukaj</Button>
                 </div>
                 <SkiAreasList

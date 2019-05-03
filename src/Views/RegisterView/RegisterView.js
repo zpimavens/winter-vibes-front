@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
 import Form from '../../components/Form/Form'
-import FormErrors from '../../components/Form/FormErrors'
+import FormMessages from '../../components/Form/FormMessages'
 import Logo from '../../components/Logo/Logo'
 import styles from './RegisterView.module.scss'
 
@@ -13,14 +13,14 @@ class RegisterView extends Component{
         email: '',
         username: '',
         password: '',
-        formErrors: { email: '', password: '' , username: ''},
+        formMessages: { email: '', password: '' , username: ''},
         emailValid: false,
         passwordValid: false,
         formValid: false,
     }
 
     validateField(fieldName, value){
-        let fieldValidationErrors = this.state.formErrors
+        let fieldValidationErrors = this.state.formMessages
         let emailValid = this.state.emailValid
         let passwordValid = this.state.passwordValid
 
@@ -39,7 +39,7 @@ class RegisterView extends Component{
         }
 
         this.setState({
-            formErrors: fieldValidationErrors,
+            formMessages: fieldValidationErrors,
             emailValid: emailValid,
             passwordValid: passwordValid
         }, this.validateForm)
@@ -58,7 +58,7 @@ class RegisterView extends Component{
 
     handleRegister = (e) => {
         e.preventDefault()
-        const { formErrors, emailValid, passwordValid, formValid, ...userData} = this.state 
+        const { formMessages, emailValid, passwordValid, formValid, ...userData} = this.state 
         if(this.state.formValid){
             
             fetch(requestUrls.REGISTER, {
@@ -73,10 +73,10 @@ class RegisterView extends Component{
                     this.props.history.push(appUrls.REGISTER_SUCCESS)
                     
                 } else if (res.status === 501) {
-                    this.setState({ formErrors: {email: 'Istnieje już taki email'}})
+                    this.setState({ formMessages: {email: 'Istnieje już taki email'}})
                 } 
                 else if (res.status === 502) {
-                    this.setState({ formErrors: {username: 'Istnieje już taka nazwa użytkownika'}})
+                    this.setState({ formMessages: {username: 'Istnieje już taka nazwa użytkownika'}})
                 } 
             })
         }
@@ -93,8 +93,8 @@ class RegisterView extends Component{
                 <Logo 
                     logoType='bigVertical'
                 />
-                <FormErrors 
-                    formErrors={this.state.formErrors} 
+                <FormMessages 
+                    formMessages={this.state.formMessages} 
                 />
                 <Form 
                     formType='register'
@@ -112,4 +112,4 @@ class RegisterView extends Component{
     )}
 }
 
-export default RegisterView
+export default withRouter(RegisterView)

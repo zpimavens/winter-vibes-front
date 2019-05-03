@@ -8,7 +8,7 @@ class PrivateRoute extends React.Component {
         loading: true,
         isAuthenticated: false,
     }
-    componentDidMount() {
+    checkToken = ()=>{
         fetch(requestUrls.CHECK_TOKEN)
         .then((res) => {
             this.setState({
@@ -17,6 +17,9 @@ class PrivateRoute extends React.Component {
             })
         })
         .catch()
+    }
+    componentDidMount() {
+        this.checkToken()
     }
     
     render() {

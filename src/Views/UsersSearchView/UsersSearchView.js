@@ -66,7 +66,7 @@ class UsersSearchView extends Component {
                         onChange={this.handleInputChange}
                     />
                     <Button 
-                        clickFn={this.handleSearch}
+                        onClick={this.handleSearch}
                     >Szukaj</Button>
                 </form>
             </div>

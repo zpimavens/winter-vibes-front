@@ -1,25 +1,25 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
 import Form from '../../components/Form/Form'
 import Logo from '../../components/Logo/Logo'
-import FormErrors from '../../components/Form/FormErrors'
+import FormMessages from '../../components/Form/FormMessages'
 import styles from './LoginView.module.scss'
 
 class LoginView extends React.Component{
     state={
         email: '',
         password: '',
-        formErrors: {
+        formMessages: {
             login: '',
         }
     }
     
     handleLogin = (e) => {
         e.preventDefault()
-        const { formErrors, ...userData } = this.state
+        const { formMessages, ...userData } = this.state
         
         fetch(requestUrls.LOGIN, {
             method: 'POST',
@@ -35,9 +35,9 @@ class LoginView extends React.Component{
                 
             } else {
                 if(res.status===401)
-                    this.setState({formErrors: {login: 'Niepoprawne dane logowania.'}})
+                    this.setState({formMessages: {login: 'Niepoprawne dane logowania.'}})
                 else{
-                    this.setState({ formErrors: { login: 'Coś poszło nie tak. Spróbuj ponownie później.' } })
+                    this.setState({ formMessages: { login: 'Coś poszło nie tak. Spróbuj ponownie później.' } })
                 }
             }
         })
@@ -60,8 +60,8 @@ class LoginView extends React.Component{
                         <Logo 
                             logoType='bigVertical'
                         />
-                        <FormErrors 
-                            formErrors={this.state.formErrors} 
+                        <FormMessages 
+                            formMessages={this.state.formMessages} 
                         />
                         <Form
                             formSubmitFnc={this.handleLogin}
@@ -83,4 +83,4 @@ LoginView.propTypes={
     fetchUserData: PropTypes.func.isRequired,
 }
 
-export default LoginView
+export default withRouter(LoginView)

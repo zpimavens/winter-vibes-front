@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import AppContext from '../../context'
+import { withRouter } from 'react-router-dom'
 import { appUrls, requestUrls } from '../../urls'
 import Input from '../../components/Input/Input'
 import Button from '../../components/Button/Button'
-import FormErrors from '../../components/Form/FormErrors'
+import FormMessages from '../../components/Form/FormMessages'
 import styles from './EditProfileView.module.scss'
 
 class EditProfileView extends Component {
@@ -13,9 +13,10 @@ class EditProfileView extends Component {
         skis: '',
         level: 0,
         town: '',
-        formErrors: {
+        formMessages: {
             else: '',
-        }
+        },
+        messageType: 'error'
 
     }
     handleInputChange = (e) => {
@@ -24,10 +25,26 @@ class EditProfileView extends Component {
             [name]: value
         })
     }
-
+    
+    fetchUserData = ()=>{
+        fetch(requestUrls.CURRENT_USER)
+        .then(res => {
+            if (res.status === 200) return res.json();
+            else throw new Error(res.status);
+        })
+        .then(([data]) => {
+            this.setState({
+                username: data.username,
+                skis: data.skis,
+                level: data.level,
+                town: data.town
+            });
+        })
+        .catch();
+    }
    handleProfileUpdate = (e) => {
        e.preventDefault()
-       const { formErrors, ...userData } = this.state
+       const { formMessages, messageType, ...userData } = this.state
        
        fetch(requestUrls.EDIT_USER, {
             method: 'POST',
@@ -38,86 +55,75 @@ class EditProfileView extends Component {
         })
         .then(res => {
             if (res.status === 200) {
-                this.setState({ formErrors: { else: 'Pomyślnie zmieniono Twoje dane :)' } })
+                this.setState({ 
+                    formMessages: { else: 'Pomyślnie zmieniono Twoje dane :)' }, 
+                    messageType: 'confirm',    
+                })
 
             } else {                
-                this.setState({formErrors: {else: 'Coś poszło nie tak. Spróbuj ponownie.'}})
+                this.setState({
+                    formMessages: {else: 'Coś poszło nie tak. Spróbuj ponownie.'},
+                    messageType: 'error'
+                })
 
             }
         })
         
    }
-  
    componentDidMount(){
-       fetch(requestUrls.CURRENT_USER)
-        .then(res=>{
-           if (res.status === 200)
-               return res.json()
-           else
-               throw new Error(res.status)
-       })
-        .then(([data]) => {
-            this.setState({
-                username: data.username,
-                skis: data.skis,
-                level: data.level,
-                town: data.town,
-            })
-        })
-        .catch()
+       this.fetchUserData()
    }
 
     render(){
         return(
-            <AppContext.Consumer>
-                {(context)=>(
-                    <div className={styles.container}>
-                    <form className={styles.formWrapper}>
-                    <h2 className={styles.formTitle}>Podaj dane do zmiany:</h2>
-                    <FormErrors formErrors={this.state.formErrors}/>
-                        <Input
-                            name="skis"
-                            id="skis"
-                            type='text'
-                            placeholder="Nazwa nart"
-                            value={this.state.skis}
-                            onChange={this.handleInputChange}
-                        />
-                        <Input
-                            name="town"
-                            id="town"
-                            type='text'
-                            placeholder="Miasto"
-                            value={this.state.town}
-                            onChange={this.handleInputChange}
-                        />
-                        <label htmlFor="level">Poziom umiejętności: {this.state.level}</label>
-                        <Input
-                            className={styles.slider}
-                            name="level"
-                            id="level"
-                            type='range'
-                            value={this.state.level}
-                            min='0'
-                            max='10'
-                            onChange={this.handleInputChange}
-                        />
-                        <Button
-                            clickFn={this.handleProfileUpdate}
-                        >
-                        ZAPISZ ZMIANY
-                        </Button>
-                    </form>
+            <div className={styles.container}>
+                <form className={styles.formWrapper}>
+                <h2 className={styles.formTitle}>Podaj dane do zmiany:</h2>
+                <FormMessages 
+                    formMessages={this.state.formMessages}
+                    messageType={this.state.messageType}
+                />
+                    <Input
+                        name="skis"
+                        id="skis"
+                        type='text'
+                        placeholder="Nazwa nart"
+                        value={this.state.skis}
+                        onChange={this.handleInputChange}
+                    />
+                    <Input
+                        name="town"
+                        id="town"
+                        type='text'
+                        placeholder="Miasto"
+                        value={this.state.town}
+                        onChange={this.handleInputChange}
+                    />
+                    <label htmlFor="level">Poziom umiejętności: {this.state.level}</label>
+                    <Input
+                        className={styles.slider}
+                        name="level"
+                        id="level"
+                        type='range'
+                        value={this.state.level}
+                        min='0'
+                        max='10'
+                        onChange={this.handleInputChange}
+                    />
                     <Button
-                        clickFn={()=>context.history.push(appUrls.USER)}
+                        onClick={this.handleProfileUpdate}
                     >
-                        WRÓĆ DO PROFILU
+                        ZAPISZ ZMIANY
                     </Button>
-                    </div>
-                )}
-            </AppContext.Consumer>
+                </form>
+                <Button
+                    onClick={()=>this.props.history.push(appUrls.USER)}
+                >
+                    WRÓĆ DO PROFILU
+                </Button>
+            </div>
         )
     }
 }
 
-export default EditProfileView
+export default withRouter(EditProfileView)

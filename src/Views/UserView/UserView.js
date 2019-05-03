@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, withRouter } from 'react-router-dom'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
@@ -83,7 +83,7 @@ class UserView extends Component{
                             />
                             {context.user.username===username && (
                                 <Button 
-                                    clickFn={()=>this.props.history.push(appUrls.EDIT_PROFILE)}
+                                    onClick={()=>this.props.history.push(appUrls.EDIT_PROFILE)}
                                 >
                                 EDYTUJ PROFIL
                                 </Button>
@@ -96,4 +96,4 @@ class UserView extends Component{
         )
     }
 }
-export default UserView
+export default withRouter(UserView)
