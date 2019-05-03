@@ -1,8 +1,8 @@
-import React from 'react';
-import UserItem from './UsersListItem';
-import AppContext from '../../context';
-import styles from './UsersList.module.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import AppContext from '../../context'
+import UserItem from './UsersListItem'
+import styles from './UsersList.module.scss'
 
 const UsersList =({users})=>  (
     <AppContext.Consumer>
@@ -29,4 +29,4 @@ UsersList.propTypes={
     users: PropTypes.array.isRequired,
 }
 
-export default UsersList;
+export default UsersList

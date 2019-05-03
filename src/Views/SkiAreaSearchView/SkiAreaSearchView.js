@@ -1,8 +1,8 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react'
+import Input from '../../components/Input/Input'
+import Button from '../../components/Button/Button'
+import SkiAreasList from '../../components/SkiAreasList/SkiAreasList'
 import styles from './SkiAreaSearchView.module.scss'
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
-import SkiAreasList from '../../components/SkiAreasList/SkiAreasList';
 
 class SkiAreaSearchView extends Component{
 //in progress
@@ -17,16 +17,16 @@ class SkiAreaSearchView extends Component{
     }
 
     handleInputChange = (e) => {
-        const { value, name } = e.target;
+        const { value, name } = e.target
         
-        if(name==='country'){
+        if(name==='country' || name==='name'){
             this.setState({
                 [name]: value
-            });
+            })
         }else{
             this.setState(prev => ({
                 [name]: !prev[name]
-            }));
+            }))
         }
     }
 
@@ -192,4 +192,4 @@ class SkiAreaSearchView extends Component{
         )
     }
 }
-export default SkiAreaSearchView;
+export default SkiAreaSearchView

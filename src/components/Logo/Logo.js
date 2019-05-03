@@ -1,7 +1,7 @@
-import React from 'react';
-import styles from './Logo.module.scss';
-import logo from '../../assets/logo.png';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import logo from '../../assets/logo.png'
+import styles from './Logo.module.scss'
 
 const Logo = ({logoType})=>(
     <div 
@@ -16,9 +16,9 @@ const Logo = ({logoType})=>(
             className={logoType === 'bigVertical' ? styles.logoText : styles.logoTextSmall}>WinterVIBES
         </h1>
     </div>
-);
+)
 
 Logo.propTypes={
     logoType: PropTypes.oneOf(['bigVertical', 'smallHorizontal']).isRequired,
 }
-export default Logo;
+export default Logo

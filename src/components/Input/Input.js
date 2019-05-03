@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './Input.module.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './Input.module.scss'
 
 const Input = ({name, type, placeholder, ...props}) =>{
 
@@ -18,7 +18,7 @@ const Input = ({name, type, placeholder, ...props}) =>{
             </input>
         </>
     )
-};
+}
 
 Input.propTypes = {
     name: PropTypes.string.isRequired,
@@ -30,4 +30,4 @@ Input.defaultProps = {
     placeholder: ' ',
 }
 
-export default Input;
+export default Input

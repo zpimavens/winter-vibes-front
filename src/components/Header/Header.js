@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './Header.module.scss';
-import HeaderNavigation from './HeaderNavigation';
-import UserAvatar from '../UserAvatar/UserAvatar';
-import AppContext from '../../context';
-import Logo from '../Logo/Logo';
+import React from 'react'
+import AppContext from '../../context'
+import HeaderNavigation from './HeaderNavigation'
+import HeaderAvatar from './HeaderAvatar'
+import Logo from '../Logo/Logo'
+import styles from './Header.module.scss'
 
 class Header extends React.Component{
     state={
@@ -18,7 +18,7 @@ class Header extends React.Component{
                 isDropDownOpen: !prevState.isDropDownOpen,
             })
         )
-    };
+    }
 
     render(){
               return(
@@ -29,7 +29,7 @@ class Header extends React.Component{
                                     logoType='smallHorizontal'
                                 />
                                 <HeaderNavigation/>
-                                <UserAvatar 
+                                <HeaderAvatar 
                                     avatarType='headerType'
                                     image={context.user.image}
                                     username={context.user.username}
@@ -47,6 +47,6 @@ class Header extends React.Component{
                     </AppContext.Consumer>
               )  
     }
-};
+}
 
-export default Header;
+export default Header

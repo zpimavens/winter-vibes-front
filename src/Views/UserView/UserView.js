@@ -1,15 +1,16 @@
-import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
-import UserAvatar from '../../components/UserAvatar/UserAvatar';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
-import Button from '../../components/Button/Button';
-import AppContext from '../../context';
-import styles from './UserView.module.scss';
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
+import AppContext from '../../context'
+import { appUrls, requestUrls } from '../../urls'
+import UserAvatar from '../../components/UserAvatar/UserAvatar'
+import ProgressBar from '../../components/ProgressBar/ProgressBar'
+import Button from '../../components/Button/Button'
+import styles from './UserView.module.scss'
 
 class UserView extends Component{
 
     state = {
-        username: window.location.pathname.slice(6).replace(/%20/g, " "),
+        username: '',
         image: '',
         skis: '',                              
         level: 0, 
@@ -27,41 +28,42 @@ class UserView extends Component{
         
     }
     uptadeProfileInfo=()=>{
-        fetch('/api/getUserByLogin', {
+        const username = window.location.pathname.slice(6).replace(/%20/g, " ")
+        
+        fetch(requestUrls.GET_USER_BY_USERNAME, {
             method: 'POST',
-            body: JSON.stringify({ "username": `${window.location.pathname.slice(6).replace(/%20/g, " ")}` }),
+            body: JSON.stringify({ "username": `${username}` }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(res => {
             if (res.status === 200) {
-                return res.json();
+                return res.json()
 
             } else {
-                const error = new Error(res.status);
-                throw error;
+                const error = new Error(res.status)
+                throw error
             }
         })
         .then(([data]) => {
-            this.updateState(data);
+            this.updateState(data)
         })
-        .catch(err => {
-            console.error(err);
-        });
+        .catch()
     }
+    
 
     componentDidUpdate(prevProps){
         if (this.props.location !== prevProps.location) {
-            this.uptadeProfileInfo();    
+            this.uptadeProfileInfo()    
         }
     }
     componentDidMount() {
-        this.uptadeProfileInfo(); 
-    };
+        this.uptadeProfileInfo() 
+    }
 
     render(){
-        const {username, image, town, skis, level} =this.state;
+        const {username, image, town, skis, level} =this.state
         return(
             <AppContext.Consumer>
                 {(context)=>(
@@ -70,7 +72,6 @@ class UserView extends Component{
                     ):(
                         <div className={styles.wrapper}>
                             <UserAvatar 
-                                avatarType='profileType'
                                 username={username}
                                 image={image}
                             />
@@ -82,16 +83,17 @@ class UserView extends Component{
                             />
                             {context.user.username===username && (
                                 <Button 
-                                    clickFn={()=>this.props.history.push('/editprofile')}
+                                    clickFn={()=>this.props.history.push(appUrls.EDIT_PROFILE)}
                                 >
                                 EDYTUJ PROFIL
                                 </Button>
                             )}  
+                           
                         </div>
                     )
                 )}
             </AppContext.Consumer>
         )
     }
-};
-export default UserView;
+}
+export default UserView

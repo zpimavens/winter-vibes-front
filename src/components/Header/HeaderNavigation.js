@@ -1,15 +1,15 @@
-import React from 'react';
-import styles from './HeaderNavigation.module.scss';
-import { NavLink } from 'react-router-dom';
-import AppContext from '../../context';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { NavLink } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import AppContext from '../../context'
+import styles from './HeaderNavigation.module.scss'
 
 const HeaderNavigation = ({type,...props}) =>{
 
-    const navLinkClassName = type==='navbar' ? styles.navItem : styles.navItemDropdown;
-    const wrapperClassName = type==='navbar' ? styles.wrapper : styles.wrapperDropdown;
-    const navItemLinkClassName = type==='navbar' ? styles.navItemLink : styles.navItemDropdownLink;
-    const navItemLinkActiveClassName = type==='navbar' ? styles.navItemLinkActive : styles.navItemDropdownLinkActive;
+    const navLinkClassName = type==='navbar' ? styles.navItem : styles.navItemDropdown
+    const wrapperClassName = type==='navbar' ? styles.wrapper : styles.wrapperDropdown
+    const navItemLinkClassName = type==='navbar' ? styles.navItemLink : styles.navItemDropdownLink
+    const navItemLinkActiveClassName = type==='navbar' ? styles.navItemLinkActive : styles.navItemDropdownLinkActive
 
     return(
         <AppContext.Consumer>
@@ -75,7 +75,7 @@ const HeaderNavigation = ({type,...props}) =>{
             )}
         </AppContext.Consumer>
     )
-};
+}
 
 HeaderNavigation.propTypes={
     type: PropTypes.oneOf(['navbar','dropdown']),
@@ -83,4 +83,4 @@ HeaderNavigation.propTypes={
 HeaderNavigation.defaultProps={
     type: 'navbar',
 }
-export default HeaderNavigation;
+export default HeaderNavigation

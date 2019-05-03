@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './Button.module.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './Button.module.scss'
 
 const Button = ({ secondary, clickFn, children, ...props}) =>{
 
@@ -13,7 +13,7 @@ const Button = ({ secondary, clickFn, children, ...props}) =>{
             {children}
         </button>
     )
-};
+}
 
 Button.propTypes = {
     secondary: PropTypes.bool,
@@ -23,4 +23,4 @@ Button.defaultProps = {
     secondary: false,
 }
 
-export default Button ;
+export default Button

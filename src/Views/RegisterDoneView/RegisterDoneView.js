@@ -1,6 +1,7 @@
-import React from 'react';
-// import { Link } from 'react-router-dom';
-import styles from '../ActivationView/ActivationView.module.scss';
+import React from 'react'
+// import { Link } from 'react-router-dom'
+// import { appUrls } from '../../urls'
+import styles from '../ActivationView/ActivationView.module.scss'
 
 const ActivationView = () => (
     <div className={styles.wrapper}>
@@ -17,4 +18,4 @@ const ActivationView = () => (
     </div>
 )
 
-export default ActivationView;
+export default ActivationView

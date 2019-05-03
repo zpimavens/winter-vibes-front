@@ -1,20 +1,21 @@
-import React from 'react';
-import './index.css';
-import { Switch, withRouter} from 'react-router-dom';
-import AppContext from '../../context';
+import React from 'react'
+import { Switch, withRouter} from 'react-router-dom'
+import AppContext from '../../context'
+import { appUrls, requestUrls } from '../../urls'
 
-import Header from '../../components/Header/Header';
-import UserView from '../UserView/UserView';
-import MainView from '../MainView/MainView';
-import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView';
-import LoginView from '../LoginView/LoginView';
-import RegisterView from '../RegisterView/RegisterView';
-import UsersSearchView from '../../Views/UsersSearchView/UsersSearchView';
-import PrivateRoute from '../../components/PrivateRoute/PrivateRoute';
-import PublicRoute from '../../components/PublicRoute/PublicRoute';
-import ActivationView from '../ActivationView/ActivationView';
-import RegisterDoneView from '../../Views/RegisterDoneView/RegisterDoneView';
-import EditProfileView from '../EditProfileView/EditProfileView';
+import Header from '../../components/Header/Header'
+import UserView from '../UserView/UserView'
+import MainView from '../MainView/MainView'
+import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView'
+import LoginView from '../LoginView/LoginView'
+import RegisterView from '../RegisterView/RegisterView'
+import UsersSearchView from '../../Views/UsersSearchView/UsersSearchView'
+import ActivationView from '../ActivationView/ActivationView'
+import PrivateRoute from '../../components/PrivateRoute/PrivateRoute'
+import PublicRoute from '../../components/PublicRoute/PublicRoute'
+import RegisterDoneView from '../../Views/RegisterDoneView/RegisterDoneView'
+import EditProfileView from '../EditProfileView/EditProfileView'
+import '../../assets/styles/index.scss'
 
 
 class App extends React.Component{
@@ -25,13 +26,13 @@ class App extends React.Component{
             image: '',
             logged: '',
         },
-    };
+    }
 
     handleLogOut = (e) => {
-        e.preventDefault();
-        fetch('/api/logOut', {
+        e.preventDefault()
+        fetch(requestUrls.LOGOUT, {
             method: 'POST',
-            body: JSON.stringify(this.state),
+            body: '',
             headers: {
                 'Content-Type': 'application/json'
             }
@@ -41,24 +42,18 @@ class App extends React.Component{
                 this.setState({
                     user: {logged: false}
                 })
-                this.props.history.push('/login');
-            } else {
-                const error = new Error(res.status);
-                throw error;
+                this.props.history.push(appUrls.LOGIN)
             }
         })
-        .catch(err => {
-            console.error(err);
-        });
-    };
+    }
 
 
     fetchUserData= ()=>{
-        fetch('/api/getCurrentUser')
+        fetch(requestUrls.CURRENT_USER)
         .then(response => {
             if(response.status===200)
-                return response.json();
-                else
+                return response.json()
+            else
                 throw new Error(response.status)
         })
         .then(([data]) => {
@@ -70,12 +65,16 @@ class App extends React.Component{
                 }
             })
         })
-        .catch(error=>(null));
+        .catch()
     }
     componentDidMount() {
-        if(fetch('/checkToken').then(res=>res.status===200)){
-            this.fetchUserData();
-        }
+
+        fetch(requestUrls.CHECK_TOKEN)
+        .then(res =>{
+            if ( res.status === 200){
+                this.fetchUserData()
+            }}
+        ) 
     }
 
     render(){   
@@ -91,50 +90,50 @@ class App extends React.Component{
                 {this.state.user.logged && <Header /> }
                 <Switch>
                     <PrivateRoute 
-                        exact path='/' 
+                        exact path={appUrls.ROOT} 
                         component={MainView}
                     />
                     <PublicRoute 
-                        path='/login' 
+                        path={appUrls.LOGIN} 
                         component={LoginView} 
                         fetchUserData={this.fetchUserData} 
                         history={this.props.history}
                     />
                     <PublicRoute 
-                        path='/register' 
+                        path={appUrls.REGISTER} 
                         component={RegisterView} 
                         history={this.props.history}
                     />
                     <PublicRoute 
-                        path='/activate' 
+                        path={appUrls.ACTIVATE}
                         component={ActivationView} 
                     />
                     <PublicRoute 
-                        path='/registersuccess' 
+                        path={appUrls.REGISTER_SUCCESS}
                         component={RegisterDoneView} 
                     />
                     <PrivateRoute 
-                        path='/user' 
+                        path={appUrls.USER}
                         component={UserView} 
                         history={this.props.history} 
                         user={this.state.user}
                     />
                     <PrivateRoute 
-                        path='/search-areas' 
+                        path={appUrls.SEARCH_AREAS} 
                         component={SkiAreaSearchView} 
                     />
                     <PrivateRoute 
-                        path='/search-users' 
+                        path={appUrls.SEARCH_USERS} 
                         component={UsersSearchView} 
                     />
                     <PrivateRoute 
-                        path='/editprofile' 
+                        path={appUrls.EDIT_PROFILE} 
                         component={EditProfileView} 
                     />
                 </Switch>
             </AppContext.Provider>    
         )
     }
-};
+}
 
-export default withRouter(App);
+export default withRouter(App)

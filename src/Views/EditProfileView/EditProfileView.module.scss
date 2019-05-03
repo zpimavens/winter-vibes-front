@@ -3,14 +3,24 @@ $progr-bar-shadow-color: #464646a2;
 $progr-bar-thumb-border-color: #524e4e;
 $progr-bar-border-color: #383737;
 
+.container{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .formWrapper{
     display: flex;
     flex-direction: column;
-    max-width: 500px;
-    margin: 50px auto;
+    max-width: 600px;
+    margin: 50px auto 10px;
     align-items: center;
     justify-content: center;
     padding: 0 40px;
+
+    & + Button{
+        margin: 10px auto ;
+
+    }
 }
 .formTitle{
     margin-bottom: 50px;

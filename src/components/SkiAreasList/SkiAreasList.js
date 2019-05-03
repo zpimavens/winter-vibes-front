@@ -1,5 +1,5 @@
-import React from 'react';
-import SkiAreasListItem from './SkiAreasListItem';
+import React from 'react'
+import SkiAreasListItem from './SkiAreasListItem'
 import styles from './SkiAreasList.module.scss'
 
 const SkiAreaList = ({areas, ...props})=>(
@@ -15,4 +15,4 @@ const SkiAreaList = ({areas, ...props})=>(
         </ul>
     </div>
 )
-export default SkiAreaList;
+export default SkiAreaList

@@ -1,5 +1,5 @@
-import React from 'react';
-import styles from './SkiAreasListItem.module.scss';
+import React from 'react'
+import styles from './SkiAreasListItem.module.scss'
 
 const SkiAreasListItem = ({name})=>(
     <li
@@ -9,4 +9,4 @@ const SkiAreasListItem = ({name})=>(
     {name}
     </li>
 )
-export default SkiAreasListItem;
+export default SkiAreasListItem

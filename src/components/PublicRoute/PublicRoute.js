@@ -1,6 +1,7 @@
-import React from 'react';
-import {Route, Redirect} from 'react-router-dom';
-import PropTypes from 'prop-types';
+import React from 'react'
+import { Route, Redirect } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { requestUrls } from '../../urls'
 
 class PublicRoute extends React.Component {
     state = {
@@ -8,18 +9,19 @@ class PublicRoute extends React.Component {
         isAuthenticated: false,
     }
     componentDidMount() {
-        fetch('/checkToken')
+        fetch(requestUrls.CHECK_TOKEN)
         .then((res) => {
             this.setState({
                 loading: false,
                 isAuthenticated: res.status===200,
-            });
-        });
+            })
+        })
+        .catch()
     }
     render() {
-        const { component: Component, ...rest } = this.props;
+        const { component: Component, ...rest } = this.props
         if (this.state.loading) {
-            return null;
+            return null
         } else {
             return (
                 <Route {...rest} render={props => (
@@ -36,4 +38,4 @@ class PublicRoute extends React.Component {
 PublicRoute.propTypes={
     component: PropTypes.func.isRequired,
 }
-export default PublicRoute;
+export default PublicRoute

@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
-import Input from '../../components/Input/Input';
-import Button from '../../components/Button/Button';
-import UsersList from '../../components/UsersList/UsersList';
-import styles from './UsersSearchView.module.scss';
+import React, { Component } from 'react'
+import { requestUrls } from '../../urls'
+import Input from '../../components/Input/Input'
+import Button from '../../components/Button/Button'
+import UsersList from '../../components/UsersList/UsersList'
+import styles from './UsersSearchView.module.scss'
 
 class UsersSearchView extends Component {
     state={
@@ -11,40 +12,42 @@ class UsersSearchView extends Component {
     }
 
     handleInputChange = (e) => {
-        const { value, name } = e.target;
+        const { value, name } = e.target
         this.setState(prevState=>({
             [name]: value,
             usersFound: prevState.usersFound,   
-        }));
+        }))
     }
 
     getSearchedUsers = ()=>{
-        fetch('/api/userSearch', {
+        const { usersFound, ...username } = this.state 
+
+        this.state.username &&
+        fetch(requestUrls.SEARCH_USER, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  
             },
-            body: JSON.stringify(this.state)
+            body: JSON.stringify(username)
         })
         .then(response => {
             if (response.status === 200)
-                return response.json();
+                return response.json()
             else
                 throw new Error(response.status)
         })
         .then((data) => {
-            
             this.setState(prevState=>({
                 usersFound: data,
                 userSearch: prevState.userSearch,
             }))
         })
-        .catch(error => (console.error(error)));
+        .catch()
         }
 
     handleSearch=(e)=>{
-        e.preventDefault();
-        this.getSearchedUsers();
+        e.preventDefault()
+        this.getSearchedUsers()
     }
 
     render(){
@@ -74,4 +77,4 @@ class UsersSearchView extends Component {
         )
     }
 }
-export default UsersSearchView;
+export default UsersSearchView

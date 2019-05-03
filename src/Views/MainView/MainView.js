@@ -1,12 +1,12 @@
-import React from 'react';
+import React from 'react'
 
 const MainView = ()=>{
 
     return(
         <>
-        <h1>kiedys tu bedzie jakis widok</h1>
+        <h1>kiedys tu beda grupy</h1>
         </>
     )
-};
+}
 
-export default MainView;
+export default MainView

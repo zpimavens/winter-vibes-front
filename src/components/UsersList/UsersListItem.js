@@ -1,7 +1,6 @@
-import React from 'react';
-import styles from './UsersListItem.module.scss';
-import PropTypes from 'prop-types';
-import UserAvatar from '../UserAvatar/UserAvatar';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './UsersListItem.module.scss'
 
 class UsersListItem extends React.Component{
     
@@ -10,17 +9,16 @@ class UsersListItem extends React.Component{
     }
     
     render(){
-        const {username, image, level, skis, city} = this.props;
+        const {username, image, level, skis, city} = this.props
         return(
             <li 
                 className={styles.wrapper}
                 onClick={this.handleClick}
                 id={username}
             >
-                <UserAvatar 
-                    avatarType='listType'
-                    image={image}
-                    username={username}
+                <img 
+                    className={styles.avatar}
+                    src={image}
                     alt={username}
                 />
                 <ul className={styles.userInfo}>
@@ -53,4 +51,4 @@ UsersListItem.dfaultProps={
     level: 0,
 }
 
-export default UsersListItem;
+export default UsersListItem

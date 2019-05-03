@@ -1,9 +1,9 @@
-import React from 'react';
-import styles from './Form.module.scss';
-import AppContext from '../../context';
-import Input from '../Input/Input';
-import Button from '../Button/Button';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import AppContext from '../../context'
+import Input from '../Input/Input'
+import Button from '../Button/Button'
+import styles from './Form.module.scss'
 
 const Form = ({formSubmitFnc, handleInputChange, formType})=>{
     return(
@@ -52,4 +52,4 @@ Form.propTypes = {
     handleInputChange: PropTypes.func.isRequired,
 }
 
-export default Form;
+export default Form

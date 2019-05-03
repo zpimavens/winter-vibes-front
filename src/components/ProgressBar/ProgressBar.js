@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './ProgressBar.module.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './ProgressBar.module.scss'
 
 const ProgressBar = ({progress})=>(
     <div className={styles.wrapper}>
@@ -12,4 +12,4 @@ const ProgressBar = ({progress})=>(
 ProgressBar.propTypes={
     progress: PropTypes.number,
 }
-export default ProgressBar;
+export default ProgressBar

@@ -1,6 +1,6 @@
-import React from 'react';
-import styles from './FormErrors.module.scss';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import styles from './FormErrors.module.scss'
 
 const FormErrors = ({formErrors})=>
 (
@@ -11,7 +11,7 @@ const FormErrors = ({formErrors})=>
                     <p key={i}>{formErrors[fieldName]}</p>
                 )
             } else {
-                return '';
+                return ''
             }
         })}
     </div>
@@ -20,4 +20,4 @@ FormErrors.propTypes={
     formErrors: PropTypes.object,
 }
 
-export default FormErrors;
+export default FormErrors
