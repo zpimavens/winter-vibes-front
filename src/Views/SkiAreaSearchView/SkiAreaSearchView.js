@@ -116,7 +116,9 @@ class SkiAreaSearchView extends Component{
             ]
         })
         //send search data, retrieve ski arenas
+        
     }
+    
   
     render(){
         return(

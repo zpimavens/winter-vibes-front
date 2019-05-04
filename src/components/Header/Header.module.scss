@@ -1,11 +1,11 @@
+@import '../../assets/styles/Variables.scss';
 .wrapper{
     display: flex;
-    background-color: lightblue;
     align-items: center;
     justify-content: space-between;
     padding: 15px 5vw;
-    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
-    
+    background-image: $blue-gradient;
+    box-shadow: 0 1px 8px rgba(184, 184, 184, 0.808);
 }
 .button{
     display: none;

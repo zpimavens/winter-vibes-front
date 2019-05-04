@@ -1,12 +1,13 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import styles from './SkiAreasListItem.module.scss'
 
-const SkiAreasListItem = ({name})=>(
+const SkiAreasListItem = ({ name, history })=>(
     <li
         className={styles.item}
-        onClick={()=>{console.log(name)}}
+        onClick={()=>history.push('/area')}
     >
     {name}
     </li>
 )
-export default SkiAreasListItem
+export default withRouter(SkiAreasListItem)

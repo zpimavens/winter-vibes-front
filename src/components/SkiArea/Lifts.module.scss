@@ -1,0 +1,28 @@
+@import '../../assets/styles/Variables.scss';
+.container{
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    
+    &>div{
+        font-weight: 800;
+        color: white;
+        border-radius: 100px;
+        padding: 8px 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 5px;
+        background-image: $blue-gradient;
+        width: 90px;
+
+    }
+    & img{
+        margin-right: 8px;
+        height: 25px;
+    }
+    &>h3{
+        font-weight: 300;
+        
+    }
+}

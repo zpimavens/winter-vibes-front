@@ -9,14 +9,14 @@ class UsersSearchView extends Component {
     state={
         usersFound: [],
         username: '',
+        message: 'Wpisz cos zeby szukać co nie'
     }
 
     handleInputChange = (e) => {
         const { value, name } = e.target
-        this.setState(prevState=>({
-            [name]: value,
-            usersFound: prevState.usersFound,   
-        }))
+        this.setState({
+            [name]: value   
+        })
     }
 
     getSearchedUsers = ()=>{
@@ -31,16 +31,30 @@ class UsersSearchView extends Component {
             body: JSON.stringify(username)
         })
         .then(response => {
-            if (response.status === 200)
+            if (response.status === 200){
                 return response.json()
-            else
+            }
+            else if(response.status === 404){
+                this.setState({
+                    message: 'Nic nie znaleźliśmy :( \n Spróbuj ponownie.'
+                })
+            }
+            else{
+                this.setState({
+                    message: 'Coś poszło nie tak. Spróbuj ponownie później.'
+                })
                 throw new Error(response.status)
+            }
         })
         .then((data) => {
-            this.setState(prevState=>({
-                usersFound: data,
-                userSearch: prevState.userSearch,
-            }))
+            if(data.length>0)
+                this.setState({
+                    usersFound: data
+                })
+            else
+                this.setState({
+                    message: 'Nic nie znaleźliśmy :('
+                })
         })
         .catch()
         }
@@ -54,25 +68,30 @@ class UsersSearchView extends Component {
         return(
             <div className={styles.wrapper}>
                 <div className={styles.formWrapper}>
-                <h2 
-                    className={styles.title}
-                >
-                WYSZUKAJ UŻYTKOWNIKÓW
-                </h2>
-                <form className={styles.form}>
-                    <Input
-                        name='username'
-                        placeholder='Szukaj użytkowników...'
-                        onChange={this.handleInputChange}
+                    <h2 
+                        className={styles.title}
+                    >
+                    WYSZUKAJ UŻYTKOWNIKÓW
+                    </h2>
+                    <form className={styles.form}>
+                        <Input
+                            name='username'
+                            placeholder='Szukaj użytkowników...'
+                            onChange={this.handleInputChange}
+                        />
+                        <Button 
+                            onClick={this.handleSearch}
+                        >Szukaj</Button>
+                    </form>
+                </div>
+                {this.state.usersFound.length>0 ? (
+                    <UsersList 
+                        users={this.state.usersFound}
                     />
-                    <Button 
-                        onClick={this.handleSearch}
-                    >Szukaj</Button>
-                </form>
-            </div>
-                <UsersList 
-                    users={this.state.usersFound}
-                />
+                    ):(
+                        <p>{this.state.message}</p>
+                    )
+                }
             </div>
         )
     }

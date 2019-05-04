@@ -1,13 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import AppContext from '../../context'
 import UserItem from './UsersListItem'
 import styles from './UsersList.module.scss'
 
-const UsersList =({users})=>  (
-    <AppContext.Consumer>
-    {(context) => (
-        <div className={styles.wrapper}>
+const UsersList =({ users })=>  (
+    <div className={styles.wrapper}>
         {users.length ? 
             <ul className={styles.userList}>
                 {users.map((user)=>(
@@ -18,11 +15,9 @@ const UsersList =({users})=>  (
                 ))}
             </ul>
             :
-            <h2>Nie znaleziono uzytkowników</h2>
+            null
         }
-        </div>
-    )}
-    </AppContext.Consumer>
+    </div>
 )
 UsersList.propTypes={
     users: PropTypes.array.isRequired,

@@ -5,6 +5,7 @@ export const appUrls = {
     ACTIVATE: '/activate',
     REGISTER_SUCCESS: '/register-success',
     USER: '/user',
+    AREA: '/area',
     SEARCH_AREAS: '/search-areas',
     SEARCH_USERS: '/search-users',
     EDIT_PROFILE: '/editprofile',

@@ -1,3 +1,5 @@
+@import '../../assets//styles/Variables.scss';
+
 .button{
     color: white;
     padding: 5px 20px;
@@ -6,14 +8,16 @@
     height: 30px;
     width: 300px;
     font-size: .9rem;
-    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
+    background-image: $blue-gradient;
     outline: none;
     cursor: pointer;
-    transition: .5s;
+    transition: .2s;
 
+    &:hover{
+        transform: scale(0.95)
+    }
     &:active{
-        background-color: white;
-        color: darkblue;
+        transform: scale(1)
     }
 
     &Secondary{
@@ -23,5 +27,4 @@
         border: .5px solid white;
         font-weight: 300;
     }
-
 }
