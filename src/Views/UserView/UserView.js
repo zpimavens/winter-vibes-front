@@ -5,6 +5,7 @@ import { appUrls, requestUrls } from '../../urls'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import Button from '../../components/Button/Button'
+import Loader from '../../components/Loader/Loader'
 import styles from './UserView.module.scss'
 
 class UserView extends Component{
@@ -70,6 +71,7 @@ class UserView extends Component{
                     (window.location.pathname === "/user" || window.location.pathname === "/user/") ?
                     (<Redirect to={`/user/${context.user.username}`} />
                     ):(
+                        this.state.username.length > 0 ?
                         <div className={styles.wrapper}>
                             <UserAvatar 
                                 username={username}
@@ -90,6 +92,8 @@ class UserView extends Component{
                             )}  
                            
                         </div>
+                        :
+                        <Loader />
                     )
                 )}
             </AppContext.Consumer>

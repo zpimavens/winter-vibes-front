@@ -53,7 +53,8 @@ class UsersSearchView extends Component {
                 })
             else
                 this.setState({
-                    message: 'Nic nie znaleźliśmy :('
+                    message: 'Nic nie znaleźliśmy :(',
+                    usersFound: []
                 })
         })
         .catch()

@@ -3,6 +3,7 @@ import Input from '../../components/Input/Input'
 import Button from '../../components/Button/Button'
 import SkiAreasList from '../../components/SkiAreasList/SkiAreasList'
 import styles from './SkiAreaSearchView.module.scss'
+import Loader from '../../components/Loader/Loader';
 
 class SkiAreaSearchView extends Component{
 //in progress
@@ -13,7 +14,8 @@ class SkiAreaSearchView extends Component{
         school: false,
         nightride: false,
         snowpark: false,
-        data: []
+        foundData: [],
+        message: "Wpisz i wciśnij 'Szukaj' "
     }
 
     handleInputChange = (e) => {
@@ -31,92 +33,40 @@ class SkiAreaSearchView extends Component{
     }
 
     handleSearch=()=>{
-        this.setState({
-            data:[
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-                {
-                    name: 'Arena 1',
-
-                },
-            ]
-        })
-        //send search data, retrieve ski arenas
         
+        //send search data, retrieve ski arenas
+        this.setState({
+            message: false,
+            foundData: []
+        })
+        fetch('/api/skiArenaSearch', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({...this.state.name})
+        })
+        .then(res=>{
+            if(res.status === 200){
+                return res.json()
+            }else if(res.status === 404){
+                this.setState({
+                    message: 'Niestety, nic nie znaleźliśmy :('
+                })
+            }else{
+                this.setState({
+                    message: 'Coś poszło nie tak. Spróbuj ponownie później.'
+                })
+                throw new Error(res.status)
+            }
+        })
+        .then(data=>{
+            this.setState({
+                foundData: data
+            })
+            console.log(data[0])
+        })
+        .catch()
     }
     
   
@@ -187,9 +137,21 @@ class SkiAreaSearchView extends Component{
                         onClick={this.handleSearch}
                     >Szukaj</Button>
                 </div>
-                <SkiAreasList
-                    areas={this.state.data}
-                />
+                
+                    <div className={styles.loader}>
+                    </div>
+                
+                {this.state.foundData.length > 0 ?
+                (
+                    <SkiAreasList
+                        areas={this.state.foundData}
+                    />
+                ):(
+                    this.state.message===false? <Loader /> 
+                    :  
+                    <p>{this.state.message}</p>
+                )
+                }
             </div>
         )
     }

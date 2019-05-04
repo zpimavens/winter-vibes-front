@@ -9,7 +9,7 @@ const SkiAreaList = ({areas, ...props})=>(
             {areas.map(area=>
                 <SkiAreasListItem
                     name={area.name}
-                    key={area.name}
+                    key={area._id}
                 />
             )}
         </ul>
