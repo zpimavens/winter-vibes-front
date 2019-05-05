@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import Input from '../../components/Inputs/Input'
-import Button from '../../components/Button/Button'
 import SkiAreasList from '../../components/SkiAreasList/SkiAreasList'
+import Input from '../../components/Inputs/Input'
+import Checkbox from '../../components/Inputs/Checkbox'
+import DropDown from '../../components/Inputs/DropDown'
+import Button from '../../components/Button/Button'
+import Loader from '../../components/Loader/Loader'
 import styles from './SkiAreaSearchView.module.scss'
-import Loader from '../../components/Loader/Loader';
-import Checkbox from '../../components/Inputs/Checkbox';
 
 class SkiAreaSearchView extends Component{
 //in progress
@@ -67,6 +68,11 @@ class SkiAreaSearchView extends Component{
             }
         })
         .then(data=>{
+            if(data.length===0)
+            this.setState({
+                message: 'Niestety, nic nie znaleźliśmy :('
+            })
+            else
             this.setState({
                 foundData: data
             })
@@ -77,6 +83,7 @@ class SkiAreaSearchView extends Component{
     
   
     render(){
+        const countryOptions = ['Austria', 'Francja', 'Polska', 'Włochy']
         return(
             <div className={styles.wrapper}>
                 <div className={styles.formWrapper}>
@@ -88,9 +95,10 @@ class SkiAreaSearchView extends Component{
                             onChange={this.handleInputChange}
                             value={this.state.name}
                         />
-                        <Input
+                        <DropDown 
                             name='country'
-                            placeholder='Kraj'
+                            options={countryOptions}
+                            placeholder='Wybierz kraj'
                             onChange={this.handleInputChange}
                             value={this.state.country}
                         />

@@ -1,0 +1,9 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    height: 30px;
+    border: .5px solid $border-dark;
+    border-radius: 15px;
+    padding: 0 30px;
+    max-width: 300px;
+}

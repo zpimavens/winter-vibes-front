@@ -13,7 +13,9 @@ class RegisterView extends Component{
         email: '',
         username: '',
         password: '',
+        passwordRep: '',
         formMessages: { email: '', password: '' , username: ''},
+
         emailValid: false,
         passwordValid: false,
         formValid: false,
@@ -31,8 +33,10 @@ class RegisterView extends Component{
                 fieldValidationErrors.email = emailValid ? '' : 'Niepoprawny adres email.'
                 break
             case 'password':
-                passwordValid = value.length >= 6
-                fieldValidationErrors.password = passwordValid ? '' : 'Hasło jest za krótkie, min 6 znaków.'
+            case 'passwordRep':
+                passwordValid = value.length >=6 && this.state.password===this.state.passwordRep
+                fieldValidationErrors.password = value.length<6 ? 'Hasło jest za krótkie, min 6 znaków.' :
+                    this.state.password!==this.state.passwordRep ? 'Hasła nie są identyczne.'  : ''
                 break
             default:
                 break
@@ -41,10 +45,9 @@ class RegisterView extends Component{
         this.setState({
             formMessages: fieldValidationErrors,
             emailValid: emailValid,
-            passwordValid: passwordValid
+            passwordValid: passwordValid,
         }, this.validateForm)
     }
-    
 
     validateForm() {
         this.setState({ formValid: this.state.emailValid && this.state.passwordValid })
@@ -100,6 +103,7 @@ class RegisterView extends Component{
                     formType='register'
                     handleInputChange={this.handleInputChange}
                     formSubmitFnc={this.handleRegister}
+                    autoComplete='off'
                 />
                 <Link 
                     className={styles.link} 

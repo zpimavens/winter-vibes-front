@@ -5,11 +5,21 @@ import Input from '../Inputs/Input'
 import Button from '../Button/Button'
 import styles from './Form.module.scss'
 
-const Form = ({formSubmitFnc, handleInputChange, formType})=>{
+const Form = ({formSubmitFnc, handleInputChange, formType, autoComplete})=>{
     return(
         <AppContext.Consumer>
             {(context)=>(
-                <form className={styles.formWrapper}>
+                <form 
+                    className={styles.formWrapper}
+                    autoComplete={autoComplete}
+                >
+                    <Input
+                        name='email'
+                        placeholder='E-MAIL'
+                        type='email'
+                        onChange={handleInputChange}
+                        value={context.email}
+                    />
                     {formType==='register' && 
                         <Input
                             name='username'
@@ -20,19 +30,21 @@ const Form = ({formSubmitFnc, handleInputChange, formType})=>{
                         />
                     }
                     <Input
-                        name='email'
-                        placeholder='E-MAIL'
-                        type='email'
-                        onChange={handleInputChange}
-                        value={context.email}
-                    />
-                    <Input
                         name='password'
                         placeholder='HASŁO'
                         type='password'
                         onChange={handleInputChange}
                         value={context.password}
                     />
+                    {formType==='register' && 
+                        <Input
+                            name='passwordRep'
+                            placeholder='POWTÓRZ HASŁO'
+                            type='password'
+                            onChange={handleInputChange}
+                            value={context.passwordRep}
+                        />
+                    }
                     <Button
                         secondary={true}
                         onClick={formSubmitFnc}

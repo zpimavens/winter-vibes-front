@@ -1,8 +1,8 @@
 import React from 'react'
-
+import PropTypes from 'prop-types'
 import styles from './Checkbox.module.scss'
 
-const Checkbox = ({ name, label, ...props }) =>(
+const CheckBox = ({ name, label, ...props }) =>(
 
     <label htmlFor={name}>
         <input
@@ -17,5 +17,8 @@ const Checkbox = ({ name, label, ...props }) =>(
     </label>
    
 )
-
-export default Checkbox
+CheckBox.propTypes={
+    name: PropTypes.string.isRequired,
+    label: PropTypes.string.isRequired,
+}
+export default CheckBox
