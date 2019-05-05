@@ -1,13 +1,3 @@
-@import '../../assets/styles/Variables.scss';
-
-.formItem{
-    height: 30px;
-    margin-bottom: 20px;
-    border: .5px solid $border-dark;
-    border-radius: 15px;
-    padding: 15px 30px;
-    width: 100%;
-}
 
 .checkbox{
     -webkit-appearance: none;
@@ -18,6 +8,7 @@
     border-radius: 3px;
     display: inline-block;
     position: relative;
+    margin-right: 8px;
 }
 
 .checkbox:active, .checkbox:checked:active{
@@ -37,5 +28,3 @@
     left: 4px;
     color: #137492;
 }
-
-

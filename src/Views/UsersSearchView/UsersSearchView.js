@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { requestUrls } from '../../urls'
-import Input from '../../components/Input/Input'
+import Input from '../../components/Inputs/Input'
 import Button from '../../components/Button/Button'
 import UsersList from '../../components/UsersList/UsersList'
 import styles from './UsersSearchView.module.scss'
+import Loader from '../../components/Loader/Loader';
 
 class UsersSearchView extends Component {
     state={
@@ -18,17 +19,23 @@ class UsersSearchView extends Component {
             [name]: value   
         })
     }
+    clearPreviousData=()=>{
+        this.setState({
+            message: '',
+            usersFound: []
+        })
+    }
 
     getSearchedUsers = ()=>{
-        const { usersFound, ...username } = this.state 
+         
+        this.clearPreviousData()
 
-        this.state.username &&
         fetch(requestUrls.SEARCH_USER, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",  
             },
-            body: JSON.stringify(username)
+            body: JSON.stringify({username: this.state.username})
         })
         .then(response => {
             if (response.status === 200){
@@ -54,7 +61,6 @@ class UsersSearchView extends Component {
             else
                 this.setState({
                     message: 'Nic nie znaleźliśmy :(',
-                    usersFound: []
                 })
         })
         .catch()
@@ -85,12 +91,13 @@ class UsersSearchView extends Component {
                         >Szukaj</Button>
                     </form>
                 </div>
-                {this.state.usersFound.length>0 ? (
-                    <UsersList 
-                        users={this.state.usersFound}
-                    />
+                {!this.state.usersFound || this.state.usersFound.length <= 0 ? 
+                    (
+                       this.state.message===''? <Loader/> : <p>{this.state.message}</p>
                     ):(
-                        <p>{this.state.message}</p>
+                        <UsersList 
+                            users={this.state.usersFound}
+                        />
                     )
                 }
             </div>

@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import AppContext from '../../context'
-import Input from '../Input/Input'
+import Input from '../Inputs/Input'
 import Button from '../Button/Button'
 import styles from './Form.module.scss'
 

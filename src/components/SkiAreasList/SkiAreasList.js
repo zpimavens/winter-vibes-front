@@ -10,6 +10,8 @@ const SkiAreaList = ({areas, ...props})=>(
                 <SkiAreasListItem
                     name={area.name}
                     key={area._id}
+                    id={area._id}
+                    country={area.country}
                 />
             )}
         </ul>

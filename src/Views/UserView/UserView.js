@@ -29,7 +29,7 @@ class UserView extends Component{
         
     }
     uptadeProfileInfo=()=>{
-        const username = window.location.pathname.slice(6).replace(/%20/g, " ")
+        const username = window.location.pathname.replace('/user/','').replace(/%20/g, " ")
         
         fetch(requestUrls.GET_USER_BY_USERNAME, {
             method: 'POST',

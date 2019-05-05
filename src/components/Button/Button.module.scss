@@ -13,7 +13,7 @@
     cursor: pointer;
     transition: .2s;
 
-    &:hover{
+    &:hover, &:focus{
         transform: scale(0.95)
     }
     &:active{

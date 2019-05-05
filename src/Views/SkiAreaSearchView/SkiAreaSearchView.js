@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-import Input from '../../components/Input/Input'
+import Input from '../../components/Inputs/Input'
 import Button from '../../components/Button/Button'
 import SkiAreasList from '../../components/SkiAreasList/SkiAreasList'
 import styles from './SkiAreaSearchView.module.scss'
 import Loader from '../../components/Loader/Loader';
+import Checkbox from '../../components/Inputs/Checkbox';
 
 class SkiAreaSearchView extends Component{
 //in progress
     state={
         country: '',
         name: '',
-        rental: false,
-        school: false,
-        nightride: false,
+        skiRental: false,
+        skiSchool: false,
+        nightRide: false,
         snowpark: false,
         foundData: [],
         message: "Wpisz i wciśnij 'Szukaj' "
@@ -31,20 +32,25 @@ class SkiAreaSearchView extends Component{
             }))
         }
     }
-
-    handleSearch=()=>{
-        
-        //send search data, retrieve ski arenas
+    clearFoundData = () => {
         this.setState({
-            message: false,
+            message: '',
             foundData: []
         })
+    }
+
+    handleSearch = () => {
+        
+        const { message, foundData, ...searchData } = this.state;
+
+        this.clearFoundData();
+
         fetch('/api/skiArenaSearch', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({...this.state.name})
+            body: JSON.stringify(searchData)
         })
         .then(res=>{
             if(res.status === 200){
@@ -64,7 +70,7 @@ class SkiAreaSearchView extends Component{
             this.setState({
                 foundData: data
             })
-            console.log(data[0])
+            
         })
         .catch()
     }
@@ -88,68 +94,46 @@ class SkiAreaSearchView extends Component{
                             onChange={this.handleInputChange}
                             value={this.state.country}
                         />
-                        <label 
-                            htmlFor='rental'
-                        >
-                            <Input
-                                name='rental'
-                                type='checkbox'
-                                onChange={this.handleInputChange}
-                                checked={this.state.rental}
-                            />
-                        WYPOŻYCZALNIA
-                        </label>
-                        <label 
-                            htmlFor='school'
-                        >
-                            <Input
-                                name='school'
-                                type='checkbox'
-                                onChange={this.handleInputChange}
-                                checked={this.state.school}
-                            />
-                        SZKÓŁKA NARCIARSKA
-                        </label>
-                        <label 
-                            htmlFor='nightride'
-                        >
-                            <Input
-                                name='nightride'
-                                type='checkbox'
-                                onChange={this.handleInputChange}
-                                checked={this.state.nightride}
-                            />
-                        NOCNA JAZDA
-                        </label>
-                        <label 
-                            htmlFor='snowpark'
-                        >
-                            <Input
-                                name='snowpark'
-                                type='checkbox'
-                                onChange={this.handleInputChange}
-                                checked={this.state.snowpark}
-                            />
-                        SNOWPARK
-                        </label>
+                        <Checkbox
+                            name='skiRental'
+                            onChange={this.handleInputChange}
+                            checked={this.state.skiRental}
+                            label='WYPOŻYCZALNIA'
+                        />
+                        <Checkbox
+                            name='skiSchool'
+                            onChange={this.handleInputChange}
+                            checked={this.state.skiSchool}
+                            label='SZKÓŁKA NARCIARSKA'
+                        />
+                        <Checkbox
+                            name='nightRide'
+                            onChange={this.handleInputChange}
+                            checked={this.state.nightRide}
+                            label='NOCNA JAZDA'
+                        />
+                        <Checkbox
+                            name='snowpark'
+                            onChange={this.handleInputChange}
+                            checked={this.state.snowpark}
+                            label='SNOWPARK'
+                        />
                     </form>
                     <Button
                         onClick={this.handleSearch}
                     >Szukaj</Button>
                 </div>
                 
-                    <div className={styles.loader}>
-                    </div>
-                
-                {this.state.foundData.length > 0 ?
+                {!this.state.foundData || this.state.foundData.length <= 0  ?
                 (
-                    <SkiAreasList
-                        areas={this.state.foundData}
-                    />
-                ):(
-                    this.state.message===false? <Loader /> 
+                    this.state.message === '' ? <Loader /> 
                     :  
                     <p>{this.state.message}</p>
+
+                ):(
+                    <SkiAreasList
+                    areas={this.state.foundData}
+                    />
                 )
                 }
             </div>

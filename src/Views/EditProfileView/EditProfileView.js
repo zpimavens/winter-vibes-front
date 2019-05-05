@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { appUrls, requestUrls } from '../../urls'
-import Input from '../../components/Input/Input'
+import Input from '../../components/Inputs/Input'
 import Button from '../../components/Button/Button'
 import FormMessages from '../../components/Form/FormMessages'
 import styles from './EditProfileView.module.scss'

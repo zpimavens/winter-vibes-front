@@ -1,43 +1,85 @@
 import React, { Component } from 'react'
-import styles from './SkiAreaView.module.scss'
-import Routes from '../../components/SkiArea/Routes';
-import Lifts from '../../components/SkiArea/Lifts';
+import { requestUrls } from '../../urls'
+import Routes from '../../components/SkiArea/Routes'
+import Lifts from '../../components/SkiArea/Lifts'
 import Conveniences from '../../components/SkiArea/Conveniences'
+import Button from '../../components/Button/Button'
+import Loader from '../../components/Loader/Loader';
+import styles from './SkiAreaView.module.scss'
 import image from '../../assets/images/skiareabg.jpg'
-import Button from '../../components/Button/Button';
 
 
 class SkiArea extends Component {
 
     state = {
-        _id: { $oid: "5cc7b821592dbc8f51e0837c" },
-        name: "Brixen im Thale - SkiWelt",
-        description: "WOW! SUCH GREAT OFFERS",
-        country: "Austria",
-        openHours: "08:30 - 16:00",
-        easyRoute: "122 km (115)",
-        mediumRoute: "129 km (86)",
-        hardRoute: "33 km (24)",
-        freeride: "1,3 km",
-        draglift: 5,
-        chairlift: 15,
-        gondolas: 4,
-        snowpark: ["Boardercross", "Funslopes", "Funparks"],
-        school: true,
-        nightride: true,
-        rental: true,
+        area: {
+            id:  "",
+            name: "",
+            description: "",
+            country: "",
+            openHours: "",
+            easyRoute: "",
+            mediumRoute: "",
+            hardRoute: "",
+            freeride: "",
+            dragLift: 0,
+            chairLift: 0,
+            gondolas: 0,
+            snowpark: [],
+            skiSchool: '',
+            nightRide: false,
+            skiRental: '',
+        },
         website: 'https://www.skiwelt.at/en/brixen-im-thale.html',
+        message: 'loading'
+    }
 
+    fetchAreaData = ()=>{
+        const path = window.location.pathname.replace('/area/','')
+
+        fetch(requestUrls.GET_AREA_BY_ID, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id: path }),
+        })
+        .then(res=>{
+            if (res.status === 200) {
+                return res.json()
+
+            } else {
+                const error = new Error(res.status)
+                throw error
+            }
+        })
+        .then(([data])=>{
+            this.setState({
+                message: '',
+                area : data,
+            })
+        })
+        .catch(err=>{
+            this.setState({
+                message: 'Coś poszło nie tak, spróbuj ponownie później'
+            })
+        })
+    }
+
+    componentDidMount(){
+        this.fetchAreaData()
     }
 
     render() {
         const additional = {
-            snowpark: this.state.snowpark.length>0,
-            school: this.state.school,
-            nightride: this.state.nightride,
-            rental: this.state.rental,
+            snowpark: this.state.area.snowpark.length>0,
+            skiSchool: this.state.area.skiSchool.length>0,
+            nightRide: this.state.area.nightRide,
+            skiRental: this.state.area.skiRental.length>0,
         }
+        const { name, country, openHours, easyRoute, mediumRoute, hardRoute, dragLift, chairLift, gondolas } = this.state.area
         return (
+            this.state.message==='loading'? <Loader/> :
             <div className={styles.container}>
                 <div
                     className={styles.backgroundImage}
@@ -45,22 +87,22 @@ class SkiArea extends Component {
                     <img 
                         src={image}
                         alt=''
-                        />
+                    />
                 </div>
-                <h1>{this.state.name}</h1>
-                <h2>{this.state.country.toUpperCase()}</h2>
+                <h1>{name}</h1>
+                <h2>{country.toUpperCase()}</h2>
                 <h3>
-                    GODZINY OTWARCIA:  {this.state.openHours}
+                    GODZINY OTWARCIA:  {openHours}
                 </h3>
                 <Routes
-                easy={this.state.easyRoute}
-                medium={this.state.mediumRoute}
-                hard={this.state.hardRoute}
+                easy={easyRoute}
+                medium={mediumRoute}
+                hard={hardRoute}
                 />
                 <Lifts 
-                    draglift={this.state.draglift}
-                    chairlift={this.state.chairlift}
-                    gondolas={this.state.gondolas}
+                    dragLift={dragLift}
+                    chairLift={chairLift}
+                    gondolas={gondolas}
                 />
                 <Conveniences 
                     additional={additional}
@@ -69,10 +111,9 @@ class SkiArea extends Component {
                     onClick={()=>(window.open(this.state.website, '_blank'))}
                 >
                     Strona główna areny <span>&#10230;</span>
-
                 </Button>
         </div>
-        );
+        )
     }
 } 
 export default SkiArea

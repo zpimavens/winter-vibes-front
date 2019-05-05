@@ -11,9 +11,7 @@
         opacity: .4;
     }
 }
-.input{
-    background-color: red;
-}
+
 .formWrapper{
     margin: 30px;
     width: 100%;
@@ -61,16 +59,14 @@
     margin: 0 30px;
     flex-wrap: wrap;
     align-items: center;
-    &>Input{
-        margin: 10px 30px 10px 0;
-    }
-    &>label{
-        margin: 10px;
-        display: flex;
-        align-items: center;
-    }
-    &>Input[type=text]{
-        width: 300px;
+        &>label{
+            margin: 10px;
+            display: flex;
+            align-items: center;
+        }
+        &>Input[type=text]{
+            width: 300px;
+            margin: 10px 10px ;
     }
     
 }

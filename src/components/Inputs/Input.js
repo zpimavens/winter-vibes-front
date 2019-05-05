@@ -7,7 +7,7 @@ const Input = ({name, type, placeholder, ...props}) =>{
     return(
         <>
             <input
-                className={type==='checkbox' ? styles.checkbox : styles.formItem}
+                className={styles.formItem}
                 name={name}
                 id={name}
                 type={type}

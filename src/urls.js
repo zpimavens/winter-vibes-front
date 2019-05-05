@@ -5,7 +5,7 @@ export const appUrls = {
     ACTIVATE: '/activate',
     REGISTER_SUCCESS: '/register-success',
     USER: '/user',
-    AREA: '/area',
+    AREA: '/area/:id',
     SEARCH_AREAS: '/search-areas',
     SEARCH_USERS: '/search-users',
     EDIT_PROFILE: '/editprofile',
@@ -20,4 +20,5 @@ export const requestUrls = {
     GET_USER_BY_USERNAME: '/api/getUserByLogin',
     EDIT_USER: '/api/editUser',
     SEARCH_USER: '/api/userSearch',
+    GET_AREA_BY_ID: '/api/getArenaById'
 }

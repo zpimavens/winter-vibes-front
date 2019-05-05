@@ -5,14 +5,14 @@ import styles from './Conveniences.module.scss'
 
 const Conv = ({ additional })=>{
 
-    const { nightride, school, snowpark, rental } = additional;
+    const { nightRide, skiSchool, snowpark, skiRental } = additional;
 
     return(
         <ul className={styles.wrapper}>
-            { nightride === true && <li>  NOCNA JAZDA</li>}
-            { school === true && <li>  SZKÓŁKA NARCIARSKA</li>}
+            { nightRide === true && <li>  NOCNA JAZDA</li>}
+            { skiSchool === true && <li>  SZKÓŁKA NARCIARSKA</li>}
             { snowpark === true && <li>  SNOWPARK</li>}
-            { rental === true && <li>  WYPOŻYCZALNIA SPRZĘTU</li>}
+            { skiRental === true && <li>  WYPOŻYCZALNIA SPRZĘTU</li>}
         </ul>
     )
 }
