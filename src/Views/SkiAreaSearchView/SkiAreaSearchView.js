@@ -16,6 +16,9 @@ class SkiAreaSearchView extends Component{
         skiSchool: false,
         nightRide: false,
         snowpark: false,
+        dragLift: false,
+        chairLift: false,
+        gondolas: false,
         foundData: [],
         message: "Wpisz i wciśnij 'Szukaj' "
     }
@@ -40,9 +43,29 @@ class SkiAreaSearchView extends Component{
         })
     }
 
+    selectAll = ()=>{
+        this.setState({
+            skiRental: true,
+            skiSchool: true,
+            nightRide: true,
+            snowpark: true,
+            dragLift: true,
+            chairLift: true,
+            gondolas: true,
+        })
+    }
+    removeFalsy = (obj) => {
+        let newObj = {};
+        Object.keys(obj).forEach((prop) => {
+            if (obj[prop]!==false) { newObj[prop] = obj[prop]; }
+        });
+        return newObj;
+    };
+
     handleSearch = () => {
         
         const { message, foundData, ...searchData } = this.state;
+        const searchDataTruthy = this.removeFalsy(searchData);
 
         this.clearFoundData();
 
@@ -51,7 +74,7 @@ class SkiAreaSearchView extends Component{
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(searchData)
+            body: JSON.stringify(searchDataTruthy)
         })
         .then(res=>{
             if(res.status === 200){
@@ -68,7 +91,7 @@ class SkiAreaSearchView extends Component{
             }
         })
         .then(data=>{
-            if(data.length===0)
+            if (!data || data.length===0 )
             this.setState({
                 message: 'Niestety, nic nie znaleźliśmy :('
             })
@@ -76,9 +99,12 @@ class SkiAreaSearchView extends Component{
             this.setState({
                 foundData: data
             })
+            console.log(data)
             
         })
-        .catch()
+        .catch(err=>{
+            console.error(err)
+        })
     }
     
   
@@ -126,7 +152,28 @@ class SkiAreaSearchView extends Component{
                             checked={this.state.snowpark}
                             label='SNOWPARK'
                         />
+                        <Checkbox
+                            name='dragLift'
+                            onChange={this.handleInputChange}
+                            checked={this.state.dragLift}
+                            label='ORCZYKI'
+                        />
+                        <Checkbox
+                            name='chairLift'
+                            onChange={this.handleInputChange}
+                            checked={this.state.chairLift}
+                            label='KRZESEŁKA'
+                        />
+                        <Checkbox
+                            name='gondolas'
+                            onChange={this.handleInputChange}
+                            checked={this.state.gondolas}
+                            label='GONDOLE'
+                        />
                     </form>
+                    <Button
+                        onClick={this.selectAll}
+                    >Zaznacz wszystko</Button>
                     <Button
                         onClick={this.handleSearch}
                     >Szukaj</Button>
