@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Redirect, withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
@@ -7,6 +7,7 @@ import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import Button from '../../components/Button/Button'
 import Loader from '../../components/Loader/Loader'
 import styles from './UserView.module.scss'
+import Page404 from '../Page404/Page404';
 
 class UserView extends Component{
 
@@ -15,7 +16,8 @@ class UserView extends Component{
         image: '',
         skis: '',                              
         level: 0, 
-        town: '',                   
+        town: '',    
+        userFound: true,               
     }
 
     updateState = (data) => {
@@ -42,17 +44,22 @@ class UserView extends Component{
             if (res.status === 200) {
                 return res.json()
 
-            } else {
+            }else if(res.status === 404){
+                this.setState({
+                    userFound: false,
+                })
+            } 
+            else {
                 const error = new Error(res.status)
                 throw error
             }
         })
-        .then(([data]) => {
-            this.updateState(data)
+        .then((data) => {
+            if(data)
+            this.updateState([data])
         })
         .catch()
     }
-    
 
     componentDidUpdate(prevProps){
         if (this.props.location !== prevProps.location) {
@@ -64,12 +71,12 @@ class UserView extends Component{
     }
 
     render(){
-        const {username, image, town, skis, level} =this.state
+        const {username, image, town, skis, level} = this.state
         return(
             <AppContext.Consumer>
                 {(context)=>(
-                    (window.location.pathname === "/user" || window.location.pathname === "/user/") ?
-                    (<Redirect to={`/user/${context.user.username}`} />
+                    (!this.state.userFound) ?
+                    (<Page404/>
                     ):(
                         this.state.username.length > 0 ?
                         <div className={styles.wrapper}>

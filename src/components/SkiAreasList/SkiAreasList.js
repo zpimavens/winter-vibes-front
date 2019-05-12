@@ -3,7 +3,7 @@ import SkiAreasListItem from './SkiAreasListItem'
 import styles from './SkiAreasList.module.scss'
 
 const SkiAreaList = ({areas, ...props})=>(
-//change teh key
+
     <div>
         <ul className={styles.wrapper}>
             {areas.map(area=>

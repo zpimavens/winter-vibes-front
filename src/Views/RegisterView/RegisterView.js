@@ -14,7 +14,7 @@ class RegisterView extends Component{
         username: '',
         password: '',
         passwordRep: '',
-        formMessages: { email: '', password: '' , username: ''},
+        formMessages: { email: '', password: '' , username: '', other:''},
 
         emailValid: false,
         passwordValid: false,
@@ -62,6 +62,7 @@ class RegisterView extends Component{
     handleRegister = (e) => {
         e.preventDefault()
         const { formMessages, emailValid, passwordValid, formValid, ...userData} = this.state 
+
         if(this.state.formValid){
             
             fetch(requestUrls.REGISTER, {
@@ -72,15 +73,20 @@ class RegisterView extends Component{
                 }
             })
             .then(res => {
-                if (res.status === 200) {
+                if (res.status === 201) {
                     this.props.history.push(appUrls.REGISTER_SUCCESS)
-                    
-                } else if (res.status === 501) {
-                    this.setState({ formMessages: {email: 'Istnieje już taki email'}})
+                } else if (res.status === 409) {
+                    return res.text()
                 } 
-                else if (res.status === 502) {
-                    this.setState({ formMessages: {username: 'Istnieje już taka nazwa użytkownika'}})
+                else if (res.status === 500) {
+                    this.setState({ formMessages: {other: 'Coś poszło nie tak, spróbuj ponownie później.'}})
                 } 
+            })
+            .then(data =>{
+                if (data === 'email')
+                    this.setState({ formMessages: { email: 'Istnieje już taki email' } })
+                else if (data === 'username')
+                    this.setState({ formMessages: { username: 'Istnieje już taka nazwa użytkownika' } })
             })
         }
     }

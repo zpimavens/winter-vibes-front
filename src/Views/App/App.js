@@ -4,7 +4,7 @@ import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
 import Header from '../../components/Header/Header'
 import UserView from '../UserView/UserView'
-import MainView from '../MainView/MainView'
+import GroupsView from '../GroupsView/GroupsView'
 import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView'
 import LoginView from '../LoginView/LoginView'
 import RegisterView from '../RegisterView/RegisterView'
@@ -95,7 +95,7 @@ class App extends React.Component{
               <PrivateRoute
                 exact
                 path={appUrls.ROOT}
-                component={MainView}
+                component={GroupsView}
               />
               <PublicRoute
                 path={appUrls.LOGIN}

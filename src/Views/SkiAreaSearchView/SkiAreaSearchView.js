@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { requestUrls } from '../../urls'
 import SkiAreasList from '../../components/SkiAreasList/SkiAreasList'
 import Input from '../../components/Inputs/Input'
 import Checkbox from '../../components/Inputs/Checkbox'
@@ -69,7 +70,7 @@ class SkiAreaSearchView extends Component{
 
         this.clearFoundData();
 
-        fetch('/api/skiArenaSearch', {
+        fetch(requestUrls.SEARCH_ARENAS, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -98,12 +99,10 @@ class SkiAreaSearchView extends Component{
             else
             this.setState({
                 foundData: data
-            })
-            console.log(data)
-            
+            })            
         })
         .catch(err=>{
-            console.error(err)
+            return ''
         })
     }
     
