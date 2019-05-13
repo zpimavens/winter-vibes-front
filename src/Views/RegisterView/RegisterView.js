@@ -15,7 +15,6 @@ class RegisterView extends Component{
         password: '',
         passwordRep: '',
         formMessages: { email: '', password: '' , username: '', other:''},
-
         emailValid: false,
         passwordValid: false,
         formValid: false,

@@ -1,11 +1,9 @@
 import React from 'react'
 import styles from './Conveniences.module.scss'
 
-
-
 const Conv = ({ additional })=>{
 
-    const { nightRide, skiSchool, snowpark, skiRental } = additional;
+    const { nightRide, skiSchool, snowpark, skiRental } = additional
 
     return(
         <ul className={styles.wrapper}>

@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import styles from './Input.module.scss'
 
-const Input = ({name, type, placeholder, ...props}) =>{
+const Input = ({ name, type, placeholder, ...props }) =>{
 
     return(
         <>
@@ -12,7 +12,6 @@ const Input = ({name, type, placeholder, ...props}) =>{
                 id={name}
                 type={type}
                 placeholder={placeholder}
-                //maxlength
                 {...props}
             > 
             </input>

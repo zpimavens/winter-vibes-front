@@ -29,8 +29,8 @@ class EditProfileView extends Component {
     fetchUserData = ()=>{
         fetch(requestUrls.CURRENT_USER)
         .then(res => {
-            if (res.status === 200) return res.json();
-            else throw new Error(res.status);
+            if (res.status === 200) return res.json()
+            else throw new Error(res.status)
         })
         .then(([data]) => {
             this.setState({
@@ -38,9 +38,9 @@ class EditProfileView extends Component {
                 skis: data.skis,
                 level: data.level,
                 town: data.town
-            });
+            })
         })
-        .catch();
+        .catch()
     }
    handleProfileUpdate = (e) => {
        e.preventDefault()
@@ -117,7 +117,7 @@ class EditProfileView extends Component {
                     </Button>
                 </form>
                 <Button
-                    onClick={()=>this.props.history.push(appUrls.USER)}
+                    onClick={()=>this.props.history.push(appUrls.USER_ID+this.state.username)}
                 >
                     WRÓĆ DO PROFILU
                 </Button>

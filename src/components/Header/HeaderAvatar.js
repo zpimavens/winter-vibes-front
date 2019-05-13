@@ -1,6 +1,7 @@
 import React from "react"
 import { withRouter } from 'react-router-dom'
 import PropTypes from "prop-types"
+import { appUrls } from '../../urls'
 import styles from "./HeaderAvatar.module.scss"
 
 const HeaderAvatar = ({ image, username, history }) => (
@@ -11,7 +12,7 @@ const HeaderAvatar = ({ image, username, history }) => (
             src={image}
             alt={username}
             onClick={() =>
-                history.push({ pathname: `/user/${username}` })
+                history.push({ pathname: appUrls.USER_ID+username })
             }
         />
         <h4 

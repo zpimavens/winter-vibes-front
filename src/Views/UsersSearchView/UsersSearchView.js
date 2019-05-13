@@ -3,14 +3,14 @@ import { requestUrls } from '../../urls'
 import Input from '../../components/Inputs/Input'
 import Button from '../../components/Button/Button'
 import UsersList from '../../components/UsersList/UsersList'
+import Loader from '../../components/Loader/Loader'
 import styles from './UsersSearchView.module.scss'
-import Loader from '../../components/Loader/Loader';
 
 class UsersSearchView extends Component {
     state={
         usersFound: [],
         username: '',
-        message: 'Wpisz cos zeby szukać co nie'
+        message: 'Wpisz nazwę i wciśnij "Szukaj"',
     }
 
     handleInputChange = (e) => {
@@ -19,6 +19,7 @@ class UsersSearchView extends Component {
             [name]: value   
         })
     }
+
     clearPreviousData=()=>{
         this.setState({
             message: '',
@@ -43,27 +44,25 @@ class UsersSearchView extends Component {
             }
             else if(response.status === 404){
                 this.setState({
-                    message: 'Nic nie znaleźliśmy :( \n Spróbuj ponownie.'
+                    message: 'Nic nie znaleźliśmy. Zmień parametry i spróbuj ponownie.'
                 })
             }
             else{
                 this.setState({
                     message: 'Coś poszło nie tak. Spróbuj ponownie później.'
                 })
-                throw new Error(response.status)
             }
         })
         .then((data) => {
-            if(data.length>0)
+            if( data && data.length > 0 )
                 this.setState({
                     usersFound: data
                 })
             else
                 this.setState({
-                    message: 'Nic nie znaleźliśmy :(',
+                    message: 'Nic nie znaleźliśmy. Zmień parametry i spróbuj ponownie.',
                 })
         })
-        .catch()
         }
 
     handleSearch=(e)=>{

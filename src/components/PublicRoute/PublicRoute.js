@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
-import { requestUrls } from '../../urls'
+import { appUrls, requestUrls } from '../../urls'
 
 class PublicRoute extends React.Component {
     state = {
@@ -29,7 +29,7 @@ class PublicRoute extends React.Component {
             return (
                 <Route {...rest} render={props => (
                     <>
-                        {this.state.isAuthenticated && <Redirect to={{ pathname: '/user', state: { from: this.props.location } }} />}
+                        {this.state.isAuthenticated && <Redirect to={{ pathname: appUrls.ROOT, state: { from: this.props.location } }} />}
                         <Component {...rest} />
                     </>
                 )}

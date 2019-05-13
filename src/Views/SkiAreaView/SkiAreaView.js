@@ -3,8 +3,7 @@ import { requestUrls } from '../../urls'
 import Routes from '../../components/SkiArea/Routes'
 import Lifts from '../../components/SkiArea/Lifts'
 import Conveniences from '../../components/SkiArea/Conveniences'
-import Button from '../../components/Button/Button'
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader'
 import styles from './SkiAreaView.module.scss'
 import image from '../../assets/images/skiareabg.jpg'
 
@@ -30,7 +29,6 @@ class SkiArea extends Component {
             nightRide: false,
             skiRental: '',
         },
-        website: 'https://www.skiwelt.at/en/brixen-im-thale.html',
         message: 'loading'
     }
 
@@ -49,19 +47,16 @@ class SkiArea extends Component {
                 return res.json()
 
             } else {
-                const error = new Error(res.status)
-                throw error
+                this.setState({
+                message: 'Coś poszło nie tak, spróbuj ponownie później.'
+            })
             }
         })
         .then(([data])=>{
+            if(data)
             this.setState({
                 message: '',
                 area : data,
-            })
-        })
-        .catch(err=>{
-            this.setState({
-                message: 'Coś poszło nie tak, spróbuj ponownie później'
             })
         })
     }
@@ -107,11 +102,6 @@ class SkiArea extends Component {
                 <Conveniences 
                     additional={additional}
                 />
-                <Button
-                    onClick={()=>(window.open(this.state.website, '_blank'))}
-                >
-                    Strona główna areny <span>&#10230;</span>
-                </Button>
         </div>
         )
     }

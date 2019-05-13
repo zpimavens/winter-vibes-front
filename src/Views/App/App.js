@@ -138,7 +138,7 @@ class App extends React.Component{
               <Route component={Page404}/>
             </Switch>
           </AppContext.Provider>
-        );
+        )
     }
 }
 

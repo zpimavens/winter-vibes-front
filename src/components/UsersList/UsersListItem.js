@@ -1,12 +1,13 @@
 import React from 'react'
 import { withRouter } from 'react-router-dom'
+import { appUrls } from '../../urls'
 import PropTypes from 'prop-types'
 import styles from './UsersListItem.module.scss'
 
 class UsersListItem extends React.Component{
     
     handleClick = (e) => {
-        this.props.history.push(`/user/${this.props.username}`)  
+        this.props.history.push(appUrls.USER_ID+this.props.username)  
     }
     
     render(){
@@ -48,7 +49,7 @@ UsersListItem.propTypes={
     skis: PropTypes.string, 
     city: PropTypes.string,
 }
-UsersListItem.dfaultProps={
+UsersListItem.defaultProps={
     level: 0,
 }
 

@@ -13,7 +13,7 @@ class LoginView extends React.Component{
         email: '',
         password: '',
         formMessages: {
-            login: '',
+            msg: '',
         }
     }
     
@@ -35,9 +35,9 @@ class LoginView extends React.Component{
                 
             } else {
                 if(res.status===401)
-                    this.setState({formMessages: {login: 'Niepoprawne dane logowania.'}})
+                    this.setState({formMessages: { msg: 'Niepoprawne dane logowania.'}})
                 else{
-                    this.setState({ formMessages: { login: 'Coś poszło nie tak. Spróbuj ponownie później.' } })
+                    this.setState({ formMessages: { msg: 'Coś poszło nie tak. Spróbuj ponownie później.' } })
                 }
             }
         })

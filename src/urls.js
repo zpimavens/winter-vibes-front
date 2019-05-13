@@ -6,6 +6,8 @@ export const appUrls = {
     REGISTER_SUCCESS: '/register-success',
     USER: '/user/:id',
     AREA: '/area/:id',
+    AREA_ID: '/area/',
+    USER_ID: '/user/',
     SEARCH_AREAS: '/search-areas',
     SEARCH_USERS: '/search-users',
     EDIT_PROFILE: '/editprofile',

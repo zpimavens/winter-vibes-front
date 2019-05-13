@@ -21,31 +21,31 @@ class Header extends React.Component{
     }
 
     render(){
-              return(
-                    <AppContext.Consumer>
-                        {(context)=>(
-                            <header className={styles.wrapper}>
-                                <Logo
-                                    logoType='smallHorizontal'
-                                />
-                                <HeaderNavigation/>
-                                <HeaderAvatar 
-                                    avatarType='headerType'
-                                    image={context.user.image}
-                                    username={context.user.username}
-                                />
-                                <button 
-                                    className={styles.button}
-                                    onClick={this.toggleMenu}
-                                >
-                                <div className={styles.buttonIcon}></div>
-                                </button>
-                                {this.state.isDropDownOpen && <HeaderNavigation onClick={this.toggleMenu} type='dropdown' />}
-                            </header>
+        return(
+            <AppContext.Consumer>
+                {(context)=>(
+                    <header className={styles.wrapper}>
+                        <Logo
+                            logoType='smallHorizontal'
+                        />
+                        <HeaderNavigation/>
+                        <HeaderAvatar 
+                            avatarType='headerType'
+                            image={context.user.image}
+                            username={context.user.username}
+                        />
+                        <button 
+                            className={styles.button}
+                            onClick={this.toggleMenu}
+                        >
+                        <div className={styles.buttonIcon}></div>
+                        </button>
+                        {this.state.isDropDownOpen && <HeaderNavigation onClick={this.toggleMenu} type='dropdown' />}
+                    </header>
 
-                        )}
-                    </AppContext.Consumer>
-              )  
+                )}
+            </AppContext.Consumer>
+        )  
     }
 }
 

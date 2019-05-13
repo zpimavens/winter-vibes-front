@@ -1,9 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import logo from '../../assets/logo.png'
 import styles from './Logo.module.scss'
+import logo from '../../assets/logo.png'
 
-const Logo = ({logoType})=>(
+const Logo = ({ logoType })=>(
     <div 
         className={logoType==='bigVertical' ? styles.wrapperBig : styles.wrapperSmall}
     >

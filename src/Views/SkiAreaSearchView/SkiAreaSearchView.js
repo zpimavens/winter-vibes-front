@@ -9,7 +9,7 @@ import Loader from '../../components/Loader/Loader'
 import styles from './SkiAreaSearchView.module.scss'
 
 class SkiAreaSearchView extends Component{
-//in progress
+
     state={
         country: '',
         name: '',
@@ -21,7 +21,7 @@ class SkiAreaSearchView extends Component{
         chairLift: false,
         gondolas: false,
         foundData: [],
-        message: "Wpisz i wciśnij 'Szukaj' "
+        message: "Wybierz parametry i wciśnij 'Szukaj'."
     }
 
     handleInputChange = (e) => {
@@ -37,6 +37,7 @@ class SkiAreaSearchView extends Component{
             }))
         }
     }
+
     clearFoundData = () => {
         this.setState({
             message: '',
@@ -56,19 +57,21 @@ class SkiAreaSearchView extends Component{
         })
     }
     removeFalsy = (obj) => {
-        let newObj = {};
+        let newObj = {}
         Object.keys(obj).forEach((prop) => {
-            if (obj[prop]!==false) { newObj[prop] = obj[prop]; }
-        });
-        return newObj;
-    };
+            if (obj[prop]!==false) { newObj[prop] = obj[prop] }
+        })
+        return newObj
+    }
 
-    handleSearch = () => {
+    handleSearch = (e) => {
         
-        const { message, foundData, ...searchData } = this.state;
-        const searchDataTruthy = this.removeFalsy(searchData);
+        e.preventDefault()
 
-        this.clearFoundData();
+        const { message, foundData, ...searchData } = this.state
+        const searchDataTruthy = this.removeFalsy(searchData)
+
+        this.clearFoundData()
 
         fetch(requestUrls.SEARCH_ARENAS, {
             method: "POST",
@@ -82,38 +85,33 @@ class SkiAreaSearchView extends Component{
                 return res.json()
             }else if(res.status === 404){
                 this.setState({
-                    message: 'Niestety, nic nie znaleźliśmy :('
+                    message: 'Niestety, nic nie znaleźliśmy. Zmień parametry i spróbuj ponownie.'
                 })
             }else{
                 this.setState({
                     message: 'Coś poszło nie tak. Spróbuj ponownie później.'
                 })
-                throw new Error(res.status)
             }
         })
         .then(data=>{
-            if (!data || data.length===0 )
-            this.setState({
-                message: 'Niestety, nic nie znaleźliśmy :('
-            })
-            else
+            if (data && data.length>0)
             this.setState({
                 foundData: data
             })            
-        })
-        .catch(err=>{
-            return ''
         })
     }
     
   
     render(){
-        const countryOptions = ['Austria', 'Francja', 'Polska', 'Włochy']
+        const countryOptions = [ 'Austria', 'Francja', 'Polska', 'Włochy' ]
         return(
             <div className={styles.wrapper}>
                 <div className={styles.formWrapper}>
                     <h2 className={styles.title}>WYSZUKAJ SKIARENY</h2>
-                    <form className={styles.form}>
+                    <form 
+                        className={styles.form}
+                        onSubmit={this.handleSearch}
+                    >
                         <Input
                             name='name'
                             placeholder='Nazwa'

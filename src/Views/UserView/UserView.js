@@ -2,12 +2,12 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import AppContext from '../../context'
 import { appUrls, requestUrls } from '../../urls'
+import Page404 from '../Page404/Page404'
 import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import Button from '../../components/Button/Button'
 import Loader from '../../components/Loader/Loader'
 import styles from './UserView.module.scss'
-import Page404 from '../Page404/Page404';
 
 class UserView extends Component{
 
@@ -48,17 +48,12 @@ class UserView extends Component{
                 this.setState({
                     userFound: false,
                 })
-            } 
-            else {
-                const error = new Error(res.status)
-                throw error
             }
         })
         .then((data) => {
-            if(data)
-            this.updateState([data])
+            if(data && data.length > 0)
+            this.updateState(...data)
         })
-        .catch()
     }
 
     componentDidUpdate(prevProps){

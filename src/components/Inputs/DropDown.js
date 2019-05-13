@@ -18,7 +18,6 @@ const DropDown = ({ options, placeholder, ...props })=>{
 }
 
 DropDown.propTypes={
-    // name: PropTypes.string.isRequired,
     options: PropTypes.array.isRequired,
     placeholder: PropTypes.string
 }

@@ -8,28 +8,34 @@ const Lifts = ({ dragLift, chairLift, gondolas }) => (
     
     <div className={styles.container}>
 
-        <div>
-        <img 
-            src={dragLiftIcon} 
-            alt="DragLift icon"
-        />
+        <div
+            title='Orczyki'
+        >
+            <img 
+                src={dragLiftIcon} 
+                alt="DragLift icon"
+            />
             {dragLift}
         </div>
-        <div>
-        <img 
-            src={chairLiftIcon} 
-            alt="Chair icon"
-        />
+        <div
+            title='Krzesełka'
+        >
+            <img 
+                src={chairLiftIcon} 
+                alt="Chair icon"
+            />
             {chairLift}
         </div>
-        <div>
-        <img 
-            src={gondolaIcon} 
-            alt="Chair icon"
-        />
+        <div
+            title='Gondole'
+        >
+            <img 
+                src={gondolaIcon} 
+                alt="Chair icon"
+            />
             {gondolas}
         </div>
     </div>
-);
+)
 
 export default Lifts

@@ -1,3 +1,5 @@
+@import '../../assets/styles/Variables.scss';
+
 .wrapper{
     display: flex;
     flex-direction: column;
@@ -5,7 +7,7 @@
     height: 100vh;
     justify-content: center;
     color: white;
-    background-image: linear-gradient(135deg, #2980B9, #6DD5FA);
+    background-image: $blue-gradient;
 }
 .link{
     text-decoration: none;

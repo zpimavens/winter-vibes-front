@@ -1,3 +1,4 @@
+@import '../../assets/styles/Variables.scss';
 
 .wrapper{
     display: flex;
@@ -12,7 +13,7 @@
     border: 3px solid rgb(113, 201, 238);
 }
 .name{
-    color: #137492;
+    color: $font-color;
     font-weight: 700;
     font-size: 1.5rem;
 }

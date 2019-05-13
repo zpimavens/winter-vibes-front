@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { appUrls } from '../../urls'
 import AppContext from '../../context'
 import styles from './HeaderNavigation.module.scss'
 
@@ -21,7 +22,7 @@ const HeaderNavigation = ({type,...props}) =>{
                                 exact 
                                 className={navItemLinkClassName} 
                                 activeClassName={navItemLinkActiveClassName} 
-                                to={`/user/${context.user.username}`}
+                                to={ appUrls.USER_ID+context.user.username}
                                 {...props}
                             >
                             MOJE KONTO
@@ -32,7 +33,7 @@ const HeaderNavigation = ({type,...props}) =>{
                                 exact 
                                 className={navItemLinkClassName} 
                                 activeClassName={navItemLinkActiveClassName} 
-                                to='/'
+                                to={appUrls.ROOT}
                                 {...props}
                             >
                             MOJE GRUPY
@@ -43,7 +44,7 @@ const HeaderNavigation = ({type,...props}) =>{
                                 exact 
                                 className={navItemLinkClassName} 
                                 activeClassName={navItemLinkActiveClassName} 
-                                to='/search-users'
+                                to={appUrls.SEARCH_USERS}
                                 {...props}
                             >
                             SPOŁECZNOŚĆ
@@ -54,7 +55,7 @@ const HeaderNavigation = ({type,...props}) =>{
                                 exact 
                                 className={navItemLinkClassName} 
                                 activeClassName={navItemLinkActiveClassName} 
-                                to='/search-areas'
+                                to={appUrls.SEARCH_AREAS}
                                 {...props}
                             >
                             SKIARENY
