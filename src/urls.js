@@ -16,7 +16,7 @@ export const appUrls = {
 export const requestUrls = {
     CHECK_TOKEN: '/checkToken',
     LOGIN: '/api/authenticate',
-    LOGOUT: '/api/logOut',
+    LOGOUT: '/api/logout',
     REGISTER: '/api/register',
     CURRENT_USER: '/api/getCurrentUser',
     GET_USER_BY_USERNAME: '/api/getUserByLogin',

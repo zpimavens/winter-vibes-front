@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
-import PropTypes from 'prop-types'
 import AppContext from '../../context'
-import { appUrls, requestUrls } from '../../urls'
+import { appUrls } from '../../urls'
+import { login } from '../../components/AuthService'
 import Form from '../../components/Form/Form'
 import Logo from '../../components/Logo/Logo'
 import FormMessages from '../../components/Form/FormMessages'
@@ -16,31 +16,31 @@ class LoginView extends React.Component{
             msg: '',
         }
     }
-    
+
     handleLogin = (e) => {
         e.preventDefault()
-        const { formMessages, ...userData } = this.state
+        const { email, password } = this.state
         
-        fetch(requestUrls.LOGIN, {
-            method: 'POST',
-            body: JSON.stringify(userData),
-            headers: {
-                'Content-Type': 'application/json'
-            }
+        login(email, password)
+        .then(res=>{
+            this.props.history.replace(appUrls.ROOT)
+            this.props.fetchUserData()
         })
-        .then(res => {
-            if (res.status === 200) {
-                this.props.history.push(appUrls.ROOT)
-                this.props.fetchUserData()
-                
-            } else {
-                if(res.status===401)
-                    this.setState({formMessages: { msg: 'Niepoprawne dane logowania.'}})
-                else{
-                    this.setState({ formMessages: { msg: 'Coś poszło nie tak. Spróbuj ponownie później.' } })
+        .catch(err=>{
+            if(err.message==='Unauthorized')
+                this.setState({
+                    formMessages: {
+                        msg: 'Niepoprawne dane logowania.'
+                    }
+                })
+            else
+            this.setState({
+                formMessages: {
+                    msg: "Coś poszło nie tak, spróbuj ponownie później."
                 }
-            }
+            })
         })
+
     }
 
     handleInputChange = (e) => {
@@ -78,9 +78,6 @@ class LoginView extends React.Component{
             </AppContext.Provider>
         )
     }
-}
-LoginView.propTypes={
-    fetchUserData: PropTypes.func.isRequired,
 }
 
 export default withRouter(LoginView)

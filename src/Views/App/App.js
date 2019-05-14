@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Switch, withRouter} from 'react-router-dom'
 import AppContext from '../../context'
+import { isLoggedIn, logout } from '../../components/AuthService'
 import { appUrls, requestUrls } from '../../urls'
 import Header from '../../components/Header/Header'
 import UserView from '../UserView/UserView'
@@ -18,34 +19,19 @@ import SkiAreaView from '../SkiAreaView/SkiAreaView'
 import Page404 from '../Page404/Page404'
 import '../../assets/styles/index.scss'
 
-
 class App extends React.Component{
 
     state={
         user: {
             username: '',
             image: '',
-            logged: '',
         },
     }
 
     handleLogOut = (e) => {
         e.preventDefault()
-        fetch(requestUrls.LOGOUT, {
-            method: 'POST',
-            body: '',
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => {
-            if (res.status === 200) {
-                this.setState({
-                    user: {logged: false}
-                })
-                this.props.history.push(appUrls.LOGIN)
-            }
-        })
+        logout()
+        this.props.history.push(appUrls.LOGIN)
     }
 
     fetchUserData= ()=>{
@@ -61,24 +47,20 @@ class App extends React.Component{
                 user: {
                     username: data.username,
                     image: data.image,
-                    logged: true,
                 }
             })
+            // console.log(data)
         })
         .catch()
     }
 
     checkToken = ()=>{
-        fetch(requestUrls.CHECK_TOKEN)
-        .then(res =>{
-            if ( res.status === 200){
-                this.fetchUserData()
-            }}
-        )
+      if (isLoggedIn())
+        this.fetchUserData()
     }
-    
+
     componentDidMount() {
-        this.checkToken()
+      this.checkToken()
     }
 
     render(){   
@@ -90,17 +72,18 @@ class App extends React.Component{
 
         return (
           <AppContext.Provider value={contextElements}>
-            {this.state.user.logged && <Header />}
             <Switch>
               <PrivateRoute
                 exact
                 path={appUrls.ROOT}
                 component={GroupsView}
+                layout={Header}
               />
               <PublicRoute
                 path={appUrls.LOGIN}
                 component={LoginView}
-                fetchUserData={this.fetchUserData}
+                fetchUserData={this.checkToken}
+
               />
               <PublicRoute
                 path={appUrls.REGISTER}
@@ -118,22 +101,27 @@ class App extends React.Component{
                 path={appUrls.USER}
                 component={UserView}
                 user={this.state.user}
+                layout={Header}
               />
               <PrivateRoute
                 path={appUrls.SEARCH_AREAS}
                 component={SkiAreaSearchView}
+                layout={Header}
               />
               <PrivateRoute
                 path={appUrls.AREA}
                 component={SkiAreaView}
+                layout={Header}
               />
               <PrivateRoute
                 path={appUrls.SEARCH_USERS}
                 component={UsersSearchView}
+                layout={Header}
               />
               <PrivateRoute
                 path={appUrls.EDIT_PROFILE}
                 component={EditProfileView}
+                layout={Header}
               />
               <Route component={Page404}/>
             </Switch>
