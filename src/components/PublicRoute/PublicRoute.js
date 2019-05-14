@@ -7,7 +7,7 @@ import { isLoggedIn } from '../AuthService'
 const PublicRoute = ({ component: Component, ...rest })=>{
     return (
         <Route {...rest} render={props => (
-            isLoggedIn() ? <Redirect to={appUrls.ROOT} /> : <Component {...props} />
+            isLoggedIn() ? <Redirect to={appUrls.ROOT} /> : <Component {...rest} />
         )}
         />
     )

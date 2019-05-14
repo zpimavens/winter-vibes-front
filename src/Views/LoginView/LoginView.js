@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
+import PropTypes from 'prop-types'
 import AppContext from '../../context'
 import { appUrls } from '../../urls'
 import { login } from '../../components/AuthService'
@@ -15,6 +16,7 @@ class LoginView extends React.Component{
         formMessages: {
             msg: '',
         }
+
     }
 
     handleLogin = (e) => {
@@ -24,7 +26,7 @@ class LoginView extends React.Component{
         login(email, password)
         .then(res=>{
             this.props.history.replace(appUrls.ROOT)
-            this.props.fetchUserData()
+            this.props.loadUserData() 
         })
         .catch(err=>{
             if(err.message==='Unauthorized')
@@ -80,4 +82,7 @@ class LoginView extends React.Component{
     }
 }
 
+LoginView.propTypes={
+    loadUserData: PropTypes.func.isRequired,
+}
 export default withRouter(LoginView)

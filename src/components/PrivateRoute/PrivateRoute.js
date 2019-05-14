@@ -9,8 +9,8 @@ const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
         <Route {...rest} render={props => (
             !isLoggedIn() ? <Redirect to={appUrls.LOGIN} /> 
             : 
-            Layout ? <><Layout/><Component {...props}/></>:
-            <Component {...props} />
+            Layout ? <><Layout/><Component {...rest}/></>:
+            <Component {...rest} />
         )}
         />
     )

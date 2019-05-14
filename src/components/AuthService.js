@@ -26,7 +26,6 @@ const isTokenExpired = token => {
             return true
         } else return false
     } catch (err) {
-        console.log("expired check failed! hehehehheheheheh")
         return false
     }
 }

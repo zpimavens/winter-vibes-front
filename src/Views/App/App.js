@@ -31,6 +31,12 @@ class App extends React.Component{
     handleLogOut = (e) => {
         e.preventDefault()
         logout()
+        this.setState({
+          user: {
+            username: '',
+            image: '',
+        },
+        })
         this.props.history.push(appUrls.LOGIN)
     }
 
@@ -43,15 +49,16 @@ class App extends React.Component{
                 throw new Error(response.status)
         })
         .then(([data]) => {
-            this.setState({
-                user: {
-                    username: data.username,
-                    image: data.image,
-                }
-            })
+            this.updateUserData(data)
             // console.log(data)
         })
         .catch()
+    }
+
+    updateUserData = (data)=>{
+      this.setState({
+        user: data
+      })
     }
 
     checkToken = ()=>{
@@ -82,7 +89,7 @@ class App extends React.Component{
               <PublicRoute
                 path={appUrls.LOGIN}
                 component={LoginView}
-                fetchUserData={this.checkToken}
+                loadUserData={this.checkToken}
 
               />
               <PublicRoute
