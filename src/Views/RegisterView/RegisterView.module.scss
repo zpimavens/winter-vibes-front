@@ -10,12 +10,16 @@
     align-items: center;
 }
 .link{
-    margin-top: 40px;
+    margin-top: 30px;
     text-decoration: none;
     color: darkblue;
     bottom: 10px;
+    transition: ease-in-out .2s;
     
     &:active{
+        color: white;
+    }
+    &:hover{
         color: white;
     }
 }

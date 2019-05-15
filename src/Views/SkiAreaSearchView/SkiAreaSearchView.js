@@ -38,12 +38,28 @@ class SkiAreaSearchView extends Component{
         }
     }
 
+    clearFilters=()=>{
+        this.setState({
+            country: '',
+            name: '',
+            skiRental: false,
+            skiSchool: false,
+            nightRide: false,
+            snowpark: false,
+            dragLift: false,
+            chairLift: false,
+            gondolas: false,
+            foundData: [],
+            message: "Wybierz parametry i wciśnij 'Szukaj'."
+        })
+    }
     clearFoundData = () => {
         this.setState({
             message: '',
             foundData: []
         })
     }
+
 
     selectAll = ()=>{
         this.setState({
@@ -107,7 +123,7 @@ class SkiAreaSearchView extends Component{
         return(
             <div className={styles.wrapper}>
                 <div className={styles.formWrapper}>
-                    <h2 className={styles.title}>WYSZUKAJ SKIARENY</h2>
+                    <h3 className={styles.title}>WYSZUKAJ SKIARENY</h3>
                     <form 
                         className={styles.form}
                         onSubmit={this.handleSearch}
@@ -168,12 +184,17 @@ class SkiAreaSearchView extends Component{
                             label='GONDOLE'
                         />
                     </form>
-                    <Button
-                        onClick={this.selectAll}
-                    >Zaznacz wszystko</Button>
-                    <Button
-                        onClick={this.handleSearch}
-                    >Szukaj</Button>
+                    <div className={styles.buttonWrapper}>
+                        <Button
+                            onClick={this.selectAll}
+                        >Zaznacz wszystko</Button>
+                        <Button
+                            onClick={this.clearFilters}
+                        >Wyczyść filtry</Button>
+                        <Button
+                            onClick={this.handleSearch}
+                        >Szukaj</Button>
+                    </div>
                 </div>
                 
                 {!this.state.foundData || this.state.foundData.length <= 0  ?

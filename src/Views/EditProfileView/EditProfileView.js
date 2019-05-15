@@ -79,7 +79,7 @@ class EditProfileView extends Component {
         return(
             <div className={styles.container}>
                 <form className={styles.formWrapper}>
-                <h2 className={styles.formTitle}>Podaj dane do zmiany:</h2>
+                <h3 className={styles.formTitle}>Podaj dane do zmiany:</h3>
                 <FormMessages 
                     formMessages={this.state.formMessages}
                     messageType={this.state.messageType}

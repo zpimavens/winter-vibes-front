@@ -3,11 +3,13 @@
     border-bottom: 1px solid rgba(36, 36, 155, 0.233);
     display: flex;
     cursor: pointer;
-    padding: 30px;
+    padding: 20px;
+    font-size: .8rem;
+    
 }
 .image{
     border-radius: 100px;
-    height: 100px;
+    height: 90px;
 }
 .userInfo{
     list-style: none;
@@ -15,7 +17,7 @@
 }
 .boldText{
     font-weight: 800;
-    font-size: 1.3em;
+    font-size: 1rem;
 }
 .italicText {
     font-style: italic;

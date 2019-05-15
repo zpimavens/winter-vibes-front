@@ -7,9 +7,10 @@
     display: inline-block;
     margin-right: 40px;
     font-weight: 300;
-    font-size: 16px;
+    font-size: 14px;
     &>button{
         @extend .navItem;
+        margin-right: 0;
         padding: 0;
         font-family: 'Roboto', sans-serif;
     }
@@ -31,7 +32,7 @@
 .wrapperDropdown{
     position: absolute;
     right: 0;
-    top: 80px;
+    top: 60px;
     z-index: 1;
 }
 .navItemDropdown{
@@ -67,7 +68,7 @@
     }
 }
 
-@media (max-width: 1250px){
+@media (max-width: 1050px){
     .navItem{
         display: none;
     }

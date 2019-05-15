@@ -7,6 +7,7 @@ import UserAvatar from '../../components/UserAvatar/UserAvatar'
 import ProgressBar from '../../components/ProgressBar/ProgressBar'
 import Button from '../../components/Button/Button'
 import Loader from '../../components/Loader/Loader'
+import { FaSkiing, FaMapMarkerAlt } from 'react-icons/fa'
 import styles from './UserView.module.scss'
 
 class UserView extends Component{
@@ -79,8 +80,8 @@ class UserView extends Component{
                                 username={username}
                                 image={image}
                             />
-                            <p>{town}</p>
-                            <p>{skis}</p>
+                                    <p><FaMapMarkerAlt />&ensp;{town}</p>
+                            <p><FaSkiing/> &ensp;{skis}</p>
                             <p>Umiejętności:</p>
                             <ProgressBar 
                                 progress={level}

@@ -6,7 +6,7 @@
     align-items: center;
     justify-content: center;
     &>p{
-        font-size: 1.5em;
+        font-size: 1.2em;
         margin-top: 60px;
         opacity: .4;
     }
@@ -37,9 +37,8 @@
 
     &::after{
         content: '';
-        
         width: 50%;
-        height: 2px;
+        height: 1px;
         display: block;
         background-color: $font-color;
         position: relative;

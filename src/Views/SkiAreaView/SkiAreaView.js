@@ -84,8 +84,8 @@ class SkiArea extends Component {
                         alt=''
                     />
                 </div>
-                <h1>{name}</h1>
-                <h2>{country.toUpperCase()}</h2>
+                <h2>{name}</h2>
+                <h3>{country.toUpperCase()}</h3>
                 <h3>
                     GODZINY OTWARCIA:  {openHours}
                 </h3>

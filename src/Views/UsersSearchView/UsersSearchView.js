@@ -74,11 +74,11 @@ class UsersSearchView extends Component {
         return(
             <div className={styles.wrapper}>
                 <div className={styles.formWrapper}>
-                    <h2 
+                    <h3 
                         className={styles.title}
                     >
                     WYSZUKAJ UŻYTKOWNIKÓW
-                    </h2>
+                    </h3>
                     <form className={styles.form}>
                         <Input
                             name='username'

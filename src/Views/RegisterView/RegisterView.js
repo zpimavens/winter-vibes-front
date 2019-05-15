@@ -114,7 +114,7 @@ class RegisterView extends Component{
                     className={styles.link} 
                     to={appUrls.LOGIN}
                 >
-                ZALOGUJ SIĘ
+                Posiadasz już konto? Zaloguj się.
                 </Link>
             </div>
         </AppContext.Provider>

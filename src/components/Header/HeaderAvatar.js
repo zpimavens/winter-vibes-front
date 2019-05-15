@@ -15,11 +15,11 @@ const HeaderAvatar = ({ image, username, history }) => (
                 history.push({ pathname: appUrls.USER_ID+username })
             }
         />
-        <h4 
+        <h5 
             className={styles.name}
         >
             {username}
-        </h4>
+        </h5>
     </div>
 )
 

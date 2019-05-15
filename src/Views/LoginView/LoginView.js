@@ -74,7 +74,7 @@ class LoginView extends React.Component{
                             className={styles.link} 
                             to={appUrls.REGISTER}
                         >
-                        NIE MASZ KONTA? ZAREJESTRUJ SIĘ
+                        Nie masz konta? Zarejestruj się!
                         </Link>
                     </div> 
             </AppContext.Provider>
