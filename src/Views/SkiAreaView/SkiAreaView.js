@@ -6,6 +6,7 @@ import Conveniences from '../../components/SkiArea/Conveniences'
 import Loader from '../../components/Loader/Loader'
 import styles from './SkiAreaView.module.scss'
 import image from '../../assets/images/skiareabg.jpg'
+import Button from '../../components/Button/Button';
 
 
 class SkiArea extends Component {
@@ -102,6 +103,11 @@ class SkiArea extends Component {
                 <Conveniences 
                     additional={additional}
                 />
+                <Button 
+                    onClick={()=>alert('Coming soon!')}
+                >
+                    UTWÓRZ WYDARZENIE Z TĄ ARENĄ
+                </Button>
         </div>
         )
     }

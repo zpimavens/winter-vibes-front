@@ -11,35 +11,40 @@ import styles from './LoginView.module.scss'
 
 class LoginView extends React.Component{
     state={
-        email: '',
+        username: '',
         password: '',
         formMessages: {
             msg: '',
-        }
-
+        },
+        isLoading: false,
     }
 
     handleLogin = (e) => {
         e.preventDefault()
-        const { email, password } = this.state
-        
-        login(email, password)
+        this.setState({
+            isLoading: true
+        })
+        const { username, password } = this.state
+        login(username, password)
         .then(res=>{
             this.props.history.replace(appUrls.ROOT)
-            this.props.loadUserData() 
+            this.props.loadUserData(username) 
+            
         })
         .catch(err=>{
             if(err.message==='Unauthorized')
                 this.setState({
                     formMessages: {
                         msg: 'Niepoprawne dane logowania.'
-                    }
+                    },
+                    isLoading: false
                 })
             else
             this.setState({
                 formMessages: {
                     msg: "Coś poszło nie tak, spróbuj ponownie później."
-                }
+                },
+                isLoading: false
             })
         })
 
@@ -69,6 +74,7 @@ class LoginView extends React.Component{
                             formSubmitFnc={this.handleLogin}
                             handleInputChange={this.handleInputChange}
                             formType='login'
+                            isLoading={this.state.isLoading}
                         />
                         <Link 
                             className={styles.link} 

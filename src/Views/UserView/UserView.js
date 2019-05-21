@@ -80,18 +80,28 @@ class UserView extends Component{
                                 username={username}
                                 image={image}
                             />
-                                    <p><FaMapMarkerAlt />&ensp;{town}</p>
-                            <p><FaSkiing/> &ensp;{skis}</p>
+                            {town && <p><FaMapMarkerAlt />&ensp;{town}</p>}
+                            {skis && <p><FaSkiing/> &ensp;{skis}</p>}
                             <p>Umiejętności:</p>
                             <ProgressBar 
                                 progress={level}
                             />
-                            {context.user.username===username && (
+                            {context.user.username===username ? (
                                 <Button 
                                     onClick={()=>this.props.history.push(appUrls.EDIT_PROFILE)}
                                 >
                                 EDYTUJ PROFIL
                                 </Button>
+                            ):(
+                                <div className={styles.buttonWrapper}>
+                                <Button
+                                    onClick={()=>alert('Coming soon!')}
+                                >OBSERWUJ</Button>
+                                
+                                <Button
+                                    onClick={() => alert('Coming soon!')}
+                                >DODAJ DO GRUPY</Button>
+                                </div>
                             )}  
                            
                         </div>

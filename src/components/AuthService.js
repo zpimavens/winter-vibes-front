@@ -1,11 +1,11 @@
 import decode from 'jwt-decode'
 import { requestUrls } from '../urls'
 
-export const login = ( email, password ) => {
+export const login = ( username, password ) => {
     return fetchFun(requestUrls.LOGIN, {
         method: "POST",
         body: JSON.stringify({
-            email,
+            username,
             password
         })
     }).then(res => {

@@ -39,7 +39,6 @@ class EditProfileView extends Component {
                 level: data.level,
                 town: data.town
             })
-            console.log(data)
         })
         .catch()
     }

@@ -5,7 +5,7 @@ import Input from '../Inputs/Input'
 import Button from '../Button/Button'
 import styles from './Form.module.scss'
 
-const Form = ({formSubmitFnc, handleInputChange, formType, autoComplete})=>{
+const Form = ({formSubmitFnc, handleInputChange, formType, autoComplete, isLoading})=>{
     return(
         <AppContext.Consumer>
             {(context)=>(
@@ -13,21 +13,22 @@ const Form = ({formSubmitFnc, handleInputChange, formType, autoComplete})=>{
                     className={styles.formWrapper}
                     autoComplete={autoComplete}
                 >
+                    
                     <Input
-                        name='email'
-                        placeholder='E-MAIL'
-                        type='email'
+                        name='username'
+                        type='text'
+                        placeholder='NAZWA UŻYTKOWNIKA'
                         onChange={handleInputChange}
-                        value={context.email}
+                        value={context.username}
                     />
                     {formType==='register' && 
                         <Input
-                            name='username'
-                            type='text'
-                            placeholder='NAZWA UŻYTKOWNIKA'
+                            name='email'
+                            placeholder='E-MAIL'
+                            type='email'
                             onChange={handleInputChange}
-                            value={context.username}
-                        />
+                            value={context.email}
+                        /> 
                     }
                     <Input
                         name='password'
@@ -48,6 +49,7 @@ const Form = ({formSubmitFnc, handleInputChange, formType, autoComplete})=>{
                     <Button
                         secondary={true}
                         onClick={formSubmitFnc}
+                        disabled={isLoading}
                     >
                     {formType === 'login' ? 'ZALOGUJ' : 'ZAREJESTRUJ SIĘ'}
                     </Button>

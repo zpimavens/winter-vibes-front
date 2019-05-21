@@ -19,7 +19,10 @@
     &:active{
         transform: scale(1)
     }
-
+    &:disabled{
+        opacity: .2;
+        cursor: wait;
+    }
     &Secondary{
         @extend .button;
         background-image: none;

@@ -18,6 +18,7 @@ class RegisterView extends Component{
         emailValid: false,
         passwordValid: false,
         formValid: false,
+        isLoading: false,
     }
 
     validateField(fieldName, value){
@@ -61,6 +62,9 @@ class RegisterView extends Component{
     handleRegister = (e) => {
         e.preventDefault()
         const { formMessages, emailValid, passwordValid, formValid, ...userData} = this.state 
+        this.setState({
+            isLoading: true
+        })
 
         if(this.state.formValid){
             
@@ -78,14 +82,23 @@ class RegisterView extends Component{
                     return res.text()
                 } 
                 else if (res.status === 500) {
-                    this.setState({ formMessages: {other: 'Coś poszło nie tak, spróbuj ponownie później.'}})
+                    this.setState({ 
+                        formMessages: {other: 'Coś poszło nie tak, spróbuj ponownie później.'},
+                        isLoading: false
+                    })
                 } 
             })
             .then(data =>{
                 if (data === 'email')
-                    this.setState({ formMessages: { email: 'Istnieje już taki email' } })
+                    this.setState({ 
+                        formMessages: { email: 'Istnieje już taki email' },
+                    isLoading: false
+                 })
                 else if (data === 'username')
-                    this.setState({ formMessages: { username: 'Istnieje już taka nazwa użytkownika' } })
+                    this.setState({ 
+                        formMessages: { username: 'Istnieje już taka nazwa użytkownika' },
+                        isLoading: false    
+                    })
             })
         }
     }
@@ -109,6 +122,7 @@ class RegisterView extends Component{
                     handleInputChange={this.handleInputChange}
                     formSubmitFnc={this.handleRegister}
                     autoComplete='off'
+                    isLoading={this.state.isLoading}
                 />
                 <Link 
                     className={styles.link} 

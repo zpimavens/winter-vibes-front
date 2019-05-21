@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { isLoggedIn } from '../AuthService'
 import { appUrls } from '../../urls'
 
-const PrivateRoute = ({ component: Component, layout: Layout, ...rest }) => {
+const PrivateRoute = ({ component: Component, layout: Layout,...rest }) => {
     return (
         <Route {...rest} render={props => (
             !isLoggedIn() ? <Redirect to={appUrls.LOGIN} /> 

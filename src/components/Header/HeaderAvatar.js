@@ -25,7 +25,7 @@ const HeaderAvatar = ({ image, username, history }) => (
 
 HeaderAvatar.propTypes = {
     image: PropTypes.string.isRequired,
-    username: PropTypes.string.isRequired
+    username: PropTypes.string
 }
 
 export default withRouter(HeaderAvatar)

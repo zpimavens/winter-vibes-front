@@ -8,6 +8,11 @@
     justify-content: center;
     color: white;
     background-image: $blue-gradient;
+    text-align: center;
+    
+    &>h1, h2{
+        margin: 10px 30px;
+    }
 }
 .link{
     text-decoration: none;

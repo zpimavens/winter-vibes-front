@@ -40,8 +40,22 @@ class App extends React.Component{
         this.props.history.push(appUrls.LOGIN)
     }
 
-    fetchUserData= ()=>{
-        fetch(requestUrls.CURRENT_USER)
+    fetchUserData= (usern)=>{
+      const username = usern
+      this.setState({
+        user:{
+          username: username,
+        }
+      })
+
+      fetch(requestUrls.GET_USER_BY_USERNAME, {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({username}),
+
+        })
         .then(response => {
             if(response.status===200)
                 return response.json()
@@ -49,21 +63,35 @@ class App extends React.Component{
                 throw new Error(response.status)
         })
         .then(([data]) => {
-            this.updateUserData(data)
-            // console.log(data)
+            this.updateStateData(data)
+
         })
         .catch()
     }
 
-    updateUserData = (data)=>{
+    updateStateData = (data)=>{
       this.setState({
         user: data
       })
     }
+    updateUserData=()=>{
+      fetch(requestUrls.CURRENT_USER)
+        .then(response => {
+          if (response.status === 200)
+            return response.json()
+          else
+            throw new Error(response.status)
+        })
+        .then(([data]) => {
+          this.updateStateData(data)
+
+        })
+        .catch()
+    }
 
     checkToken = ()=>{
       if (isLoggedIn())
-        this.fetchUserData()
+        this.updateUserData()
     }
 
     componentDidMount() {
@@ -89,7 +117,7 @@ class App extends React.Component{
               <PublicRoute
                 path={appUrls.LOGIN}
                 component={LoginView}
-                loadUserData={this.checkToken}
+                loadUserData={this.fetchUserData}
 
               />
               <PublicRoute
@@ -131,6 +159,7 @@ class App extends React.Component{
                 layout={Header}
               />
               <Route component={Page404}/>
+              
             </Switch>
           </AppContext.Provider>
         )
