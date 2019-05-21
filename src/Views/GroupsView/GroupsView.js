@@ -2,11 +2,16 @@ import React, { Component } from 'react'
 import AddGroupButton from '../../components/AddGroup/AddGroupButton'
 import styles from './GroupsView.module.scss'
 import AddGroupModal from '../../components/AddGroup/AddGroupModal'
+import GroupList from '../../components/GroupList/GroupList'
+
 
 class GroupsView extends Component {
 
     state={
         isModalOpen: false,
+        groups: [
+            
+        ],
     }
     openModal=()=>{
         this.setState({
@@ -19,6 +24,24 @@ class GroupsView extends Component {
         })
     }
 
+    componentDidMount(){
+        fetch('/api/groups')
+        .then(res=>{
+            if(res.status===200){
+                return res.json()
+            }else{
+                throw new Error('no data')
+            }
+        })
+        .then(data=>{
+            if(data && data.length>0)
+            {
+                this.setState({
+                    groups: data
+                })
+            }
+        })
+    }
 
     render(){
         return(
@@ -31,7 +54,9 @@ class GroupsView extends Component {
                         closeModalFn={this.closeModal} 
                     />
                 }
-                <p>Cześć! Ta podstrona jest w trakcie produkcji, wpadnij tutaj troszkę później :)</p>
+                <GroupList 
+                    groups={this.state.groups}
+                />
             </div>
         )
     }

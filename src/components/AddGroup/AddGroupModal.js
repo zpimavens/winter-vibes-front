@@ -24,47 +24,57 @@ class AddGroupModal extends Component {
                 isPrivate: !prev.isPrivate
             }))
         }else
-        this.setState({
-            [name]:value
-        })
+            this.setState({
+                [name]:value
+            })
+    }
+
+    isFormEmpty=()=>{
+        return !this.state.name && !this.state.description 
     }
 
     handleSubmit=(e)=>{
         e.preventDefault()
-        const data = {
-            name: this.state.name,
-            description: this.state.description,
-            owner: this.state.owner,
-            private: this.state.isPrivate
-        }
-        console.log(data)
+        if(this.isFormEmpty()){
+            this.setState({
+                message:{
+                    msg: 'Wypełnij wszystkie pola.'
+                }
+            })
+        }else{
 
-        fetch('/api/groups',{
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
+            const data = {
+                name: this.state.name,
+                description: this.state.description,
+                owner: this.state.owner,
+                private: this.state.isPrivate
             }
-        })
-        .then(res=>{
-            if(res.status===201){
-                this.setState({
-                    message: {
-                        msg: 'Dodano grupę!'
-                    } 
-                })
-            }else{
-                this.setState({
-                    message: {
-                        msg: 'Cos poszło nie tak. Sprobuj ponownie później.'
-                    }
-                })
-            }
-        })
-        
+    
+            fetch('/api/groups',{
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res=>{
+                if(res.status===201){
+                    this.setState({
+                        message: {
+                            msg: 'Dodano grupę!'
+                        } 
+                    })
+                }else{
+                    this.setState({
+                        message: {
+                            msg: 'Cos poszło nie tak. Sprobuj ponownie później.'
+                        }
+                    })
+                }
+            })
+        }
     }
     
-
     render(){
 
         return(
@@ -87,6 +97,7 @@ class AddGroupModal extends Component {
                         placeholder='Nazwa grupy'
                         onChange={this.handleInputChange}
                         value={this.state.name}
+                        maxLength='30'
                     />
                     <Checkbox 
                         name='isPrivate'

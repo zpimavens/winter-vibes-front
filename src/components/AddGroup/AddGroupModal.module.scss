@@ -9,6 +9,8 @@
     display: flex;
     align-content: center;
     flex-direction: column;
+    border-radius: 50px;
+
 
     &>h4{
        text-align: center;
@@ -36,10 +38,10 @@
     width: 20px;
     background-color: $gradient-color-dark;
     position: relative;
-    top: 0px;
-    right: 30px;
+    top: 20px;
+    border-radius: 5px;
+    right: 5px;
     cursor: pointer;
-    // border-radius: 5px;
 
     &::after{
         content: ' ';
