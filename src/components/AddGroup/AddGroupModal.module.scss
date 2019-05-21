@@ -1,0 +1,66 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    background-color: white;
+    position: absolute;
+    box-shadow: 0px 0px 5px 1px rgba(115, 176, 255, 0.4);
+    z-index: 20;
+    padding: 0px 30px 30px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+
+    &>h4{
+       text-align: center;
+       color: $font-color-light2;
+    }
+    & >form>Input, textarea {
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid; 
+        padding-left: 10px;
+        margin: 20px 0 30px;
+        width: 300px;
+    }
+
+    &>form>Button{
+        margin: 10px auto;
+        display: block;
+       
+        width: 200px;
+    }
+}
+.closeButton{
+
+    height: 20px;
+    width: 20px;
+    background-color: $gradient-color-dark;
+    position: relative;
+    top: 0px;
+    right: 30px;
+    cursor: pointer;
+    // border-radius: 5px;
+
+    &::after{
+        content: ' ';
+        height: 15px;
+        width: 2px;
+        position: relative;
+        top: -13px;
+        left: 9px;
+        background-color: white;
+        display: block;
+        transform: rotate(45deg);
+    }
+    &::before{
+        content: ' ';
+        height: 15px;
+        width: 2px;
+        position: relative;
+        top: 2px;
+        left: 9px;
+        background-color: white;
+        display: block;
+        transform: rotate(-45deg);
+    }
+}

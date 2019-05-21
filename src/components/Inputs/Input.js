@@ -4,17 +4,22 @@ import styles from './Input.module.scss'
 
 const Input = ({ name, type, placeholder, ...props }) =>{
 
+    const Tag = type === 'textarea' ? 'textarea' : 'input'
+    const style = type === 'textarea' ? styles.textArea : styles.formItem
+
     return(
         <>
-            <input
-                className={styles.formItem}
+       
+            <Tag
+                className={style}
                 name={name}
                 id={name}
                 type={type}
                 placeholder={placeholder}
                 {...props}
             > 
-            </input>
+            </Tag>
+       
         </>
     )
 }

@@ -1,0 +1,18 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    background-color: transparent;
+    border: 1px solid $font-color;
+    color: $font-color;
+    border-radius: 100px;
+    padding: 10px 20px 13px;
+    cursor: pointer;
+
+    &::before{
+        content: '\002B';
+        font-size: 20px;
+        margin-right: 5px;
+        position: relative;
+        top: 2px;
+    }   
+}
