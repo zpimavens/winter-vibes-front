@@ -1,0 +1,15 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    background-color: transparent;
+    border: 1px solid $font-color;
+    color: $font-color;
+    border-radius: 30px;
+    padding: 5px 30px;
+    cursor: pointer;
+    margin: 20px;
+
+    & p{
+        font-size: .8rem;
+    }
+}
