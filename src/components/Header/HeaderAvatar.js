@@ -12,7 +12,7 @@ const HeaderAvatar = ({ image, username, history }) => (
             src={image}
             alt={username}
             onClick={() =>
-                history.push({ pathname: appUrls.USER_ID+username })
+                history.push({ pathname: appUrls.USER+username })
             }
         />
         <h5 

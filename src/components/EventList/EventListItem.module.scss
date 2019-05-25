@@ -1,17 +1,16 @@
 @import '../../assets/styles/Variables.scss';
 
 .wrapper{
-    background-color: transparent;
-    width: 350px;
-    max-width: 80vw;
+    // width: 350px;
+    // max-width: 80vw;
+    // display: inline-block;
     border: 1px solid $light-gray;
     color: $font-color;
-    display: inline-block;
     box-shadow: $light-gray-shadow;
     border-radius: 30px;
     padding: 5px 30px 10px;
     cursor: pointer;
-    margin: 20px;
+    margin: 20px 0;
     position: relative;
 
     &:hover{
@@ -21,12 +20,16 @@
     & p{
         font-size: .8rem;
         opacity: .7;
+
+        &:first-child{
+            font-weight: 700;
+        }
     }
     & span{
         opacity: .4;
         margin-left: 10px;
         position: absolute;
         right: 25px;
-
+        top: 20px;
     }
 }

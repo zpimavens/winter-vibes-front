@@ -1,0 +1,27 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    background-color: transparent;
+    border: none;
+    color: white;
+    background-image: $blue-gradient;
+    border-radius: 100px;
+    padding: 15px 14px 10px 15px;
+    cursor: pointer;
+    position: fixed;
+    bottom: 10vh;
+    right: 10vh;
+    font-size: 18px;
+    z-index: 10;
+
+    &:hover{
+        box-shadow: $light-gray-shadow-hover;
+    }
+
+}
+@media( max-width: 768px){
+    .wrapper{
+        bottom: 5vh;
+        right: 5vh;
+    }
+}

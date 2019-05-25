@@ -117,7 +117,7 @@ class EditProfileView extends Component {
                     </Button>
                 </form>
                 <Button
-                    onClick={()=>this.props.history.push(appUrls.USER_ID+this.state.username)}
+                    onClick={()=>this.props.history.push(appUrls.USER+this.state.username)}
                 >
                     WRÓĆ DO PROFILU
                 </Button>

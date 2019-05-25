@@ -47,7 +47,7 @@ class AddGroupModal extends Component {
                 name: this.state.name,
                 description: this.state.description,
                 owner: this.state.owner,
-                private: this.state.isPrivate
+                isPrivate: this.state.isPrivate
             }
     
             fetch('/api/groups',{

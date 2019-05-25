@@ -7,7 +7,7 @@ import styles from './SkiAreasListItem.module.scss'
 const SkiAreasListItem = ({ name, country, id, history })=>(
     <li
         className={styles.item}
-        onClick={()=>history.push(appUrls.AREA_ID+id)}
+        onClick={()=>history.push(appUrls.AREA+id)}
     >
     <ul>
         <li className={styles.areaName}>{name}</li>

@@ -1,0 +1,14 @@
+.wrapper{
+    list-style: none;
+    display: flex;
+    align-items: center;
+}
+.image{
+    border-radius: 100px;
+    height: 50px;
+}
+.name{
+    display: inline-block;
+    line-height: 50px;
+    margin-left: 20px;
+}

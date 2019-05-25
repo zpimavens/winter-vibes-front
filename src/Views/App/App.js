@@ -5,7 +5,8 @@ import { isLoggedIn, logout } from '../../components/AuthService'
 import { appUrls, requestUrls } from '../../urls'
 import Header from '../../components/Header/Header'
 import UserView from '../UserView/UserView'
-import GroupsView from '../GroupsView/GroupsView'
+import MyGroupsView from '../MyGroupsView/MyGroupsView'
+import GroupView from '../GroupView/GroupView'
 import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView'
 import LoginView from '../LoginView/LoginView'
 import RegisterView from '../RegisterView/RegisterView'
@@ -111,7 +112,7 @@ class App extends React.Component{
               <PrivateRoute
                 exact
                 path={appUrls.ROOT}
-                component={GroupsView}
+                component={MyGroupsView}
                 layout={Header}
               />
               <PublicRoute
@@ -133,9 +134,14 @@ class App extends React.Component{
                 component={RegisterDoneView}
               />
               <PrivateRoute
-                path={appUrls.USER}
+                path={appUrls.USER_ID}
                 component={UserView}
                 user={this.state.user}
+                layout={Header}
+              />
+              <PrivateRoute
+                path={appUrls.GROUP_ID}
+                component={GroupView}
                 layout={Header}
               />
               <PrivateRoute
@@ -144,7 +150,7 @@ class App extends React.Component{
                 layout={Header}
               />
               <PrivateRoute
-                path={appUrls.AREA}
+                path={appUrls.AREA_ID}
                 component={SkiAreaView}
                 layout={Header}
               />

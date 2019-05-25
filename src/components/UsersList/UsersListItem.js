@@ -7,7 +7,7 @@ import styles from './UsersListItem.module.scss'
 class UsersListItem extends React.Component{
     
     handleClick = (e) => {
-        this.props.history.push(appUrls.USER_ID+this.props.username)  
+        this.props.history.push(appUrls.USER+this.props.username)  
     }
     
     render(){

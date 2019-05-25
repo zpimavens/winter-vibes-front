@@ -22,7 +22,7 @@ const HeaderNavigation = ({type,...props}) =>{
                                 exact 
                                 className={navItemLinkClassName} 
                                 activeClassName={navItemLinkActiveClassName} 
-                                to={ appUrls.USER_ID+context.user.username}
+                                to={ appUrls.USER+context.user.username}
                                 {...props}
                             >
                             MOJE KONTO

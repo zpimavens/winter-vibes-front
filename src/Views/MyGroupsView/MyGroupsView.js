@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import AddGroupButton from '../../components/AddGroup/AddGroupButton'
-import styles from './GroupsView.module.scss'
+import { requestUrls } from '../../urls'
+import { FaPlus } from 'react-icons/fa'
+import IconButton from '../../components/Button/SmallIconButton'
 import AddGroupModal from '../../components/AddGroup/AddGroupModal'
 import GroupList from '../../components/GroupList/GroupList'
+import styles from './MyGroupsView.module.scss'
 
 
 class GroupsView extends Component {
@@ -13,10 +15,11 @@ class GroupsView extends Component {
             
         ],
     }
-    openModal=()=>{
-        this.setState({
-            isModalOpen: true
-        })
+    
+    toggleModal=()=>{
+        this.setState(prev=>({
+            isModalOpen: !prev.isModalOpen
+        }))
     }
     closeModal=()=>{
         this.setState({
@@ -25,7 +28,7 @@ class GroupsView extends Component {
     }
 
     componentDidMount(){
-        fetch('/api/groups')
+        fetch(requestUrls.GET_GROUPS)
         .then(res=>{
             if(res.status===200){
                 return res.json()
@@ -45,18 +48,22 @@ class GroupsView extends Component {
 
     render(){
         return(
-            <div className={styles.container}>
-                <AddGroupButton
-                    onClick={this.openModal}
+            <div
+                className={styles.container}
+            >
+                <GroupList 
+                    groups={this.state.groups}
                 />
+                <IconButton
+                    onClick={this.toggleModal}
+                >
+                    <FaPlus /> 
+                </IconButton>
                 {this.state.isModalOpen && 
                     <AddGroupModal 
                         closeModalFn={this.closeModal} 
                     />
                 }
-                <GroupList 
-                    groups={this.state.groups}
-                />
             </div>
         )
     }

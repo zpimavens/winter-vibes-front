@@ -4,14 +4,15 @@ export const appUrls = {
     REGISTER: '/register',
     ACTIVATE: '/activate',
     REGISTER_SUCCESS: '/register-success',
-    USER: '/user/:id',
-    AREA: '/area/:id',
-    AREA_ID: '/area/',
-    USER_ID: '/user/',
+    USER_ID: '/user/:id',
+    AREA_ID: '/area/:id',
+    AREA: '/area/',
+    USER: '/user/',
     SEARCH_AREAS: '/search-areas',
     SEARCH_USERS: '/search-users',
     EDIT_PROFILE: '/editprofile',
-
+    GROUP_ID: '/group/:id',
+    GROUP: '/group/',
 }
 export const requestUrls = {
     CHECK_TOKEN: '/checkToken',
@@ -23,5 +24,6 @@ export const requestUrls = {
     EDIT_USER: '/api/editUser',
     SEARCH_USER: '/api/userSearch',
     SEARCH_ARENAS: '/api/skiArenaSearch',
-    GET_AREA_BY_ID: '/api/getArenaById'
+    GET_AREA_BY_ID: '/api/getArenaById',
+    GET_GROUPS: '/api/groups',
 }

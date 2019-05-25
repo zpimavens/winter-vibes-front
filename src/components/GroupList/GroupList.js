@@ -1,15 +1,21 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { appUrls } from '../../urls'
 import GroupListItem from './GroupListItem'
+import styles from './GroupList.module.scss'
 
-const GroupList = ({ groups })=>{
+const GroupList = ({ groups, history })=>{
 
     return(
-        <div>
+        <div
+            className={styles.container}
+        >
             {groups.length ? 
                 groups.map(group=>(
                     <GroupListItem 
-                        key={group.id}
+                        key={group._id}
                         {...group}
+                        onClick={()=>{history.push(appUrls.GROUP+group._id)}}
                     />
 
                 ))
@@ -21,4 +27,4 @@ const GroupList = ({ groups })=>{
     )
 }
 
-export default GroupList
+export default withRouter(GroupList)
