@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { requestUrls } from '../../urls'
 import { FaPlus } from 'react-icons/fa'
+import AppContext from '../../context'
 import IconButton from '../../components/Button/SmallIconButton'
 import AddGroupModal from '../../components/AddGroup/AddGroupModal'
 import GroupList from '../../components/GroupList/GroupList'
@@ -28,7 +29,13 @@ class GroupsView extends Component {
     }
 
     componentDidMount(){
-        fetch(requestUrls.GET_GROUPS)
+        fetch(requestUrls.GET_USER_GROUPS, {
+            method: "POST",
+            body: JSON.stringify({ username: this.context.user.username }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
         .then(res=>{
             if(res.status===200){
                 return res.json()
@@ -56,6 +63,7 @@ class GroupsView extends Component {
                 />
                 <IconButton
                     onClick={this.toggleModal}
+                    type='fixed'
                 >
                     <FaPlus /> 
                 </IconButton>
@@ -68,5 +76,5 @@ class GroupsView extends Component {
         )
     }
 }
-
+GroupsView.contextType = AppContext; 
 export default GroupsView

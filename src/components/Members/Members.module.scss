@@ -1,0 +1,20 @@
+@import '../../assets/styles/Variables.scss';
+.container{
+
+    padding: 0 20px;
+    margin: 0 20px;
+    height: 60vh;
+    width: 96%;
+    overflow-y: scroll;
+    display: relative;
+    border-bottom: 1px solid $font-color-light2;
+
+    & h4{
+        display: inline;
+    }
+    &Top{
+        display: flex;
+        justify-content: space-between;
+        
+    }
+}

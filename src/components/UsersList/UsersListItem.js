@@ -15,7 +15,7 @@ class UsersListItem extends React.Component{
         return(
             <li 
                 className={styles.wrapper}
-                onClick={this.handleClick}
+                onClick={this.props.onClick ? this.props.onClick : this.handleClick}
                 id={username}
             >
                 <img 

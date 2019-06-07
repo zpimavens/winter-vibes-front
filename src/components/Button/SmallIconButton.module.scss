@@ -1,26 +1,38 @@
 @import '../../assets/styles/Variables.scss';
 
-.wrapper{
-    background-color: transparent;
+.wrapperBase{
     border: none;
     color: white;
     background-image: $blue-gradient;
     border-radius: 100px;
     padding: 15px 14px 10px 15px;
-    cursor: pointer;
-    position: fixed;
-    bottom: 10vh;
-    right: 10vh;
     font-size: 18px;
-    z-index: 10;
-
+    cursor: pointer;
+    
     &:hover{
         box-shadow: $light-gray-shadow-hover;
     }
 
 }
+.wrapperSec{
+    @extend .wrapperBase;
+    color: $gradient-color-light;
+    background-color: transparent;
+    background-image: none;
+    &:hover{
+        transform: scale(1.2);
+        box-shadow: none;
+    }
+}
+.wrapperFixed{
+    @extend .wrapperBase;
+    position: fixed;
+    bottom: 10vh;
+    right: 10vh;
+    z-index: 10;
+}
 @media( max-width: 768px){
-    .wrapper{
+    .wrapperFixed{
         bottom: 5vh;
         right: 5vh;
     }

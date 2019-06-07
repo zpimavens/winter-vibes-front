@@ -43,11 +43,11 @@ class App extends React.Component{
 
     fetchUserData= (usern)=>{
       const username = usern
-      this.setState({
-        user:{
-          username: username,
-        }
-      })
+      // this.setState({
+      //   user:{
+      //     username: username,
+      //   }
+      // })
 
       fetch(requestUrls.GET_USER_BY_USERNAME, {
           method: "POST",
@@ -72,8 +72,11 @@ class App extends React.Component{
 
     updateStateData = (data)=>{
       this.setState({
-        user: data
-      })
+        user:{
+          username: data.username,
+          image: data.image
+        }
+      })      
     }
     updateUserData=()=>{
       fetch(requestUrls.CURRENT_USER)
@@ -85,7 +88,6 @@ class App extends React.Component{
         })
         .then(([data]) => {
           this.updateStateData(data)
-
         })
         .catch()
     }
@@ -102,7 +104,11 @@ class App extends React.Component{
     render(){   
 
         const contextElements = {
-            ...this.state,
+            user:{
+                username: this.state.user.username,
+                image: this.state.user.image
+            }
+            ,
             handleLogOut: this.handleLogOut,
         }
 
@@ -119,7 +125,6 @@ class App extends React.Component{
                 path={appUrls.LOGIN}
                 component={LoginView}
                 loadUserData={this.fetchUserData}
-
               />
               <PublicRoute
                 path={appUrls.REGISTER}

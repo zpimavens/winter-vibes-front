@@ -3,30 +3,27 @@ import PropTypes from 'prop-types'
 import EventListItem from './EventListItem'
 import styles from './EventList.module.scss'
 
-const EventList = ({ events, type }) =>{
-
+const EventList = ({ events }) =>{
+// console.log(events)
     return(
         <div
             className={styles.container}
         >
-            <h5>{type==='current' ? 'Nadchodzące wydarzenia:' : 'Przeszłe wydarzenia'}</h5>
-            {events.length ? 
+            {!!events && events.length ? 
             <ul>
                 {events.map(event=>(
                     <EventListItem
                         key={event.id}
                         {...event}
-                        type={type}
                     />
                 ))}
             </ul>
             :
-            <p>nie ok </p>}
+            <p>Brak wydarzeń</p>}
         </div>
     )
 }
 EventList.propTypes={
-    events: PropTypes.array.isRequired,
-    type: PropTypes.string.isRequired,
+    events: PropTypes.array,
 }
 export default EventList

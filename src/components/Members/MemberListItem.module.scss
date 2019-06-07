@@ -1,0 +1,47 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    list-style: none;
+    display: flex;
+    position: relative;
+    align-items: center;
+    border-bottom: 1px solid $font-color-light2;
+
+    &:last-child{
+        border: none;
+    }
+    &:hover{
+        font-weight: 700;
+    }
+}
+.image{
+    border-radius: 100px;
+    height: 50px;
+    cursor: pointer;
+}
+.name{
+    line-height: 50px;
+    margin-left: 20px;
+    position: relative;
+    cursor: pointer;
+
+    &Owner{
+        @extend .name;
+        &::before{
+            content: 'Wlasciciel';
+            position: absolute;
+            display: block;
+            font-size: 10px;
+            // left: 5px;
+            top: 15px;
+        }
+    }
+}
+.moreIcon{
+    position: absolute;
+    right: 0px;
+    cursor: pointer;
+    font-size: 20px;
+    margin-right: 10px;
+    opacity: .5;
+}

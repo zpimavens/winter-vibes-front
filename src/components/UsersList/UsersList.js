@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import UserItem from './UsersListItem'
 import styles from './UsersList.module.scss'
 
-const UsersList =({ users })=>  (
+const UsersList =({ users, onClick })=>  (
     <div className={styles.wrapper}>
         {users.length ? 
             <ul className={styles.userList}>
@@ -11,6 +11,7 @@ const UsersList =({ users })=>  (
                     <UserItem 
                         {...user}
                         key={user.username}
+                        onClick={onClick}
                     />
                 ))}
             </ul>

@@ -26,4 +26,5 @@ export const requestUrls = {
     SEARCH_ARENAS: '/api/skiArenaSearch',
     GET_AREA_BY_ID: '/api/getArenaById',
     GET_GROUPS: '/api/groups',
+    GET_USER_GROUPS: '/api/groups-of-user'
 }

@@ -1,0 +1,76 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    background-color: white;
+    position: absolute;
+    width: 60vh;
+    left: 30%;
+    top: 15%;
+    box-shadow: 0px 0px 5px 1px rgba(115, 176, 255, 0.4);
+    z-index: 3;
+    padding: 0px 30px 30px;
+    display: flex;
+    align-content: center;
+    flex-direction: column;
+    border-radius: 50px;
+
+
+    &>h4{
+       text-align: center;
+       color: $font-color-light2;
+    }
+    & >form>Input {
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid; 
+        padding-left: 10px;
+        margin: 20px 0 30px;
+        width: 100%;
+    }
+
+    &>form>Button{
+        margin: 10px auto;
+        display: block;
+       
+        width: 200px;
+        max-width: 50vw;
+    }
+}
+.closeButton{
+
+    height: 20px;
+    width: 20px;
+    background-color: transparent;
+    position: relative;
+    top: 20px;
+    border-radius: 5px;
+    right: 5px;
+    cursor: pointer;
+
+    &::after{
+        content: ' ';
+        height: 15px;
+        width: 2px;
+        position: relative;
+        top: -13px;
+        left: 9px;
+        background-color: $gradient-color-dark;
+        display: block;
+        transform: rotate(45deg);
+    }
+    &::before{
+        content: ' ';
+        height: 15px;
+        width: 2px;
+        position: relative;
+        top: 2px;
+        left: 9px;
+        background-color: $gradient-color-dark;
+        display: block;
+        transform: rotate(-45deg);
+    }
+}
+.listWrapper{
+    overflow-y: scroll;
+    height: 300px;
+}

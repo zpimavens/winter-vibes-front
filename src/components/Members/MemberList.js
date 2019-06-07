@@ -1,14 +1,15 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { appUrls } from '../../urls'
 import MemberListItem from './MemberListItem'
 import styles from './MemberList.module.scss'
 
-const MemberList = ({ members })=>{
+const MemberList = ({ members, owner, history })=>{
 
     return(
-        members.length ? 
+        !!members && members.length  ? 
         <>
-        <h5>Członkowie grupy:</h5>
         <ul
             className={styles.container}
         >
@@ -17,15 +18,18 @@ const MemberList = ({ members })=>{
                     name={member.name}
                     key={member.name}
                     image={member.image}
+                    owner={owner}
+                    onClick={()=>history.push(appUrls.USER+member.name)}
                 /> 
             ))}
         </ul>
         </>
         :
-        <p>nie ma innych membersow</p>
+        <p>Brak innych członków</p>
     )
 }
 MemberList.propTypes={
-    members: PropTypes.array
+    members: PropTypes.array,
+    owner: PropTypes.string,
 }
-export default MemberList
+export default withRouter(MemberList)

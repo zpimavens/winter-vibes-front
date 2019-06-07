@@ -1,0 +1,16 @@
+.content{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    grid-template-rows: 1;
+    // flex-wrap: wrap;
+    // justify-content: space-between;
+}
+.contextMenuWrapper{
+    position: relative;
+}
+@media (max-width: 768px){
+    .content{
+        grid-template-columns: 100%;
+        // grid-template-rows: 1 1;
+    }
+}
