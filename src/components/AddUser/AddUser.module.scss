@@ -1,0 +1,21 @@
+@import '../../assets/styles/Variables.scss';
+.listWrapper{
+    overflow-y: scroll;
+    height: 300px;
+}
+.container>form>Input {
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid; 
+        padding-left: 10px;
+        margin: 20px 0 30px;
+        width: 100%;
+    }
+
+.container>form>Button{
+        margin: 10px auto;
+        display: block;
+       
+        width: 200px;
+        max-width: 50vw;
+    }

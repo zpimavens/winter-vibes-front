@@ -1,11 +1,12 @@
 import React from 'react'
 import styles from './MenuItemList.module.scss'
 
-const MenuItemList = ({ items })=>{
+const MenuItemList = ({ items, onClick })=>{
 
     return(
         <div
             className={styles.container}
+            onClick={onClick}
         >
             <ul>
                 {items.map(item=>(

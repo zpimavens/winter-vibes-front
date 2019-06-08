@@ -1,0 +1,22 @@
+@import '../../assets/styles/Variables.scss';
+.tab{
+
+    list-style: none;
+    border: 1px solid $light-gray ;
+    border-bottom: 1px solid transparent;
+    border-radius: 3px 3px 0 0;
+    padding:10px;
+    width: 50%;
+    text-align: center;
+    background-color: $light-gray;
+    opacity: .3;
+    transition: .4s;
+    cursor: pointer;
+
+    &Active{
+        @extend .tab;
+        background-color: white;
+        opacity: 1;
+
+    }
+}

@@ -30,12 +30,14 @@
         top: 30px;
         box-shadow: 0 2px 3px rgb(221, 221, 221);
     }
+    
 }
 .title{
     font-weight: 300;
     margin-top: 0;
     margin-right: 10px;
     margin-bottom: 30px;
+    
 
     &::after{
         content: '';
@@ -54,4 +56,5 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    
 }

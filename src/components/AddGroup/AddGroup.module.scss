@@ -1,0 +1,21 @@
+@import '../../assets/styles/Variables.scss';
+
+.wrapper{
+    
+    & >form>Input, textarea {
+        border: none;
+        border-radius: 0;
+        border-bottom: 1px solid; 
+        padding-left: 10px;
+        margin: 20px 0 30px;
+        width: 100%;
+    }
+
+    &>form>Button{
+        margin: 10px auto;
+        display: block;
+       
+        width: 200px;
+        max-width: 50vw;
+    }
+}

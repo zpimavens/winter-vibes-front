@@ -10,7 +10,7 @@ import GroupView from '../GroupView/GroupView'
 import SkiAreaSearchView from '../SkiAreaSearchView/SkiAreaSearchView'
 import LoginView from '../LoginView/LoginView'
 import RegisterView from '../RegisterView/RegisterView'
-import UsersSearchView from '../../Views/UsersSearchView/UsersSearchView'
+import CommunitySearchView from '../../Views/CommunitySearchView/CommunitySearchView'
 import ActivationView from '../ActivationView/ActivationView'
 import PrivateRoute from '../../components/PrivateRoute/PrivateRoute'
 import PublicRoute from '../../components/PublicRoute/PublicRoute'
@@ -19,6 +19,7 @@ import EditProfileView from '../EditProfileView/EditProfileView'
 import SkiAreaView from '../SkiAreaView/SkiAreaView'
 import Page404 from '../Page404/Page404'
 import '../../assets/styles/index.scss'
+import Loader from '../../components/Loader/Loader';
 
 class App extends React.Component{
 
@@ -27,6 +28,7 @@ class App extends React.Component{
             username: '',
             image: '',
         },
+        isLoading: false
     }
 
     handleLogOut = (e) => {
@@ -43,11 +45,9 @@ class App extends React.Component{
 
     fetchUserData= (usern)=>{
       const username = usern
-      // this.setState({
-      //   user:{
-      //     username: username,
-      //   }
-      // })
+      this.setState({
+        isLoading: true
+      })
 
       fetch(requestUrls.GET_USER_BY_USERNAME, {
           method: "POST",
@@ -75,10 +75,14 @@ class App extends React.Component{
         user:{
           username: data.username,
           image: data.image
-        }
+        },
+        isLoading: false
       })      
     }
     updateUserData=()=>{
+      this.setState({
+        isLoading: true
+      })
       fetch(requestUrls.CURRENT_USER)
         .then(response => {
           if (response.status === 200)
@@ -113,6 +117,7 @@ class App extends React.Component{
         }
 
         return (
+          this.state.isLoading ? <Loader /> :
           <AppContext.Provider value={contextElements}>
             <Switch>
               <PrivateRoute
@@ -161,7 +166,7 @@ class App extends React.Component{
               />
               <PrivateRoute
                 path={appUrls.SEARCH_USERS}
-                component={UsersSearchView}
+                component={CommunitySearchView}
                 layout={Header}
               />
               <PrivateRoute

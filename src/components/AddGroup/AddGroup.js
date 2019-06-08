@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import Input from '../Inputs/Input'
 import Checkbox from '../Inputs/Checkbox'
-import styles from './AddGroupModal.module.scss'
+import styles from './AddGroup.module.scss'
 import Button from '../Button/Button';
 import FormMessages from '../Form/FormMessages';
 
-class AddGroupModal extends Component {
+class AddGroup extends Component {
 
     state={
         isPrivate: false,
@@ -64,6 +64,7 @@ class AddGroupModal extends Component {
                             msg: 'Dodano grupę!'
                         } 
                     })
+                    this.props.reloadData()
                 }else{
                     this.setState({
                         message: {
@@ -81,10 +82,6 @@ class AddGroupModal extends Component {
             <div
                 className={styles.wrapper}
             >
-                <div
-                    className={styles.closeButton}
-                    onClick={this.props.closeModalFn}
-                ></div>
                 <h4>NOWA GRUPA</h4>
                 <form>
                     <FormMessages 
@@ -125,4 +122,4 @@ class AddGroupModal extends Component {
     }
 }
 
-export default AddGroupModal
+export default AddGroup

@@ -3,7 +3,8 @@ import { requestUrls } from '../../urls'
 import { FaPlus } from 'react-icons/fa'
 import AppContext from '../../context'
 import IconButton from '../../components/Button/SmallIconButton'
-import AddGroupModal from '../../components/AddGroup/AddGroupModal'
+import AddGroupModal from '../../components/AddGroup/AddGroup'
+import Modal from '../../components/Modal/Modal'
 import GroupList from '../../components/GroupList/GroupList'
 import styles from './MyGroupsView.module.scss'
 
@@ -27,8 +28,7 @@ class GroupsView extends Component {
             isModalOpen: false
         })
     }
-
-    componentDidMount(){
+    fetchGroupData=()=>{
         fetch(requestUrls.GET_USER_GROUPS, {
             method: "POST",
             body: JSON.stringify({ username: this.context.user.username }),
@@ -36,21 +36,24 @@ class GroupsView extends Component {
                 'Content-Type': 'application/json'
             }
         })
-        .then(res=>{
-            if(res.status===200){
-                return res.json()
-            }else{
-                throw new Error('no data')
-            }
-        })
-        .then(data=>{
-            if(data && data.length>0)
-            {
-                this.setState({
-                    groups: data
-                })
-            }
-        })
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json()
+                } else {
+                    throw new Error('no data')
+                }
+            })
+            .then(data => {
+                if (data && data.length > 0) {
+                    this.setState({
+                        groups: data
+                    })
+                }
+            })
+    }
+
+    componentDidMount(){
+        this.fetchGroupData()
     }
 
     render(){
@@ -68,9 +71,7 @@ class GroupsView extends Component {
                     <FaPlus /> 
                 </IconButton>
                 {this.state.isModalOpen && 
-                    <AddGroupModal 
-                        closeModalFn={this.closeModal} 
-                    />
+                    <Modal render={AddGroupModal} closeModalFn={this.closeModal} reloadData={this.fetchGroupData}/>
                 }
             </div>
         )

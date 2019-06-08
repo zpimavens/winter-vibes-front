@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
-import { appUrls } from '../../urls'
+import { appUrls, requestUrls } from '../../urls'
 import AppContext from '../../context';
 import GroupHeader from '../../components/GroupHeader/GroupHeader'
 import Members from '../../components/Members/Members'
@@ -8,15 +8,18 @@ import Events from '../../components/Events/Events'
 import ContextMenu from '../../components/ContextMenu/MenuItemList'
 import SmallIconButton from '../../components/Button/SmallIconButton'
 import Loader from '../../components/Loader/Loader'
-import ModalUsers from '../../components/ModalUsers/ModalUsers'
+import EditGroup from '../../components/EditGroupData/EditGroupData'
+import AddUser from '../../components/AddUser/AddUser'
 import styles from './GroupView.module.scss'
 import { FiSettings } from 'react-icons/fi'
+import Modal from '../../components/Modal/Modal';
 
 class GroupView extends Component{
 
     state={
         isMenuOpen: false,
         isAddMemberOpen: false,
+        isEditGroupOpen: false,
         isDataLoading: false,
         name: '',
         description: '',
@@ -93,7 +96,7 @@ class GroupView extends Component{
     }
     availableSettings=[]
 
-    setAvailableSettings=(isOwner)=>{
+    setAvailableSettings=(isOwner, isMember)=>{
         if(isOwner){
             this.availableSettings=[
                 {
@@ -106,10 +109,18 @@ class GroupView extends Component{
                 },
                 {
                     name: 'Edytuj dane grupy',
-                    onClick: this.modifyGroupData
+                    onClick: this.toggleEditGroupModal
                 }
         ]
-        }else{
+        }else if(!isMember){
+            this.availableSettings=[
+                {
+                    name: 'Dołącz do grupy',
+                    onClick: this.joinGroup
+                }
+            ]
+        }
+        else{
             this.availableSettings=[
                 {
                     name: 'Opuść grupę',
@@ -118,11 +129,35 @@ class GroupView extends Component{
             ]
         }
     }
+    joinGroup=()=>{
+        fetch(requestUrls.ADD_MEMBER, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                id: this.groupData.id,
+                member: this.context.user.username
+            })
+        })
+        .then(res=>{
+            if(res.status===200){
+                this.updateGroupData()
+            }else{
+                alert('cos poszlo zle')
+            }
+        })
+    }
 
     toggleSettings=()=>{
 //GDZIE TO DAc? ZEBY ZDAZYŁ SIE CONTEXT ZAŁADOWAĆ Z FETCHA W APP
         const isOwner = this.context.user.username===this.state.owner
-        this.setAvailableSettings(isOwner)
+        
+        const isMember = !!this.state.otherMembers.filter(el=>el.name===this.context.user.username).length
+        console.log('isMember: '+isMember)
+        console.log(this.context.user.username)
+        
+        this.setAvailableSettings(isOwner, isMember)
     
         this.setState(prev=>({
             isMenuOpen: !prev.isMenuOpen
@@ -131,27 +166,30 @@ class GroupView extends Component{
     }
 
     leaveGroup=()=>{
-        if(window.confirm('na pewno chceszopuscic grupe?')){
+        if(window.confirm('na pewno chcesz opuscic grupe?')){
             this.deleteUser(this.groupData.id, this.context.user.username)
             this.props.history.push(appUrls.ROOT)
         }
     }
 
     deleteUser=(groupId, username)=>{
-        fetch('/api/delete-user', {
+        fetch(requestUrls.DELETE_MEMBER, {
             method: "POST",
             body: JSON.stringify({
                 id: groupId,
                 username: username
-            })
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
         })
-            .then(res => {
-                if (res.status === 200) {
-                    alert('usunięto')
-                } else {
-                    alert('cos poszło nie tak, spróbuj ponownie później')
-                }
-            })
+        .then(res => {
+            if (res.status === 200) {
+                alert('usunięto')
+            } else {
+                alert('cos poszło nie tak, spróbuj ponownie później')
+            }
+        })
     }
     toggleAddMemberModal=()=>{
         this.setState(prev=>({
@@ -159,9 +197,15 @@ class GroupView extends Component{
         }))
     }
 
+    toggleEditGroupModal = () => {
+        this.setState(prev => ({
+            isEditGroupOpen: !prev.isEditGroupOpen,
+        }))
+    }
+
     deleteMember=(name)=>{
         if(window.confirm('Na pewno usunąć użytkownika '+name+' ?')){
-            this.deleteUser(this.groupData.id, this.context.user.username)
+            this.deleteUser(this.groupData.id, name)
             var index = this.state.otherMembers.findIndex(el=>el.name===name)
             var arr = this.state.otherMembers
             arr.splice(index,1)
@@ -182,7 +226,7 @@ class GroupView extends Component{
     deleteGroup=()=>{
         var result = window.confirm('Na pewno chcesz usunąć grupę?')
         if(result){
-            fetch('/api/delete-group', {
+            fetch(requestUrls.DELETE_GROUP, {
                 method: "POST",
                 body: JSON.stringify({id:this.groupData.id}),
                 headers: {
@@ -200,10 +244,6 @@ class GroupView extends Component{
             })
         }
     }
-    modifyGroupData=()=>{
-        alert('modify group data')
-        //actually modify the data
-    }
     changeAdmin=()=>{
         alert('kiedys bedzie mozna zmienic admina. moze')
         //needed?
@@ -213,7 +253,7 @@ class GroupView extends Component{
         this.setState({
             isDataLoading: true
         })
-        fetch('/api/group-by-id/'+id)
+        fetch(requestUrls.GET_GROUP_BY_ID+id)
         .then(res=>{
             this.setState({
                 isDataLoading: false
@@ -262,7 +302,9 @@ class GroupView extends Component{
                 {this.state.isDataLoading ? <Loader /> :
                 <>
                     <GroupHeader/>
-                        {this.state.isAddMemberOpen && <ModalUsers groupId={this.groupData.id} closeModalFn={this.toggleAddMemberModal}/>}
+                    {this.state.isAddMemberOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddMemberModal} render={AddUser}/>}
+                    {this.state.isEditGroupOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleEditGroupModal} render={EditGroup} />}
+
                     <div
                         className={styles.content}
                     >
@@ -276,7 +318,7 @@ class GroupView extends Component{
                             type='fixed'
                             onClick={this.toggleSettings}
                         ><FiSettings/></SmallIconButton>
-                        {this.state.isMenuOpen && <ContextMenu items={this.availableSettings}/>}
+                            {this.state.isMenuOpen && <ContextMenu items={this.availableSettings} onClick={this.toggleSettings}/>}
                     </div>  
                 </>
                 }                  

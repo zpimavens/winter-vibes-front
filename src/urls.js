@@ -22,9 +22,14 @@ export const requestUrls = {
     CURRENT_USER: '/api/getCurrentUser',
     GET_USER_BY_USERNAME: '/api/getUserByLogin',
     EDIT_USER: '/api/editUser',
-    SEARCH_USER: '/api/userSearch',
+    SEARCH_USER: '/api/userSearch/',
     SEARCH_ARENAS: '/api/skiArenaSearch',
     GET_AREA_BY_ID: '/api/getArenaById',
     GET_GROUPS: '/api/groups',
-    GET_USER_GROUPS: '/api/groups-of-user'
+    GET_GROUP_BY_ID: '/api/group-by-id/',
+    SEARCH_GROUP: '/api/groups/search/',
+    GET_USER_GROUPS: '/api/groups-of-user',
+    DELETE_GROUP: '/api/delete-group',
+    ADD_MEMBER: '/api/groups-add-member',
+    DELETE_MEMBER: '/api/delete-user',
 }

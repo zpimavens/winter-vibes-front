@@ -1,12 +1,12 @@
-import React from 'react'
-
-import Input from '../Inputs/Input'
+import React, { Component } from 'react'
+import { requestUrls } from '../../urls'
 import Button from '../Button/Button'
-import Loader from '../Loader/Loader'
 import UsersList from '../UsersList/UsersList'
-import styles from './ModalUsers.module.scss'
+import Loader from '../Loader/Loader'
+import Input from '../Inputs/Input'
+import styles from './AddUser.module.scss'
 
-class ModalUsers  extends React.Component{
+class AddUser extends Component {
 
     state = {
         username: '',
@@ -24,21 +24,21 @@ class ModalUsers  extends React.Component{
         })
         this.search()
     }
-    handleClick=(e)=>{
+    handleClick = (e) => {
         this.setState({
-            checked:  e.currentTarget.id
+            checked: e.currentTarget.id
         })
-        
+
     }
 
     isFormEmpty = () => {
-        return !this.state.username 
+        return !this.state.username
     }
-    search=()=>{
+    search = () => {
         const data = {
             username: this.state.username,
         }
-        fetch('/api/userSearch', {
+        fetch(requestUrls.SEARCH_USER, {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
@@ -59,7 +59,7 @@ class ModalUsers  extends React.Component{
             else {
 
                 this.setState({
-                    
+
                     message: {
                         msg: 'Cos poszło nie tak. Spróbuj ponownie później.'
                     }
@@ -67,7 +67,7 @@ class ModalUsers  extends React.Component{
             }
         })
         .then(data => {
-            if(data){
+            if (data) {
                 this.setState({
                     found: data
                 })
@@ -78,51 +78,44 @@ class ModalUsers  extends React.Component{
 
     handleSubmit = (e) => {
         e.preventDefault()
+        if(this.isFormEmpty){
 
-        const data={
-            id: this.props.groupID,
+        const data = {
+            id: this.props.groupId,
             member: this.state.checked
         }
-        if(!!data.member){
-            fetch('/api/groups-add-member',{
+        if (!!data.member) {
+            fetch(requestUrls.ADD_MEMBER, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
                     'Content-Type': 'application/json'
                 }
             })
-            .then(res=>{
-                if(res.status===200){
-                    console.log('dodano')
-                }
-                else{
-                    this.setState({
-                        message:{
-                            msg:"coś poszło nie tak. spróbuj ponownie później"
-                        }
-                    })
-                }
-            })
-        //dodaj do grupy this.props.groupid
-        }
-
-        
+                .then(res => {
+                    if (res.status === 200) {
+                        console.log('dodano')
+                        //close modal
+                        //
+                    }
+                    else {
+                        this.setState({
+                            message: {
+                                msg: "coś poszło nie tak. spróbuj ponownie później"
+                            }
+                        })
+                    }
+                })
+            //dodaj do grupy this.props.groupid
+        }}
     }
 
-    render() {
-
-        return (
-            <div
-                className={styles.wrapper}
-            >
-                <div
-                    className={styles.closeButton}
-                    onClick={this.props.closeModalFn}
-                ></div>
-                <h4>Dodaj użytkownika</h4>
+    render(){
+        return(
+            <div className={styles.container}>
+                <h4>DODAJ UŻYTKOWNIKA</h4>
                 <p>wybrany użytkownik: {this.state.checked}</p>
                 <form>
-                
                     <Input
                         name='username'
                         id='name'
@@ -133,16 +126,16 @@ class ModalUsers  extends React.Component{
                         maxLength='30'
                     />
                     <div className={styles.listWrapper}>
-                    {!this.state.found || this.state.found.length <= 0 ?
-                        (
-                            this.state.message.msg === '' ? <Loader /> : <p>{this.state.message.msg}</p>
-                        ) : (
-                            <UsersList
-                                users={this.state.found}
-                                onClick={this.handleClick}
-                            />
-                        )
-                    }
+                        {!this.state.found || this.state.found.length <= 0 ?
+                            (
+                                this.state.message.msg === '' ? <Loader /> : <p>{this.state.message.msg}</p>
+                            ) : (
+                                <UsersList
+                                    users={this.state.found}
+                                    onClick={this.handleClick}
+                                />
+                            )
+                        }
                     </div>
                     <Button
                         onClick={this.handleSubmit}
@@ -154,4 +147,4 @@ class ModalUsers  extends React.Component{
         )
     }
 }
-export default ModalUsers
+export default AddUser
