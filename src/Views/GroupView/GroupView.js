@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import { appUrls, requestUrls } from '../../urls'
-import AppContext from '../../context';
+import AppContext from '../../context'
 import GroupHeader from '../../components/GroupHeader/GroupHeader'
 import Members from '../../components/Members/Members'
 import Events from '../../components/Events/Events'
@@ -10,9 +10,10 @@ import SmallIconButton from '../../components/Button/SmallIconButton'
 import Loader from '../../components/Loader/Loader'
 import EditGroup from '../../components/EditGroupData/EditGroupData'
 import AddUser from '../../components/AddUser/AddUser'
+import AddEvent from '../../components/AddEvent/AddEvent'
 import styles from './GroupView.module.scss'
 import { FiSettings } from 'react-icons/fi'
-import Modal from '../../components/Modal/Modal';
+import Modal from '../../components/Modal/Modal'
 
 class GroupView extends Component{
 
@@ -20,50 +21,12 @@ class GroupView extends Component{
         isMenuOpen: false,
         isAddMemberOpen: false,
         isEditGroupOpen: false,
+        isAddEventOpen: false,
         isDataLoading: false,
         name: '',
         description: '',
-        owner: '',
         isPrivate: false,
-        otherMembers: [
-            {
-                name: 'madoranges',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-
-            },
-            {
-                name: 'ola2323',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'moniczka3425',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'xerw4555',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'destroyer21',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'sprobujzgadnackto',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'szukamdziewczyny33',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'tosix23',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-            {
-                name: 'karrrambaa',
-                image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'
-            },
-        ],
+        otherMembers: [],
         currentEvents: [
             {
                 id: 'wfnoifenwoi34isefgtrh',
@@ -93,6 +56,7 @@ class GroupView extends Component{
 
     groupData = {
         id : window.location.pathname.replace(appUrls.GROUP, ''),
+        owner: '',
     }
     availableSettings=[]
 
@@ -102,10 +66,6 @@ class GroupView extends Component{
                 {
                     name: 'Usuń grupę',
                     onClick: this.deleteGroup
-                },
-                {
-                    name: 'Zmień właściciela',
-                    onClick: this.changeAdmin
                 },
                 {
                     name: 'Edytuj dane grupy',
@@ -129,6 +89,7 @@ class GroupView extends Component{
             ]
         }
     }
+
     joinGroup=()=>{
         fetch(requestUrls.ADD_MEMBER, {
             method: "POST",
@@ -149,34 +110,27 @@ class GroupView extends Component{
         })
     }
 
-    toggleSettings=()=>{
-//GDZIE TO DAc? ZEBY ZDAZYŁ SIE CONTEXT ZAŁADOWAĆ Z FETCHA W APP
-        const isOwner = this.context.user.username===this.state.owner
-        
-        const isMember = !!this.state.otherMembers.filter(el=>el.name===this.context.user.username).length
-        console.log('isMember: '+isMember)
-        console.log(this.context.user.username)
-        
-        this.setAvailableSettings(isOwner, isMember)
-    
-        this.setState(prev=>({
-            isMenuOpen: !prev.isMenuOpen
-        }))
-
-    }
-
-    leaveGroup=()=>{
-        if(window.confirm('na pewno chcesz opuscic grupe?')){
+    leaveGroup = () => {
+        if (window.confirm('na pewno chcesz opuscic grupe?')) {
             this.deleteUser(this.groupData.id, this.context.user.username)
             this.props.history.push(appUrls.ROOT)
         }
     }
 
-    deleteUser=(groupId, username)=>{
+    toggleSettings=()=>{
+        const isOwner = this.context.user.username===this.groupData.owner
+        const isMember = !!this.state.otherMembers.filter(el=>el.name===this.context.user.username).length
+        this.setAvailableSettings(isOwner, isMember)
+        this.setState(prev=>({
+            isMenuOpen: !prev.isMenuOpen
+        }))
+    }
+
+    deleteUser=(username)=>{
         fetch(requestUrls.DELETE_MEMBER, {
             method: "POST",
             body: JSON.stringify({
-                id: groupId,
+                id: this.groupData.id,
                 username: username
             }),
             headers: {
@@ -190,7 +144,9 @@ class GroupView extends Component{
                 alert('cos poszło nie tak, spróbuj ponownie później')
             }
         })
+        this.updateGroupData()
     }
+
     toggleAddMemberModal=()=>{
         this.setState(prev=>({
             isAddMemberOpen: !prev.isAddMemberOpen,
@@ -203,20 +159,10 @@ class GroupView extends Component{
         }))
     }
 
-    deleteMember=(name)=>{
-        if(window.confirm('Na pewno usunąć użytkownika '+name+' ?')){
-            this.deleteUser(this.groupData.id, name)
-            var index = this.state.otherMembers.findIndex(el=>el.name===name)
-            var arr = this.state.otherMembers
-            arr.splice(index,1)
-            this.setState({
-               otherMembers: arr   
-            })
-        }
-    }
-
-    addEvent=()=>{
-        alert('dodaj event:')
+    toggleAddEventModal = () => {
+        this.setState(prev => ({
+            isAddEventOpen: !prev.isAddEventOpen,
+        }))
     }
 
     removeEvent=()=>{
@@ -244,16 +190,12 @@ class GroupView extends Component{
             })
         }
     }
-    changeAdmin=()=>{
-        alert('kiedys bedzie mozna zmienic admina. moze')
-        //needed?
-    }
 
-    updateGroupData=(id)=>{
+    updateGroupData=()=>{
         this.setState({
             isDataLoading: true
         })
-        fetch(requestUrls.GET_GROUP_BY_ID+id)
+        fetch(requestUrls.GET_GROUP_BY_ID+this.groupData.id)
         .then(res=>{
             this.setState({
                 isDataLoading: false
@@ -266,10 +208,10 @@ class GroupView extends Component{
                 for(let i=0; i<data.otherMembers.length;i++){
                     members = [...members, { name: data.otherMembers[i], image:'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9'}]
                 }
+                this.groupData.owner = data.owner
                 this.setState({
                     name: data.name,
                     description: data.description,
-                    owner: data.owner,
                     isPrivate: data.isPrivate,
                     otherMembers: members,
                     // currentEvents: data.currentEvents,
@@ -282,7 +224,7 @@ class GroupView extends Component{
     componentDidMount(){
         //fetch data from db
         this.updateGroupData(this.groupData.id)
-        const isOwner = this.context.user.username===this.state.owner
+        const isOwner = this.context.user.username===this.groupData.owner
         this.setAvailableSettings(isOwner)
 
     }
@@ -292,10 +234,11 @@ class GroupView extends Component{
             username: this.context.user.username,
             ...this.state,
             ...this.groupData,
-            addEvent: this.addEvent,
             addMember: this.toggleAddMemberModal,
-            isOwner: this.context.user.username===this.state.owner,
-            deleteMember: this.deleteMember,
+            addEvent: this.toggleAddEventModal,
+            isOwner: this.context.user.username===this.groupData.owner,
+            updateGroupData: this.updateGroupData,
+            deleteUser: this.deleteUser,
         }
         return(
             <AppContext.Provider value={data}>
@@ -304,6 +247,7 @@ class GroupView extends Component{
                     <GroupHeader/>
                     {this.state.isAddMemberOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddMemberModal} render={AddUser}/>}
                     {this.state.isEditGroupOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleEditGroupModal} render={EditGroup} />}
+                    {this.state.isAddEventOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddEventModal} render={AddEvent} />}
 
                     <div
                         className={styles.content}
@@ -326,5 +270,5 @@ class GroupView extends Component{
         )
     }
 }
-GroupView.contextType = AppContext; 
+GroupView.contextType = AppContext
 export default withRouter(GroupView)

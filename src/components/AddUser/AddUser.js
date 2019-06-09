@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { requestUrls } from '../../urls'
+import AppContext from '../../context'
 import Button from '../Button/Button'
 import UsersList from '../UsersList/UsersList'
 import Loader from '../Loader/Loader'
@@ -9,7 +10,7 @@ import styles from './AddUser.module.scss'
 class AddUser extends Component {
 
     state = {
-        username: '',
+        username: ' ',
         message: {
             msg: 'Szukaj użytkowników',
         },
@@ -18,33 +19,24 @@ class AddUser extends Component {
     }
 
     handleInputChange = (e) => {
+        this.search()
         const { name, value } = e.target
         this.setState({
             [name]: value
         })
-        this.search()
     }
     handleClick = (e) => {
         this.setState({
             checked: e.currentTarget.id
         })
-
     }
 
     isFormEmpty = () => {
         return !this.state.username
     }
     search = () => {
-        const data = {
-            username: this.state.username,
-        }
-        fetch(requestUrls.SEARCH_USER, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
+
+        fetch(requestUrls.SEARCH_USER+this.state.username)
         .then(res => {
 
             if (res.status === 200) {
@@ -57,9 +49,7 @@ class AddUser extends Component {
                 })
             }
             else {
-
                 this.setState({
-
                     message: {
                         msg: 'Cos poszło nie tak. Spróbuj ponownie później.'
                     }
@@ -96,7 +86,7 @@ class AddUser extends Component {
                     if (res.status === 200) {
                         console.log('dodano')
                         //close modal
-                        //
+                        alert('Dodano uzytkowika')
                     }
                     else {
                         this.setState({
@@ -106,6 +96,7 @@ class AddUser extends Component {
                         })
                     }
                 })
+            this.context.updateGroupData()
             //dodaj do grupy this.props.groupid
         }}
     }
@@ -121,8 +112,8 @@ class AddUser extends Component {
                         id='name'
                         type='text'
                         placeholder='Nazwa użytkownika'
-                        onChange={this.handleInputChange}
                         value={this.state.name}
+                        onChange={this.handleInputChange}
                         maxLength='30'
                     />
                     <div className={styles.listWrapper}>
@@ -147,4 +138,5 @@ class AddUser extends Component {
         )
     }
 }
+AddUser.contextType = AppContext
 export default AddUser

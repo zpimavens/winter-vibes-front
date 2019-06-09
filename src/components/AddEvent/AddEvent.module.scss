@@ -1,0 +1,19 @@
+@import '../../assets/styles/Variables.scss';
+
+.container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.dateWrapper{
+
+    margin-bottom: 20px;
+
+    & input{
+        margin: 5px;
+        padding: 5px;
+        border-radius: 100px;
+        border: 1px solid $border-dark;
+        
+    }
+}

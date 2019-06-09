@@ -27,7 +27,7 @@ const MemberListItem = ({ name, image, onClick, owner })=>{
                 (owner===name ? null : 
                     <span 
                         className={styles.moreIcon}
-                        onClick={()=>context.deleteMember(name)}
+                        onClick={()=>context.deleteUser(name)}
                     >
                         <IoMdTrash/>
                     </span>)
