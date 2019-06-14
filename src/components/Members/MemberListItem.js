@@ -23,6 +23,7 @@ const MemberListItem = ({ name, image, onClick, owner })=>{
             >
                 {name}
             </p>
+            
             {context.isOwner &&
                 (owner===name ? null : 
                     <span 

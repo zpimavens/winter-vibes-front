@@ -19,7 +19,8 @@ import EditProfileView from '../EditProfileView/EditProfileView'
 import SkiAreaView from '../SkiAreaView/SkiAreaView'
 import Page404 from '../Page404/Page404'
 import '../../assets/styles/index.scss'
-import Loader from '../../components/Loader/Loader';
+import Loader from '../../components/Loader/Loader'
+import EventView from '../EventView/EventView'
 
 class App extends React.Component{
 
@@ -174,6 +175,11 @@ class App extends React.Component{
                 component={EditProfileView}
                 layout={Header}
               />
+                <PrivateRoute
+                  path={appUrls.EVENT_ID}
+                  component={EventView}
+                  layout={Header}
+                />
               <Route component={Page404}/>
               
             </Switch>

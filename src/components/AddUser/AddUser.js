@@ -84,9 +84,7 @@ class AddUser extends Component {
             })
                 .then(res => {
                     if (res.status === 200) {
-                        console.log('dodano')
-                        //close modal
-                        alert('Dodano uzytkowika')
+                        this.context.updateGroupData()
                     }
                     else {
                         this.setState({
@@ -96,7 +94,6 @@ class AddUser extends Component {
                         })
                     }
                 })
-            this.context.updateGroupData()
             //dodaj do grupy this.props.groupid
         }}
     }

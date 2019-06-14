@@ -13,7 +13,7 @@ const EventList = ({ events }) =>{
             <ul>
                 {events.map(event=>(
                     <EventListItem
-                        key={event.id}
+                        key={event._id}
                         {...event}
                     />
                 ))}

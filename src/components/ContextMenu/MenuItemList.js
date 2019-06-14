@@ -13,6 +13,7 @@ const MenuItemList = ({ items, onClick })=>{
                     <li
                         onClick={item.onClick}
                         className={styles.item}
+                        key={item.name}
                     >
                         {item.name}
                     </li>

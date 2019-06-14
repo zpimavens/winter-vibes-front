@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
+import AppContext from '../../context'
 import Input from '../Inputs/Input'
 import Checkbox from '../Inputs/Checkbox'
 import styles from './AddGroup.module.scss'
-import Button from '../Button/Button';
-import FormMessages from '../Form/FormMessages';
+import Button from '../Button/Button'
+import FormMessages from '../Form/FormMessages'
 
 class AddGroup extends Component {
 
@@ -11,7 +12,7 @@ class AddGroup extends Component {
         isPrivate: false,
         name: '',
         description: '',
-        owner: 'madoranges',
+        owner: '',
         message: {
             msg: '',
         },
@@ -75,6 +76,12 @@ class AddGroup extends Component {
             })
         }
     }
+
+    componentDidMount(){
+        this.setState({
+            owner: this.context.user.username
+        })
+    }
     
     render(){
 
@@ -121,5 +128,5 @@ class AddGroup extends Component {
         )
     }
 }
-
+AddGroup.contextType = AppContext
 export default AddGroup

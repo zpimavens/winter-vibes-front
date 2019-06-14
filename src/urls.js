@@ -13,6 +13,8 @@ export const appUrls = {
     EDIT_PROFILE: '/editprofile',
     GROUP_ID: '/group/:id',
     GROUP: '/group/',
+    EVENT: '/event/',
+    EVENT_ID: '/event/:id',
 }
 export const requestUrls = {
     CHECK_TOKEN: '/checkToken',
@@ -32,4 +34,8 @@ export const requestUrls = {
     DELETE_GROUP: '/api/delete-group',
     ADD_MEMBER: '/api/groups-add-member',
     DELETE_MEMBER: '/api/delete-user',
+    ADD_EVENT: '/api/add_event',
+    GET_EVENT_ID: '/api/getEventById',
+    DELETE_EVENT: '/api/delete_event',
+    DELETE_FROM_EVENT: '/api/removeMemberFromEvent',
 }

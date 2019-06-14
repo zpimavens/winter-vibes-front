@@ -1,18 +1,24 @@
 import React from 'react'
+import { withRouter } from 'react-router-dom'
+import { appUrls } from '../../urls'
 import styles from './EventListItem.module.scss'
 import { FiMoreVertical } from 'react-icons/fi'
 
-const EventListItem = ({ name, date, participants }) => {
+const EventListItem = ({ name, startDate, endDate, members, _id, history }) => {
 
+    const start = new Date(startDate)
+    const end = new Date(endDate)
     return(
         <li
             className={styles.wrapper}
+            onClick={()=>history.push(appUrls.EVENT+_id)}
         >
             <span><FiMoreVertical/></span>
             <p>{name}</p>
-            <p>{date}</p>
-            <p>{participants.length} uczestników </p>
+            <p>Początek: {start.getDate()}/{start.getMonth()}/{start.getFullYear()}</p>
+            <p>Koniec: {end.getDate()}/{end.getMonth()}/{end.getFullYear()}</p>
+            <p>{members.length} uczestników </p>
         </li>
     )
 }
-export default EventListItem
+export default withRouter(EventListItem)

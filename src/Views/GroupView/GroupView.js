@@ -14,6 +14,7 @@ import AddEvent from '../../components/AddEvent/AddEvent'
 import styles from './GroupView.module.scss'
 import { FiSettings } from 'react-icons/fi'
 import Modal from '../../components/Modal/Modal'
+import Page404 from '../Page404/Page404';
 
 class GroupView extends Component{
 
@@ -27,37 +28,16 @@ class GroupView extends Component{
         description: '',
         isPrivate: false,
         otherMembers: [],
-        currentEvents: [
-            {
-                id: 'wfnoifenwoi34isefgtrh',
-                name: 'fajny iwent',
-                date: '2018-03-21',
-                destination: 'fajna skiarena',
-                participants: ['ola1','ola2']
-            },
-            {
-                id: 'wfnoifenwojefesefgtrh',
-                name: 'fajny iwent',
-                date: '2018-03-21',
-                destination: 'fajna skiarena',
-                participants: ['ola1','ola2']
-            }
-        ],
-        pastEvents: [
-            {
-                id: 'wfnoifenwoi34it3niwfn',
-                name: 'mniej fajny iwent',
-                date: '2017-03-21',
-                destination: 'fajna skiarena',
-                participants: ['ola1','ola2','ola1','ola2']
-            }
-        ],
+        currentEvents: [],
+        pastEvents: [],
+        isGroupFound: true,
     }
 
     groupData = {
         id : window.location.pathname.replace(appUrls.GROUP, ''),
         owner: '',
     }
+
     availableSettings=[]
 
     setAvailableSettings=(isOwner, isMember)=>{
@@ -139,12 +119,12 @@ class GroupView extends Component{
         })
         .then(res => {
             if (res.status === 200) {
-                alert('usunięto')
+
+                this.updateGroupData()
             } else {
                 alert('cos poszło nie tak, spróbuj ponownie później')
             }
         })
-        this.updateGroupData()
     }
 
     toggleAddMemberModal=()=>{
@@ -163,10 +143,6 @@ class GroupView extends Component{
         this.setState(prev => ({
             isAddEventOpen: !prev.isAddEventOpen,
         }))
-    }
-
-    removeEvent=()=>{
-        //only if u r owner of the group
     }
 
     deleteGroup=()=>{
@@ -201,6 +177,11 @@ class GroupView extends Component{
                 isDataLoading: false
             })
             if (res.status===200){ return res.json()}
+            else{
+                this.setState({
+                    isGroupFound: false
+                })
+            }
         })
         .then(([data])=>{
             let members=[]
@@ -214,19 +195,44 @@ class GroupView extends Component{
                     description: data.description,
                     isPrivate: data.isPrivate,
                     otherMembers: members,
-                    // currentEvents: data.currentEvents,
-                    // pastEvents: data.pastEvents,
+                    
                 })
             }
         })
     }
 
-    componentDidMount(){
-        //fetch data from db
-        this.updateGroupData(this.groupData.id)
-        const isOwner = this.context.user.username===this.groupData.owner
-        this.setAvailableSettings(isOwner)
+    getEvents = () =>{
+        fetch('/api/list_group_events', {
+            method: 'POST',
+            body: JSON.stringify({ groupId: this.groupData.id}),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json()
 
+                } else if (res.status === 404) {
+                    this.setState({
+                        currentEvents: [],
+                    })
+                }
+            })
+            .then((data) => {
+                if (data && data.length > 0)
+                    this.setState({
+                        currentEvents: data
+                    })
+            })
+    }
+
+    componentDidMount(){
+        this.updateGroupData()
+        const isOwner = this.context.user.username===this.groupData.owner
+        const isMember = !!this.state.otherMembers.filter(el => el.name === this.context.user.username).length
+        this.setAvailableSettings(isOwner, isMember)
+        this.getEvents()
     }
 
     render(){
@@ -238,33 +244,41 @@ class GroupView extends Component{
             addEvent: this.toggleAddEventModal,
             isOwner: this.context.user.username===this.groupData.owner,
             updateGroupData: this.updateGroupData,
+            updateEvents: this.getEvents,
             deleteUser: this.deleteUser,
+            
         }
         return(
             <AppContext.Provider value={data}>
                 {this.state.isDataLoading ? <Loader /> :
-                <>
-                    <GroupHeader/>
-                    {this.state.isAddMemberOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddMemberModal} render={AddUser}/>}
-                    {this.state.isEditGroupOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleEditGroupModal} render={EditGroup} />}
-                    {this.state.isAddEventOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddEventModal} render={AddEvent} />}
+                     (this.state.isGroupFound ? 
+                        <>
+                            <GroupHeader/>
+                            {this.state.isAddMemberOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddMemberModal} render={AddUser}/>}
+                            {this.state.isEditGroupOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleEditGroupModal} render={EditGroup} />}
+                            {this.state.isAddEventOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddEventModal} render={AddEvent} />}
 
-                    <div
-                        className={styles.content}
-                    >
-                        <Members />
-                        <Events />
-                    </div>
-                    <div
-                        className={styles.contextMenuWrapper}
-                    >
-                        <SmallIconButton 
-                            type='fixed'
-                            onClick={this.toggleSettings}
-                        ><FiSettings/></SmallIconButton>
-                            {this.state.isMenuOpen && <ContextMenu items={this.availableSettings} onClick={this.toggleSettings}/>}
-                    </div>  
-                </>
+                            <div
+                                className={styles.content}
+                            >
+                                <Members 
+                                    title='Członkowie grupy:'
+                                />
+                                <Events />
+                            </div>
+                            <div
+                                className={styles.contextMenuWrapper}
+                            >
+                                <SmallIconButton 
+                                    type='fixed'
+                                    onClick={this.toggleSettings}
+                                ><FiSettings/></SmallIconButton>
+                                {this.state.isMenuOpen && <ContextMenu items={this.availableSettings} onClick={this.toggleSettings}/>}
+                            </div>  
+                        </>
+                        :
+                        <Page404 />
+                     )
                 }                  
             </AppContext.Provider>
         )

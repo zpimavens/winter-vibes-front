@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import AppContext from '../../context'
 import DatePicker, { registerLocale } from 'react-datepicker'
+import { requestUrls } from '../../urls'
 import PL from 'date-fns/locale/pl'
 import Input from '../Inputs/Input'
 import styles from './AddEvent.module.scss'
@@ -13,6 +15,7 @@ class AddEvent extends Component {
         name: '',
         startDate: '',
         endDate: '',
+        description: '',
     }
 
     handleInputChange=(e)=>{
@@ -32,9 +35,39 @@ class AddEvent extends Component {
             endDate: day
         })
     }
+    addEvent = (event) =>{
+        fetch(requestUrls.ADD_EVENT, {
+            method: "POST",
+            body: JSON.stringify(event),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        })
+        .then(res=>{
+            if(res.status===201){
+                this.context.addEvent()
+                this.context.updateEvents()
+            }else{
+                alert('not ok')
+            }
+        })
+    }
     handleSubmit=(e)=>{
         e.preventDefault()
-        console.log(this.state)
+        if(!this.state.name || !this.state.endDate || !this.state.startDate || !this.state.description)
+            {alert('wypelnij wszystkie pola')
+                return
+            }
+        const event = {
+            group: this.context.id, 
+            name: this.state.name, 
+            owner: this.context.username, 
+            isPrivate: true, 
+            description: this.state.description, 
+            startDate: this.state.startDate, 
+            endDate: this.state.endDate
+        }
+        this.addEvent(event)
     }
     render(){
         return(
@@ -48,6 +81,13 @@ class AddEvent extends Component {
                         onChange={this.handleInputChange}
                         placeholder='Nazwa wydarzenia'
                     />     
+                    <Input 
+                        name='description'
+                        value={this.state.description}
+                        onChange={this.handleInputChange}
+                        type='textarea'
+                        placeholder='Opis...'
+                    />
                     <div className={styles.dateWrapper}>
                         <DatePicker 
                             onChange={this.setStartDay} 
@@ -88,5 +128,6 @@ class AddEvent extends Component {
         )
     }
 }
+AddEvent.contextType = AppContext
 //proptypes
 export default AddEvent
