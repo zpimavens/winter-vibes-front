@@ -26,7 +26,7 @@ class EditGroupData extends Component {
     }
     handleSubmit=(e)=>{
         e.preventDefault()
-        const data = this.removeFalsy(this.state)
+        //const data = this.removeFalsy(this.state)
         this.changeData()
         this.props.closeModalFn()
     }

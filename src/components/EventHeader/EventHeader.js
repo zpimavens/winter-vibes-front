@@ -18,7 +18,7 @@ const EventHeader = ()=>{
             {/* <p>Wydarzenie{context.isPrivate ? ' prywatne' : ' publiczne'}</p> */}
             <p>Początek:  {start.getDate()}/{start.getMonth()+1}/{start.getFullYear()}, {start.getHours()}:{start.getMinutes() === 0 ? '00' : start.getMinutes()}</p>
             <p>Koniec:  {end.getDate()}/{end.getMonth()+1}/{end.getFullYear()}, {end.getHours()}:{end.getMinutes() === 0 ? '00' : end.getMinutes()}</p>
-            <p>{context.skiArena && context.skiArena}</p>
+            <p>{context.skiArena && 'Gdzie jedziemy? '+context.skiArena}</p>
         </div>
  
     )

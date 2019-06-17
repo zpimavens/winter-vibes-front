@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import AppContext from '../../context'
+import AsyncSelect from 'react-select/lib/Async'
 import DatePicker, { registerLocale } from 'react-datepicker'
 import { requestUrls } from '../../urls'
 import PL from 'date-fns/locale/pl'
 import Input from '../Inputs/Input'
 import styles from './AddEvent.module.scss'
-import Button from '../Button/Button';
+import Button from '../Button/Button'
 
 registerLocale('PL', PL);
 
@@ -16,12 +17,58 @@ class AddEvent extends Component {
         startDate: new Date(),
         endDate: '',
         description: '',
+        skiArena: '',
+        foundAreas: [],
+        area: '',
     }
 
+    loadOptions = (inputValue, callback) => {
+        //console.log(inputValue)
+        //var requestResults = []
+        const area = {
+            country: '',
+            name: inputValue,
+            skiRental: false,
+            skiSchool: false,
+            nightRide: false,
+            snowpark: false,
+            dragLift: false,
+            chairLift: false,
+            gondolas: false,}
+        fetch('/api/skiArenaSearch', {
+            method: "POST",
+            body: JSON.stringify(area),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    return res.json()
+                }
+            })
+            .then(data => {
+                if (data) {
+                    let areas = data.map(el => ({ label: el.name, value: el._id }))
+                    this.setState({
+                        foundAreas: areas
+                    }) 
+                }
+            })
+
+
+    callback(this.state.foundAreas)
+    }
     handleInputChange=(e)=>{
         const { name, value } = e.target
         this.setState({
             [name] : value
+        })
+    }
+    handleAreaInputChange=(e)=>{
+        const id = e.label
+        this.setState({
+            area: id,
         })
     }
     setStartDay=(day)=>{
@@ -54,6 +101,7 @@ class AddEvent extends Component {
     }
     handleSubmit=(e)=>{
         e.preventDefault()
+        
         if(!this.state.name || !this.state.endDate || !this.state.startDate || !this.state.description)
             {alert('wypelnij wszystkie pola')
                 return
@@ -65,7 +113,8 @@ class AddEvent extends Component {
             isPrivate: true, 
             description: this.state.description, 
             startDate: this.state.startDate, 
-            endDate: this.state.endDate
+            endDate: this.state.endDate,
+            skiArena: this.state.area
         }
         this.addEvent(event)
     }
@@ -87,6 +136,11 @@ class AddEvent extends Component {
                         onChange={this.handleInputChange}
                         type='textarea'
                         placeholder='Opis...'
+                    />
+                    <AsyncSelect 
+                        className={styles.select}
+                        loadOptions={this.loadOptions}
+                        onChange={this.handleAreaInputChange}
                     />
                     <div className={styles.dateWrapper}>
                         <DatePicker 

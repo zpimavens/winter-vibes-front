@@ -15,12 +15,16 @@ const Members = ({ title })=>{
                 className={styles.containerTop}
             >
                 <h4>{title}</h4>
-                <SmallIconButton 
-                    type='secondary'
-                    onClick={context.addMember}
-                > 
-                    <FaPlus/>
-                </SmallIconButton>
+                {
+                    context.owner===context.username &&
+                    <SmallIconButton 
+                        type='secondary'
+                        onClick={context.addMember}
+                    > 
+                        <FaPlus/>
+                    </SmallIconButton>
+
+                }
             </div>
             <MemberList 
                 members={context.otherMembers}

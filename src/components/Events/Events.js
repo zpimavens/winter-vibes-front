@@ -16,12 +16,15 @@ const Events = ()=>{
                 >
                     <div className={styles.containerTop}>
                         <h5>Nadchodzące wydarzenia:</h5>
-                        <SmallIconButton 
-                                type='secondary'
-                                onClick={context.addEvent}
-                            > 
-                                <FaPlus/> 
-                        </SmallIconButton>
+                        {
+                            context.owner === context.username &&
+                            <SmallIconButton 
+                                    type='secondary'
+                                    onClick={context.addEvent}
+                                > 
+                                    <FaPlus/> 
+                            </SmallIconButton>
+                        }
                     </div>
                     <EventList 
                         events={context.currentEvents}

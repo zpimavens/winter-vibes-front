@@ -6,7 +6,9 @@ import Conveniences from '../../components/SkiArea/Conveniences'
 import Loader from '../../components/Loader/Loader'
 import styles from './SkiAreaView.module.scss'
 import image from '../../assets/images/skiareabg.jpg'
-import Button from '../../components/Button/Button';
+// import Button from '../../components/Button/Button';
+// import Modal from '../../components/Modal/Modal';
+// import AddEvent from '../../components/AddEvent/AddEvent';
 
 
 class SkiArea extends Component {
@@ -30,7 +32,8 @@ class SkiArea extends Component {
             nightRide: false,
             skiRental: '',
         },
-        message: 'loading'
+        message: 'loading',
+        isAddEventOpen: false,
     }
 
     fetchAreaData = ()=>{
@@ -60,6 +63,11 @@ class SkiArea extends Component {
                 area : data,
             })
         })
+    }
+    toggleAddEventModal=()=>{
+        this.setState(prev=>({
+            isAddEventOpen: !prev.isAddEventOpen
+        }))
     }
 
     componentDidMount(){
@@ -103,11 +111,12 @@ class SkiArea extends Component {
                 <Conveniences 
                     additional={additional}
                 />
-                <Button 
-                    onClick={()=>alert('Coming soon!')}
+                {/* <Button 
+                    onClick={this.toggleAddEventModal}
                 >
                     UTWÓRZ WYDARZENIE Z TĄ ARENĄ
                 </Button>
+                {this.state.isAddEventOpen && <Modal groupId={this.groupData.id} closeModalFn={this.toggleAddEventModal} render={AddEvent} />} */}
         </div>
         )
     }

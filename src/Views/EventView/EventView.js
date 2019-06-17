@@ -138,8 +138,7 @@ class EventView extends Component {
             })
                 .then(res => {
                     if (res.status === 200) {
-                        alert('Usunęliśmy Twoje wydarzenie')
-                        this.props.history.push(appUrls.ROOT)
+                        this.props.history.push('/group/' + this.state.group)
                     }
                     else {
                         alert('Wystąpił błąd, spróbuj ponownie później')
@@ -201,7 +200,7 @@ class EventView extends Component {
                 members = [...members, { name: data.members[i], image: 'https://images.unsplash.com/photo-1556780547-25b93bd93f38?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=200&h=200&fit=crop&ixid=eyJhcHBfaWQiOjF9' }]
             }
             this.eventData.owner=data.owner
-            
+           
             this.setState({
                 name: data.name,
                 group: data.group,
@@ -217,7 +216,7 @@ class EventView extends Component {
             })
         })
         .catch(err=>null)
-        // console.log(this.eventData.id)
+        
     }
 
     componentDidMount(){
@@ -234,12 +233,14 @@ class EventView extends Component {
         const context = {
             otherMembers: this.state.members,
             name: this.state.name,
+            skiArena: this.state.skiArena,
             owner: this.eventData.owner,
             isOwner: this.state.isOwner,
             isPrivate: this.state.isPrivate,
             description: this.state.description,
             addMember: this.toggleAddMemberModal,
             username: this.context.user.username,
+            deleteUser: this.deleteUser,
             startDate: this.state.startDate,
             endDate: this.state.endDate,
             updateEventData: this.updateEventData

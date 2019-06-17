@@ -92,7 +92,8 @@ class GroupView extends Component{
 
     leaveGroup = () => {
         if (window.confirm('na pewno chcesz opuscic grupe?')) {
-            this.deleteUser(this.groupData.id, this.context.user.username)
+            
+            this.deleteUser(this.context.user.username)
             this.props.history.push(appUrls.ROOT)
         }
     }
