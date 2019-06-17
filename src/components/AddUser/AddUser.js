@@ -69,13 +69,15 @@ class AddUser extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         if(this.isFormEmpty){
+        const url = !!this.props.groupId ? requestUrls.ADD_MEMBER : requestUrls.ADD_MEMBER_EVENT
 
         const data = {
-            id: this.props.groupId,
+            id: this.props.groupId || this.props.eventId,
             member: this.state.checked
         }
+
         if (!!data.member) {
-            fetch(requestUrls.ADD_MEMBER, {
+            fetch(url, {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
@@ -84,7 +86,8 @@ class AddUser extends Component {
             })
                 .then(res => {
                     if (res.status === 200) {
-                        this.context.updateGroupData()
+                        this.context.addMember()
+                        this.props.groupId ? this.context.updateGroupData() : this.context.updateEventData()
                     }
                     else {
                         this.setState({

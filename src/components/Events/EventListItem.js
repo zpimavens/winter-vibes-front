@@ -15,8 +15,8 @@ const EventListItem = ({ name, startDate, endDate, members, _id, history }) => {
         >
             <span><FiMoreVertical/></span>
             <p>{name}</p>
-            <p>Początek: {start.getDate()}/{start.getMonth()}/{start.getFullYear()}</p>
-            <p>Koniec: {end.getDate()}/{end.getMonth()}/{end.getFullYear()}</p>
+            <p>Początek: {start.getDate()}/{start.getMonth()+1}/{start.getFullYear()}</p>
+            <p>Koniec: {end.getDate()}/{end.getMonth()+1}/{end.getFullYear()}</p>
             <p>{members.length} uczestników </p>
         </li>
     )

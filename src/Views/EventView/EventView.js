@@ -8,6 +8,9 @@ import EventHeader from '../../components/EventHeader/EventHeader';
 import SmallIconButton from '../../components/Button/SmallIconButton'
 import { FiSettings } from 'react-icons/fi'
 import Page404 from '../Page404/Page404';
+import Loader from '../../components/Loader/Loader';
+import Modal from '../../components/Modal/Modal';
+import AddUser from '../../components/AddUser/AddUser';
 
 
 class EventView extends Component {
@@ -178,10 +181,11 @@ class EventView extends Component {
             },
         })
         .then(res=>{
+            this.setState({
+                isLoading: false
+            })
             if(res.status===200){
-                this.setState({
-                    isLoading: false
-                })
+                
                 return res.json()
             }else{
                 this.setState({
@@ -237,9 +241,11 @@ class EventView extends Component {
             addMember: this.toggleAddMemberModal,
             username: this.context.user.username,
             startDate: this.state.startDate,
-            endDate: this.state.endDate
+            endDate: this.state.endDate,
+            updateEventData: this.updateEventData
         }
         return(
+            this.state.isLoading ? <Loader /> :
             (!this.state.eventFound) ?
                 (<Page404 />
                 ) : (
@@ -252,6 +258,7 @@ class EventView extends Component {
                         type='fixed'
                         onClick={this.toggleSettings}
                     ><FiSettings /></SmallIconButton>
+                    {this.state.isAddMemberOpen && <Modal eventId={this.eventData.id} closeModalFn={this.toggleAddMemberModal} render={AddUser} />}
                     {this.state.isMenuOpen && <ContextMenu items={this.availableSettings} onClick={this.toggleSettings} />}
                 </AppContext.Provider>
         ))

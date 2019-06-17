@@ -36,6 +36,7 @@ export const requestUrls = {
     DELETE_MEMBER: '/api/delete-user',
     ADD_EVENT: '/api/add_event',
     GET_EVENT_ID: '/api/getEventById',
+    ADD_MEMBER_EVENT: '/api/addMemberToEvent',
     DELETE_EVENT: '/api/delete_event',
     DELETE_FROM_EVENT: '/api/removeMemberFromEvent',
 }

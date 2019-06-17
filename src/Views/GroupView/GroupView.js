@@ -157,7 +157,6 @@ class GroupView extends Component{
             })
             .then(res=>{
                 if(res.status===200){
-                    alert('Usunęliśmy Twoją grupę')
                     this.props.history.push(appUrls.ROOT)
                 }
                 else{
@@ -222,7 +221,8 @@ class GroupView extends Component{
             .then((data) => {
                 if (data && data.length > 0)
                     this.setState({
-                        currentEvents: data
+                        currentEvents: data[0],
+                        pastEvents: data[1]
                     })
             })
     }

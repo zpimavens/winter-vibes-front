@@ -13,7 +13,7 @@ class AddEvent extends Component {
 
     state={
         name: '',
-        startDate: '',
+        startDate: new Date(),
         endDate: '',
         description: '',
     }
@@ -71,7 +71,7 @@ class AddEvent extends Component {
     }
     render(){
         return(
-            <form>
+            <form autoComplete='off'>
                 <div className={styles.container}>
                     <h4>NOWE WYDARZENIE</h4>
                     <Input 
@@ -102,6 +102,7 @@ class AddEvent extends Component {
                             timeCaption="Czas"
                             placeholderText="Początek"
                             locale="PL"
+                            minDate={new Date()}
                         />
                         <DatePicker
                             name='startDate'
@@ -118,6 +119,7 @@ class AddEvent extends Component {
                             timeCaption="Czas"
                             placeholderText="Koniec"
                             locale="PL"
+                            
                         />
                     </div>
                     <Button
